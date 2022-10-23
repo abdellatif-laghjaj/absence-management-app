@@ -38,6 +38,7 @@
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/full_name_edit_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,6 +57,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_edit_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,6 +76,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cne_edit_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +95,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_edit_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,6 +115,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirm_password_edit_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,6 +135,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
+            android:id="@+id/user_role_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
@@ -138,6 +144,7 @@
             android:weightSum="2">
 
             <RadioButton
+                android:id="@+id/student_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
@@ -152,6 +159,7 @@
                 android:textStyle="bold" />
 
             <RadioButton
+                android:id="@+id/teacher_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -167,6 +175,7 @@
         </RadioGroup>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/register_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
