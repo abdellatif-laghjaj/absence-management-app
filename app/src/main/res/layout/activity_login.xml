@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
             android:gravity="center"
-            android:text="login"
+            android:text="@string/login"
             android:textAllCaps="true"
             android:textColor="?android:colorPrimary"
             android:textSize="36sp"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:hint="welcome to absenti.fy"
+            android:hint="@string/welcome_to_absenti_fy"
             android:textAllCaps="false"
             android:textColor="@color/dark_blue"
             android:textSize="20sp" />
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:paddingVertical="20dp"
                 android:textColor="#B81F262E" />
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingVertical="20dp"
                 android:textColor="#B81F262E" />
@@ -97,7 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Remember me"
+                android:text="@string/remember_me"
                 android:textColor="@color/dark_blue"
                 android:textSize="16sp" />
 
@@ -115,7 +115,7 @@
             android:layout_marginVertical="4dp"
             android:background="@drawable/button_layout"
             android:paddingVertical="18dp"
-            android:text="login"
+            android:text="@string/login"
             android:textColor="#FFF"
             android:textSize="18sp" />
 
@@ -128,13 +128,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have an account? " />
+                android:text="@string/don_t_have_an_account" />
 
             <TextView
                 android:id="@+id/register_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign up"
+                android:text="@string/register"
                 android:textColor="?android:colorPrimary" />
         </LinearLayout>
     </LinearLayout>
