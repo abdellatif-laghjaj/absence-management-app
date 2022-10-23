@@ -7,7 +7,7 @@ import android.view.WindowManager
 import android.widget.TextView
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var login_tv: TextView
+    private lateinit var login_text_view: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -17,8 +17,8 @@ class RegisterActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        login_tv = findViewById(R.id.login_tv)
-        login_tv.setOnClickListener {
+        login_text_view = findViewById(R.id.login_text_view)
+        login_text_view.setOnClickListener {
             Intent(this, LoginActivity::class.java).also {
                 startActivity(it)
                 finish()
