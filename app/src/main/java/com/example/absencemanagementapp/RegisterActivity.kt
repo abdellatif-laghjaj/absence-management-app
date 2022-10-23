@@ -17,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        login_text_view = findViewById(R.id.login_text_view)
+        login_text_view = findViewById(R.id.login_tv)
         login_text_view.setOnClickListener {
             Intent(this, LoginActivity::class.java).also {
                 startActivity(it)
