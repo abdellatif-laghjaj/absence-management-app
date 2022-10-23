@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">AbsenceManagementApp</string>
+    <string name="register">register</string>
+    <string name="welcome_to_absenti_fy">welcome to absenti.fy</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="cne">CNE</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login">Login</string>
 </resources>

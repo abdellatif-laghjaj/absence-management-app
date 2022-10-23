@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
             android:gravity="center"
-            android:text="register"
+            android:text="@string/register"
             android:textAllCaps="true"
             android:textColor="?android:colorPrimary"
             android:textSize="36sp"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:hint="welcome to absenti.fy"
+            android:hint="@string/welcome_to_absenti_fy"
             android:textAllCaps="false"
             android:textColor="?android:colorPrimary"
             android:textSize="20sp" />
@@ -49,10 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="Full name"
+                android:hint="@string/full_name"
                 android:inputType="text"
                 android:paddingVertical="20dp"
-                android:paddingStart="10dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,10 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:paddingVertical="20dp"
-                android:paddingStart="10dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,10 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="CNE"
+                android:hint="@string/cne"
                 android:inputType="text"
                 android:paddingVertical="20dp"
-                android:paddingStart="10dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,10 +104,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingVertical="20dp"
-                android:paddingStart="10dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,10 +123,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_layout"
-                android:hint="Confirm password"
+                android:hint="@string/confirm_password"
                 android:inputType="textPassword"
                 android:paddingVertical="20dp"
-                android:paddingStart="10dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,7 +149,7 @@
                 android:drawableTop="@drawable/ic_student"
                 android:gravity="center"
                 android:paddingVertical="20dp"
-                android:text="Student"
+                android:text="@string/student"
                 android:textColor="@drawable/radio_button_text"
                 android:textStyle="bold" />
 
@@ -169,7 +164,7 @@
                 android:drawableTop="@drawable/ic_teacher"
                 android:gravity="center"
                 android:paddingVertical="20dp"
-                android:text="Teacher"
+                android:text="@string/teacher"
                 android:textColor="@drawable/radio_button_text"
                 android:textStyle="bold" />
         </RadioGroup>
@@ -181,7 +176,7 @@
             android:layout_marginVertical="4dp"
             android:background="@drawable/button_layout"
             android:paddingVertical="18dp"
-            android:text="register"
+            android:text="@string/register"
             android:textColor="#FFF"
             android:textSize="18sp" />
 
@@ -194,14 +189,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account?" />
+                android:text="@string/already_have_an_account" />
 
             <TextView
                 android:id="@+id/login_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="?android:colorPrimary" />
         </LinearLayout>
     </LinearLayout>
