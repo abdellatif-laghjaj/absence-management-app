@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "474274239538",
+    "project_id": "absence-management-app-465ef",
+    "storage_bucket": "absence-management-app-465ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474274239538:android:92446b957676cd6b5d982b",
+        "android_client_info": {
+          "package_name": "com.example.absencemanagementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474274239538-spmktcc7kg69b3gi6s8ptcvvl4ia0nv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.absencemanagementapp",
+            "certificate_hash": "c633ec4b8c4ab9afe53a0a54838683db3986ec24"
+          }
+        },
+        {
+          "client_id": "474274239538-bah5amllm1osp4v2ia6hp4v113dd9nng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLJKSWmvnASa-NS-PjuCgxF8cZU5AH-xE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474274239538-bah5amllm1osp4v2ia6hp4v113dd9nng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

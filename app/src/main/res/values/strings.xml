@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AbsenceManagementApp</string>
-    <string name="register">register</string>
+    <string name="register">Register</string>
     <string name="welcome_to_absenti_fy">welcome to absenti.fy</string>
     <string name="full_name">Full name</string>
     <string name="email">Email</string>
@@ -13,4 +13,20 @@
     <string name="login">Login</string>
     <string name="remember_me">Remember me</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="cin">CIN</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="semester">Semester</string>
+    <string name="branch">Branch</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
