@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.Models
+package com.example.absencemanagementapp.models
 
 data class User(
     val id: Int,
