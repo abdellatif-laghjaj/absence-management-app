@@ -40,6 +40,7 @@ class StudentRegisterFragment : Fragment() {
 
         //put the code here
         initViews()
+        initDropDowns()
         register_btn.setOnClickListener {
             val first_name = first_name_et.text.toString()
             Toast.makeText(context, first_name, Toast.LENGTH_SHORT).show()
@@ -72,71 +73,6 @@ class StudentRegisterFragment : Fragment() {
         password_et = view?.findViewById(R.id.password_et)!!
         confirm_password_et = view?.findViewById(R.id.confirm_password_et)!!
         register_btn = view?.findViewById(R.id.register_btn)!!
-    }
-
-    private fun validateFields(): Boolean {
-        if (first_name_et.text.toString().isEmpty()) {
-            first_name_et.setError("First name is required")
-            return false
-        } else {
-            first_name_et.setError(null)
-        }
-        if (last_name_et.text.toString().isEmpty()) {
-            last_name_et.setError("Last name is required")
-            return false
-        } else {
-            last_name_et.setError(null)
-        }
-        if (cin_et.text.toString().isEmpty()) {
-            cin_et.setError("CIN is required")
-            return false
-        } else {
-            cin_et.setError(null)
-        }
-        if (cne_et.text.toString().isEmpty()) {
-            cne_et.setError("CNE is required")
-            return false
-        } else {
-            cne_et.setError(null)
-        }
-        if (filiere_dropdown.text.toString().isEmpty()) {
-            filiere_dropdown.setError("Filiere is required")
-            return false
-        } else {
-            filiere_dropdown.setError(null)
-        }
-        if (semester_dropdown.text.toString().isEmpty()) {
-            semester_dropdown.setError("Semester is required")
-            return false
-        } else {
-            semester_dropdown.setError(null)
-        }
-        if (email_et.text.toString().isEmpty()) {
-            email_et.setError("Email is required")
-            return false
-        } else {
-            email_et.setError(null)
-        }
-        if (password_et.text.toString().isEmpty()) {
-            password_et.setError("Password is required")
-            return false
-        } else {
-            password_et.setError(null)
-        }
-        if (confirm_password_et.text.toString().isEmpty()) {
-            confirm_password_et.setError("Confirm password is required")
-            return false
-        } else {
-            confirm_password_et.setError(null)
-        }
-        if (password_et.text.toString() != confirm_password_et.text.toString()) {
-            confirm_password_et.setError("Passwords do not match")
-            return false
-        } else {
-            confirm_password_et.setError(null)
-        }
-
-        return true
     }
 
     private fun initDropDowns() {
