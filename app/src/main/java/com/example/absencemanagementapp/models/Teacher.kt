@@ -1,6 +1,3 @@
 package com.example.absencemanagementapp.models
 
-enum class UserRole {
-    Student,
-    Teacher
-}
+class Teacher(var matricule: String) : User() {}
