@@ -17,5 +17,5 @@
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
     <string name="semester">Semester</string>
-    <string name="filiere">Filiere</string>
+    <string name="branch">Branch</string>
 </resources>

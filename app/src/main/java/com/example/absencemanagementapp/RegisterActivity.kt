@@ -8,6 +8,8 @@ import android.widget.TextView
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var login_text_view: TextView
+    private val semsters = arrayOf("1", "2", "3", "4", "5", "6", "7", "8")
+    private val branches = arrayOf("GI", "SV", "LAE", "ECO")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
