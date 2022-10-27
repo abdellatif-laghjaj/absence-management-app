@@ -81,7 +81,7 @@
                 app:startIconDrawable="@drawable/ic_student">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/las_name_et"
+                    android:id="@+id/last_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/last_name"
@@ -166,7 +166,7 @@
                 app:startIconDrawable="@drawable/ic_filiere">
 
                 <AutoCompleteTextView
-                    android:id="@+id/filiere_et"
+                    android:id="@+id/filiere_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/branch"
@@ -189,7 +189,7 @@
                 app:startIconDrawable="@drawable/ic_semester">
 
                 <AutoCompleteTextView
-                    android:id="@+id/semester_et"
+                    android:id="@+id/semester_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/semester"
