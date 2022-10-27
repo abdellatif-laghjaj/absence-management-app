@@ -8,6 +8,6 @@ data class User(
     val cne: String,
     val filiere: String,
     val semester: String,
-    val email: String,
+    val email: UserRole,
     val password: String
 )
