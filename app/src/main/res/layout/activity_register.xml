@@ -265,7 +265,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
-            android:id="@+id/user_role_radio_group"
+            android:id="@+id/user_role_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
@@ -274,7 +274,7 @@
             android:weightSum="2">
 
             <RadioButton
-                android:id="@+id/student_radio_btn"
+                android:id="@+id/student_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
@@ -289,7 +289,7 @@
                 android:textStyle="bold" />
 
             <RadioButton
-                android:id="@+id/teacher_radio_btn"
+                android:id="@+id/teacher_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"

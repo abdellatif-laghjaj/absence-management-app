@@ -18,6 +18,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var email_et: TextInputEditText
     private lateinit var password_et: TextInputEditText
     private lateinit var confirm_password_et: TextInputEditText
+    private lateinit var user_role_rg: RadioGroup
+    private lateinit var student_rb: RadioButton
+    private lateinit var teacher_rb: RadioButton
     private lateinit var register_btn: Button
 
     private val semsters = arrayOf("1", "2", "3", "4", "5", "6")
@@ -36,13 +39,13 @@ class RegisterActivity : AppCompatActivity() {
         initViews()
         initDropDowns()
 
-        filiere_dropdown.setOnItemClickListener { adapterView, view, i, l ->
+        filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
             Toast.makeText(
                 this, "Selected branch: ${adapterView.getItemAtPosition(i)}", Toast.LENGTH_SHORT
             ).show()
         }
 
-        semester_dropdown.setOnItemClickListener { adapterView, view, i, l ->
+        semester_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
             Toast.makeText(
                 this, "Selected semester: ${adapterView.getItemAtPosition(i)}", Toast.LENGTH_SHORT
             ).show()
@@ -148,6 +151,7 @@ class RegisterActivity : AppCompatActivity() {
         email_et = findViewById(R.id.email_et)
         password_et = findViewById(R.id.password_et)
         confirm_password_et = findViewById(R.id.confirm_password_et)
+        user_role_rg = findViewById(R.id.user_role_rg)
         register_btn = findViewById(R.id.register_btn)
     }
 
