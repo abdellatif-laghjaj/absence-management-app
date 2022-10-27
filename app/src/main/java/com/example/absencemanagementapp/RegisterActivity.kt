@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 
 class RegisterActivity : AppCompatActivity() {
@@ -20,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var password_et: TextInputEditText
     private lateinit var confirm_password_et: TextInputEditText
 
-    private val semsters = arrayOf("1", "2", "3", "4", "5", "6", "7", "8")
+    private val semsters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +34,25 @@ class RegisterActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        //init views
+        //init views and adapters for dropdowns
         initViews()
+        initDropDowns()
+
+        filiere_dropdown.setOnItemClickListener { adapterView, view, i, l ->
+            Toast.makeText(
+                this,
+                "Selected branch: ${adapterView.getItemAtPosition(i)}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        semester_dropdown.setOnItemClickListener { adapterView, view, i, l ->
+            Toast.makeText(
+                this,
+                "Selected semester: ${adapterView.getItemAtPosition(i)}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
         login_tv.setOnClickListener {
             Intent(this, LoginActivity::class.java).also {
@@ -54,5 +73,12 @@ class RegisterActivity : AppCompatActivity() {
         email_et = findViewById(R.id.email_et)
         password_et = findViewById(R.id.password_et)
         confirm_password_et = findViewById(R.id.confirm_password_et)
+    }
+
+    fun initDropDowns() {
+        val adapter = ArrayAdapter(this, R.layout.dropdown_item, branches)
+        filiere_dropdown.setAdapter(adapter)
+        val adapter2 = ArrayAdapter(this, R.layout.dropdown_item, semsters)
+        semester_dropdown.setAdapter(adapter2)
     }
 }
