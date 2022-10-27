@@ -34,7 +34,7 @@ class RegisterActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        //init views and adapters for dropdowns
+        //initiate views and adapters for dropdowns
         initViews()
         initDropDowns()
 
