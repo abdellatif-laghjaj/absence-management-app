@@ -9,19 +9,19 @@ class Student() : User() {
         first_name: String,
         last_name: String,
         cin: String,
-        email: String,
-        password: String,
         cne: String,
         filiere: String,
-        semester: String
+        semester: String,
+        email: String,
+        password: String
     ) : this() {
         this.first_name = first_name
         this.last_name = last_name
         this.cin = cin
-        this.email = email
-        this.password = password
         this.cne = cne
         this.filiere = filiere
         this.semester = semester
+        this.email = email
+        this.password = password
     }
 }
