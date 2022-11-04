@@ -5,8 +5,6 @@ open class User {
     var first_name: String = ""
     var last_name: String = ""
     var cin: String = ""
-    var filiere: String = ""
-    var semester: String = ""
     var email: String = ""
     var password: String = ""
 
@@ -16,8 +14,6 @@ open class User {
         first_name: String,
         last_name: String,
         cin: String,
-        filiere: String,
-        semester: String,
         email: String,
         password: String
     ) {
@@ -25,8 +21,6 @@ open class User {
         this.first_name = first_name
         this.last_name = last_name
         this.cin = cin
-        this.filiere = filiere
-        this.semester = semester
         this.email = email
         this.password = password
     }
