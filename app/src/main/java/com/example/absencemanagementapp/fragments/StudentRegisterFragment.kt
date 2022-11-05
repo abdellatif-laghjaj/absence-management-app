@@ -3,6 +3,7 @@ package com.example.absencemanagementapp.fragments
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -168,8 +169,16 @@ class StudentRegisterFragment : Fragment() {
                 email_et.error = "Email is required"
                 false
             }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                email_et.error = "Email is not valid"
+                false
+            }
             password.isEmpty() -> {
                 password_et.error = "Password is required"
+                false
+            }
+            password.length < 6 -> {
+                password_et.error = "Password must be at least 6 characters"
                 false
             }
             confirm_password.isEmpty() -> {
