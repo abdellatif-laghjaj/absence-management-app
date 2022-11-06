@@ -60,10 +60,22 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 val user = auth.currentUser
-                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                Intent(this, MainActivity::class.java).also {
-                    startActivity(it)
-                    finish()
+                //check if logged in user is a student or a teacher
+                database.getReference("students").child(user!!.uid).get().addOnSuccessListener {
+                    if (it.exists()) {
+                        //user is a student
+                        val student = it.getValue(Student::class.java)
+                        Intent(this, StudentActivity::class.java).also {
+                            startActivity(it)
+                            finish()
+                        }
+                    } else {
+                        //user is a teacher
+                        Intent(this, TeacherActivity::class.java).also {
+                            startActivity(it)
+                            finish()
+                        }
+                    }
                 }
             } else {
                 // If sign in fails, display a message to the user
