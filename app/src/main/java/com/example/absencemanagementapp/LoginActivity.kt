@@ -54,29 +54,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //on start
-    override fun onStart() {
-        super.onStart()
-        if (auth.currentUser != null) {
-            val user_id = auth.currentUser!!.uid
-
-            //check if user is student or teacher
-            database.getReference("students").child(user_id).get().addOnSuccessListener {
-                if (it.exists()) {
-                    Intent(this, StudentActivity::class.java).also {
-                        startActivity(it)
-                        finish()
-                    }
-                } else {
-                    Intent(this, TeacherActivity::class.java).also {
-                        startActivity(it)
-                        finish()
-                    }
-                }
-            }
-        }
-    }
-
     private fun login(email: String, password: String) {
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()

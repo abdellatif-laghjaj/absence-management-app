@@ -30,4 +30,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="user_image">user image</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="card_image">card image</string>
+    <string name="my_stats">My Stats</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>
