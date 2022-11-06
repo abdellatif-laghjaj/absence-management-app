@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_alignParentTop="true"
-        android:background="?android:colorPrimary">
+        android:background="?android:colorPrimary"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/user_name_tv"
@@ -21,14 +22,14 @@
             android:layout_marginStart="16dp"
             android:text="Welcome User"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
 
         <androidx.cardview.widget.CardView
             android:id="@+id/user_image_cv"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
@@ -44,6 +45,7 @@
                 android:layout_height="80dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:contentDescription="@string/user_image"
                 android:src="@drawable/ic_launcher_background" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

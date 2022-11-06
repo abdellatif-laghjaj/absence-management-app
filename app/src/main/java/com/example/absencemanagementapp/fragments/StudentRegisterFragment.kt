@@ -111,21 +111,6 @@ class StudentRegisterFragment : Fragment() {
             }
         }
 
-//        var student = Student(
-//            first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
-//            last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
-//            cin_et.text.toString().trim().uppercase(Locale.getDefault()),
-//            cne_et.text.toString().trim().uppercase(Locale.getDefault()),
-//            filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
-//            semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
-//            email_et.text.toString(),
-//            password_et.text.toString()
-//        )
-//        database = FirebaseDatabase.getInstance()
-//        val ref = database.getReference("students")
-//        ref.child(student.cin).setValue(student)
-//        Toast.makeText(context, "Student registered successfully", Toast.LENGTH_SHORT).show()
-
         //redirect to login
         redirectToLogin()
     }
