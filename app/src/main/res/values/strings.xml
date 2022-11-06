@@ -32,4 +32,7 @@
     <string name="user_image">user image</string>
     <string name="dashboard">Dashboard</string>
     <string name="card_image">card image</string>
+    <string name="my_stats">My Stats</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="reset_password">Reset Password</string>
 </resources>
