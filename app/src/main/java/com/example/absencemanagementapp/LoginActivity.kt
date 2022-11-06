@@ -12,6 +12,7 @@ import com.example.absencemanagementapp.models.Student
 import com.example.absencemanagementapp.models.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var register_tv: TextView
@@ -26,8 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
         //full screen
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
+            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
         //initiate views
@@ -41,8 +41,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login_btn.setOnClickListener {
-            val cin = cin_et.text.toString()
-            val password = password_et.text.toString()
+            val cin = cin_et.text.toString().trim().uppercase(Locale.getDefault())
+            val password = password_et.text.toString().trim()
 
             if (validateInputs()) {
                 login(cin, password)

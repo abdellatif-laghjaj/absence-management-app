@@ -60,9 +60,9 @@ class TeacherRegisterFragment : Fragment() {
     private fun registerTeacher() {
         //register the teacher to firebase
         var teacher = Teacher(
-            first_name_et.text.toString().uppercase(Locale.getDefault()),
-            last_name_et.text.toString().uppercase(Locale.getDefault()),
-            cin_et.text.toString().uppercase(Locale.getDefault()),
+            first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+            last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+            cin_et.text.toString().trim().uppercase(Locale.getDefault()),
             email_et.text.toString(),
             password_et.text.toString()
         )
