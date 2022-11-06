@@ -59,36 +59,22 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         if (auth.currentUser != null) {
             val user_id = auth.currentUser!!.uid
-            if (isStudent(user_id)) {
-                Intent(this, StudentActivity::class.java).also {
-                    startActivity(it)
-                    finish()
-                }
-            } else {
-                Intent(this, TeacherActivity::class.java).also {
-                    startActivity(it)
-                    finish()
+
+            //check if user is student or teacher
+            database.getReference("students").child(user_id).get().addOnSuccessListener {
+                if (it.exists()) {
+                    Intent(this, StudentActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
+                } else {
+                    Intent(this, TeacherActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
                 }
             }
-        } else {
-            Log.d("TAG", "onStart: user is null")
         }
-    }
-
-    //check if user is a teacher or a student
-    private fun isStudent(user_id: String): Boolean {
-        var isStudent = false
-        val ref = database.getReference("students")
-
-        ref.child(user_id).get().addOnSuccessListener {
-            if (it.exists()) {
-                isStudent = true
-            }
-        }.addOnFailureListener {
-            Log.d("TAG", "isStudent: ${it.message}")
-            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-        }
-        return isStudent
     }
 
     private fun login(email: String, password: String) {
