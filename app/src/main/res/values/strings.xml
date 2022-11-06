@@ -35,4 +35,6 @@
     <string name="my_stats">My Stats</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="reset_password">Reset Password</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>
