@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.example.absencemanagementapp.LoginActivity
 import com.example.absencemanagementapp.R
@@ -54,13 +53,51 @@ class TeacherRegisterFragment : Fragment() {
         register_btn.setOnClickListener {
             if (validateInputs()) {
                 //register the teacher
-                registerTeacher()
+                val email = email_et.text.toString().trim()
+                val password = password_et.text.toString().trim()
+                registerTeacher(email, password)
             }
         }
     }
 
-    private fun registerTeacher() {
+    private fun registerTeacher(email: String, password: String) {
         //register the teacher to firebase
+        auth = FirebaseAuth.getInstance()
+
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                //register teacher to database
+                val teacher = Teacher(
+                    first_name_et.text.toString().trim(),
+                    last_name_et.text.toString().trim(),
+                    cin_et.text.toString().trim(),
+                    email_et.text.toString().trim()
+                )
+                database = FirebaseDatabase.getInstance()
+                val ref = database.getReference("teachers")
+                val id = FirebaseAuth.getInstance().currentUser!!.uid
+                ref.child(id).setValue(teacher).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Teacher registered successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        redirectToLogin()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
         var teacher = Teacher(
             first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
             last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
@@ -78,8 +115,10 @@ class TeacherRegisterFragment : Fragment() {
     }
 
     private fun redirectToLogin() {
-        val intent = Intent(context, LoginActivity::class.java)
-        startActivity(intent)
+        Intent(requireContext(), LoginActivity::class.java).also {
+            startActivity(it)
+            requireActivity().finish()
+        }
     }
 
     private fun initViews() {

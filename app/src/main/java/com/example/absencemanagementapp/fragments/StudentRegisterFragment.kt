@@ -62,8 +62,8 @@ class StudentRegisterFragment : Fragment() {
         //regsitration logic
         register_btn.setOnClickListener {
             if (validateInputs()) {
-                val email = email_et.text.toString()
-                val password = password_et.text.toString()
+                val email = email_et.text.toString().trim()
+                val password = password_et.text.toString().trim()
                 //register student
                 registerStudent(email, password)
             }
@@ -74,33 +74,42 @@ class StudentRegisterFragment : Fragment() {
         //register student in firebase
         auth = FirebaseAuth.getInstance()
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    //register student in database
-                    val student = Student(
-                        first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
-                        last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
-                        cin_et.text.toString().trim().uppercase(Locale.getDefault()),
-                        cne_et.text.toString().trim().uppercase(Locale.getDefault()),
-                        filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
-                        semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
-                        email_et.text.toString()
-                    )
-                    database = FirebaseDatabase.getInstance()
-                    val ref = database.getReference("students")
-                    val id = FirebaseAuth.getInstance().currentUser!!.uid
-                    ref.child(id).setValue(student)
-                    Toast.makeText(context, "Student registered successfully", Toast.LENGTH_SHORT)
-                        .show()
-                    //redirect to login activity
-                    val intent = Intent(context, LoginActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
-                        .show()
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                //register student in database
+                val student = Student(
+                    first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    cin_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    cne_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+                    semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+                    email_et.text.toString()
+                )
+                database = FirebaseDatabase.getInstance()
+                val ref = database.getReference("students")
+                val id = FirebaseAuth.getInstance().currentUser!!.uid
+                ref.child(id).setValue(student).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Student registered successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        redirectToLogin()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
+            } else {
+                Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
+        }
 
 //        var student = Student(
 //            first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
@@ -205,7 +214,9 @@ class StudentRegisterFragment : Fragment() {
     }
 
     private fun redirectToLogin() {
-        val intent = Intent(context, LoginActivity::class.java)
-        startActivity(intent)
+        Intent(requireContext(), LoginActivity::class.java).also {
+            startActivity(it)
+            requireActivity().finish()
+        }
     }
 }
