@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AbsenceManagementApp</string>
     <string name="register">Register</string>
+    <string name="welcome_user">Welcome back, %s</string>
     <string name="welcome_to_absenti_fy">welcome to absenti.fy</string>
     <string name="full_name">Full name</string>
     <string name="email">Email</string>
