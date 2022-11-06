@@ -1,6 +1,5 @@
 package com.example.absencemanagementapp.fragments
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -13,9 +12,8 @@ import com.example.absencemanagementapp.LoginActivity
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class StudentRegisterFragment : Fragment() {
@@ -34,6 +32,7 @@ class StudentRegisterFragment : Fragment() {
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,28 +62,60 @@ class StudentRegisterFragment : Fragment() {
         //regsitration logic
         register_btn.setOnClickListener {
             if (validateInputs()) {
+                val email = email_et.text.toString()
+                val password = password_et.text.toString()
                 //register student
-                registerStudent()
+                registerStudent(email, password)
             }
         }
     }
 
-    private fun registerStudent() {
+    private fun registerStudent(email: String, password: String) {
         //register student in firebase
-        var student = Student(
-            first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
-            last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
-            cin_et.text.toString().trim().uppercase(Locale.getDefault()),
-            cne_et.text.toString().trim().uppercase(Locale.getDefault()),
-            filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
-            semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
-            email_et.text.toString(),
-            password_et.text.toString()
-        )
-        database = FirebaseDatabase.getInstance()
-        val ref = database.getReference("students")
-        ref.child(student.cin).setValue(student)
-        Toast.makeText(context, "Student registered successfully", Toast.LENGTH_SHORT).show()
+        auth = FirebaseAuth.getInstance()
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    //register student in database
+                    val student = Student(
+                        first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+                        last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+                        cin_et.text.toString().trim().uppercase(Locale.getDefault()),
+                        cne_et.text.toString().trim().uppercase(Locale.getDefault()),
+                        filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+                        semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+                        email_et.text.toString()
+                    )
+                    database = FirebaseDatabase.getInstance()
+                    val ref = database.getReference("students")
+                    val id = FirebaseAuth.getInstance().currentUser!!.uid
+                    ref.child(id).setValue(student)
+                    Toast.makeText(context, "Student registered successfully", Toast.LENGTH_SHORT)
+                        .show()
+                    //redirect to login activity
+                    val intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+//        var student = Student(
+//            first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+//            last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+//            cin_et.text.toString().trim().uppercase(Locale.getDefault()),
+//            cne_et.text.toString().trim().uppercase(Locale.getDefault()),
+//            filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+//            semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+//            email_et.text.toString(),
+//            password_et.text.toString()
+//        )
+//        database = FirebaseDatabase.getInstance()
+//        val ref = database.getReference("students")
+//        ref.child(student.cin).setValue(student)
+//        Toast.makeText(context, "Student registered successfully", Toast.LENGTH_SHORT).show()
 
         //redirect to login
         redirectToLogin()

@@ -16,6 +16,7 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
@@ -32,6 +33,7 @@ class TeacherRegisterFragment : Fragment() {
     private lateinit var register_btn: Button
 
     private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
