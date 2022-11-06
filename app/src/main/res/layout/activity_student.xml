@@ -39,8 +39,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/user_image_cv"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
@@ -139,7 +139,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
-                android:layout_height="142dp"
+                android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_rowWeight="1"
                 android:layout_column="0"
@@ -154,17 +154,18 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="8dp"
-                        android:src="@drawable/ic_email" />
+                        android:src="@drawable/scan_qr_code" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,7 +179,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
-                android:layout_height="142dp"
+                android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_rowWeight="1"
                 android:layout_column="1"
@@ -193,17 +194,18 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="8dp"
-                        android:src="@drawable/ic_email" />
+                        android:src="@drawable/reset_password" />
 
                     <TextView
                         android:layout_width="wrap_content"
