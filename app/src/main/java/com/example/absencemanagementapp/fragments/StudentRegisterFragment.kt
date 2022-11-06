@@ -83,7 +83,7 @@ class StudentRegisterFragment : Fragment() {
         )
         database = FirebaseDatabase.getInstance()
         val ref = database.getReference("students")
-        ref.child(student.cne).setValue(student)
+        ref.child(student.cin).setValue(student)
         Toast.makeText(context, "Student registered successfully", Toast.LENGTH_SHORT).show()
 
         //redirect to login
