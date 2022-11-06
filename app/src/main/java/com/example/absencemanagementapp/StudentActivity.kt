@@ -27,7 +27,7 @@ class StudentActivity : AppCompatActivity() {
         database.getReference("students").child(user_id).get().addOnSuccessListener {
             if (it.exists()) {
                 val student = it.getValue(Student::class.java)
-                user_name_tv.text = getString(R.string.welcome_user, student!!.first_name)
+                user_name_tv.text = student!!.first_name
             }
         }
     }
