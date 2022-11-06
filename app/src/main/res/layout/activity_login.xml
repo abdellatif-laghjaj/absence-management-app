@@ -61,11 +61,11 @@
             app:startIconDrawable="@drawable/ic_verify">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_et"
+                android:id="@+id/cin_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
+                android:hint="@string/cin"
+                android:inputType="text"
                 android:paddingVertical="20dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>

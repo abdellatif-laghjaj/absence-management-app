@@ -17,6 +17,7 @@ import com.example.absencemanagementapp.models.Student
 import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class TeacherRegisterFragment : Fragment() {
     private lateinit var first_name_et: TextInputEditText
@@ -59,9 +60,9 @@ class TeacherRegisterFragment : Fragment() {
     private fun registerTeacher() {
         //register the teacher to firebase
         var teacher = Teacher(
-            first_name_et.text.toString(),
-            last_name_et.text.toString(),
-            cin_et.text.toString(),
+            first_name_et.text.toString().uppercase(Locale.getDefault()),
+            last_name_et.text.toString().uppercase(Locale.getDefault()),
+            cin_et.text.toString().uppercase(Locale.getDefault()),
             email_et.text.toString(),
             password_et.text.toString()
         )

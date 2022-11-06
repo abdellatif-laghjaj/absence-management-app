@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class StudentRegisterFragment : Fragment() {
     private lateinit var first_name_et: TextInputEditText
@@ -61,28 +62,7 @@ class StudentRegisterFragment : Fragment() {
 
         //regsitration logic
         register_btn.setOnClickListener {
-            val first_name = first_name_et.text.toString()
-            val last_name = last_name_et.text.toString()
-            val cin = cin_et.text.toString()
-            val cne = cne_et.text.toString()
-            val filiere = filiere_dropdown.text.toString()
-            val semester = semester_dropdown.text.toString()
-            val email = email_et.text.toString()
-            val password = password_et.text.toString()
-            val confirm_password = confirm_password_et.text.toString()
             if (validateInputs()) {
-                //register the student
-                //dialog
-                val dialog = AlertDialog.Builder(context)
-                dialog.setTitle("Register")
-                dialog.setMessage(
-                    "Your information are: \n" + "First name: $first_name \n" + "Last name: $last_name \n" + "CIN: $cin \n" + "CNE: $cne \n" + "Filiere: $filiere \n" + "Semester: $semester \n" + "Email: $email \n" + "Password: $password \n" + "Confirm password: $confirm_password \n"
-                )
-                dialog.setPositiveButton("OK") { _, _ ->
-                    //do nothing
-                }
-                dialog.show()
-
                 //register student
                 registerStudent()
             }
@@ -92,12 +72,12 @@ class StudentRegisterFragment : Fragment() {
     private fun registerStudent() {
         //register student in firebase
         var student = Student(
-            first_name_et.text.toString(),
-            last_name_et.text.toString(),
-            cin_et.text.toString(),
-            cne_et.text.toString(),
-            filiere_dropdown.text.toString(),
-            semester_dropdown.text.toString(),
+            first_name_et.text.toString().uppercase(Locale.getDefault()),
+            last_name_et.text.toString().uppercase(Locale.getDefault()),
+            cin_et.text.toString().uppercase(Locale.getDefault()),
+            cne_et.text.toString().uppercase(Locale.getDefault()),
+            filiere_dropdown.text.toString().uppercase(Locale.getDefault()),
+            semester_dropdown.text.toString().uppercase(Locale.getDefault()),
             email_et.text.toString(),
             password_et.text.toString()
         )
