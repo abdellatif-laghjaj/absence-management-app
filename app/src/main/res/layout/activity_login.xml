@@ -58,14 +58,14 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:startIconDrawable="@drawable/ic_verify">
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/cin_et"
+                android:id="@+id/email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/cin"
-                android:inputType="text"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:paddingVertical="20dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>

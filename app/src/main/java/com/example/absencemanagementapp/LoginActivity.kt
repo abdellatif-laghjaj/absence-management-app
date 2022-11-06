@@ -9,18 +9,19 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.absencemanagementapp.models.Student
-import com.example.absencemanagementapp.models.User
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var register_tv: TextView
-    private lateinit var cin_et: TextInputEditText
+    private lateinit var email_et: TextInputEditText
     private lateinit var password_et: TextInputEditText
     private lateinit var login_btn: Button
 
     private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -41,55 +42,51 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login_btn.setOnClickListener {
-            val cin = cin_et.text.toString().trim().uppercase(Locale.getDefault())
+            val email = email_et.text.toString().trim().uppercase(Locale.getDefault())
             val password = password_et.text.toString().trim()
 
             if (validateInputs()) {
-                login(cin, password)
+                login(email, password)
             }
         }
     }
 
-    private fun login(cin: String, password: String) {
+    private fun login(email: String, password: String) {
         database = FirebaseDatabase.getInstance()
-        val ref = database.getReference("students")
+        auth = FirebaseAuth.getInstance()
 
-        // get student by cin
-        ref.child(cin).get().addOnSuccessListener {
-            if (it.exists()) {
-                val user = it.getValue(Student::class.java)
-                Log.d("TAG", "login: $user")
-                if (user != null) {
-                    if (user.password == password) {
-                        Intent(this, MainActivity::class.java).also {
-                            startActivity(it)
-                            finish()
-                        }
-                    } else {
-                        Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show()
-                    }
+        //log in the user
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                // Sign in success, update UI with the signed-in user's information
+                val user = auth.currentUser
+                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                Intent(this, MainActivity::class.java).also {
+                    startActivity(it)
+                    finish()
                 }
             } else {
-                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                // If sign in fails, display a message to the user
+                Toast.makeText(
+                    baseContext, "Authentication failed. Please try again.", Toast.LENGTH_SHORT
+                ).show()
             }
-        }.addOnFailureListener {
-            Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun initViews() {
         register_tv = findViewById(R.id.register_tv)
-        cin_et = findViewById(R.id.cin_et)
+        email_et = findViewById(R.id.email_et)
         password_et = findViewById(R.id.password_et)
         login_btn = findViewById(R.id.login_btn)
     }
 
     private fun validateInputs(): Boolean {
-        val email = cin_et.text.toString()
+        val email = email_et.text.toString()
         val password = password_et.text.toString()
         return when {
             email.isEmpty() -> {
-                cin_et.error = "Email is required"
+                email_et.error = "Email is required"
                 false
             }
             password.isEmpty() -> {
