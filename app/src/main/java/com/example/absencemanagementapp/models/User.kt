@@ -22,4 +22,9 @@ open class User {
         this.password = password
     }
 
+    override fun toString(): String {
+        return "User(first_name='$first_name', last_name='$last_name', cin='$cin', email='$email', password='$password')"
+    }
+
+
 }
