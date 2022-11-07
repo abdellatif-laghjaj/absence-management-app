@@ -1,13 +1,20 @@
 package com.example.absencemanagementapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.absencemanagementapp.LoginActivity
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class StudentRegisterFragment : Fragment() {
     private lateinit var first_name_et: TextInputEditText
@@ -23,6 +30,9 @@ class StudentRegisterFragment : Fragment() {
 
     private val semsters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,25 +51,68 @@ class StudentRegisterFragment : Fragment() {
         //put the code here
         initViews()
         initDropDowns()
-        register_btn.setOnClickListener {
-            val first_name = first_name_et.text.toString()
-            Toast.makeText(context, first_name, Toast.LENGTH_SHORT).show()
-        }
         filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
-            Toast.makeText(
-                context,
-                "Selected branch is ${adapterView.getItemAtPosition(i)}",
-                Toast.LENGTH_SHORT
-            ).show()
+            //adapterView.getItemAtPosition(i)
         }
 
         semester_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
-            Toast.makeText(
-                context,
-                "Selected semester is ${adapterView.getItemAtPosition(i)}",
-                Toast.LENGTH_SHORT
-            ).show()
+            //adapterView.getItemAtPosition(i)
         }
+
+        //regsitration logic
+        register_btn.setOnClickListener {
+            if (validateInputs()) {
+                val email = email_et.text.toString().trim()
+                val password = password_et.text.toString().trim()
+                //register student
+                registerStudent(email, password)
+            }
+        }
+    }
+
+    private fun registerStudent(email: String, password: String) {
+        //register student in firebase
+        auth = FirebaseAuth.getInstance()
+
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                //register student in database
+                val student = Student(
+                    first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    cin_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    cne_et.text.toString().trim().uppercase(Locale.getDefault()),
+                    filiere_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+                    semester_dropdown.text.toString().trim().uppercase(Locale.getDefault()),
+                    email_et.text.toString()
+                )
+                database = FirebaseDatabase.getInstance()
+                val ref = database.getReference("students")
+                val id = FirebaseAuth.getInstance().currentUser!!.uid
+                ref.child(id).setValue(student).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Student registered successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        redirectToLogin()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        //redirect to login
+        redirectToLogin()
     }
 
     private fun initViews() {
@@ -80,5 +133,75 @@ class StudentRegisterFragment : Fragment() {
         filiere_dropdown.setAdapter(filiere_adapter)
         val semester_adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, semsters)
         semester_dropdown.setAdapter(semester_adapter)
+    }
+
+    private fun validateInputs(): Boolean {
+        val first_name = first_name_et.text.toString()
+        val last_name = last_name_et.text.toString()
+        val cin = cin_et.text.toString()
+        val cne = cne_et.text.toString()
+        val filiere = filiere_dropdown.text.toString()
+        val semester = semester_dropdown.text.toString()
+        val email = email_et.text.toString()
+        val password = password_et.text.toString()
+        val confirm_password = confirm_password_et.text.toString()
+        return when {
+            first_name.isEmpty() -> {
+                first_name_et.error = "First name is required"
+                false
+            }
+            last_name.isEmpty() -> {
+                last_name_et.error = "Last name is required"
+                false
+            }
+            cin.isEmpty() -> {
+                cin_et.error = "CIN is required"
+                false
+            }
+            cne.isEmpty() -> {
+                cne_et.error = "CNE is required"
+                false
+            }
+            filiere.isEmpty() -> {
+                filiere_dropdown.error = "Filiere is required"
+                false
+            }
+            semester.isEmpty() -> {
+                semester_dropdown.error = "Semester is required"
+                false
+            }
+            email.isEmpty() -> {
+                email_et.error = "Email is required"
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                email_et.error = "Email is not valid"
+                false
+            }
+            password.isEmpty() -> {
+                password_et.error = "Password is required"
+                false
+            }
+            password.length < 6 -> {
+                password_et.error = "Password must be at least 6 characters"
+                false
+            }
+            confirm_password.isEmpty() -> {
+                confirm_password_et.error = "Confirm password is required"
+                false
+            }
+            password != confirm_password -> {
+                confirm_password_et.error = "Passwords don't match"
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun redirectToLogin() {
+        Intent(requireContext(), LoginActivity::class.java).also {
+            startActivity(it)
+            requireActivity().finish()
+        }
     }
 }

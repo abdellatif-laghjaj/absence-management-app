@@ -2,17 +2,22 @@ package com.example.absencemanagementapp.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.example.absencemanagementapp.LoginActivity
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.models.Student
+import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class TeacherRegisterFragment : Fragment() {
     private lateinit var first_name_et: TextInputEditText
@@ -26,13 +31,15 @@ class TeacherRegisterFragment : Fragment() {
     private lateinit var confirm_password_et: TextInputEditText
     private lateinit var register_btn: Button
 
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_teacher_register, container, false)
@@ -44,18 +51,133 @@ class TeacherRegisterFragment : Fragment() {
         //put the code here
         initViews()
         register_btn.setOnClickListener {
-            val first_name = first_name_et.text.toString()
-            Toast.makeText(context, first_name, Toast.LENGTH_LONG).show()
+            if (validateInputs()) {
+                //register the teacher
+                val email = email_et.text.toString().trim()
+                val password = password_et.text.toString().trim()
+                registerTeacher(email, password)
+            }
+        }
+    }
+
+    private fun registerTeacher(email: String, password: String) {
+        //register the teacher to firebase
+        auth = FirebaseAuth.getInstance()
+
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                //register teacher to database
+                val teacher = Teacher(
+                    first_name_et.text.toString().trim(),
+                    last_name_et.text.toString().trim(),
+                    cin_et.text.toString().trim(),
+                    email_et.text.toString().trim()
+                )
+                database = FirebaseDatabase.getInstance()
+                val ref = database.getReference("teachers")
+                val id = FirebaseAuth.getInstance().currentUser!!.uid
+                ref.child(id).setValue(teacher).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Teacher registered successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        redirectToLogin()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        var teacher = Teacher(
+            first_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+            last_name_et.text.toString().trim().uppercase(Locale.getDefault()),
+            cin_et.text.toString().trim().uppercase(Locale.getDefault()),
+            email_et.text.toString(),
+            password_et.text.toString()
+        )
+        database = FirebaseDatabase.getInstance()
+        val ref = database.getReference("teachers")
+        ref.child(teacher.cin).setValue(teacher)
+        Toast.makeText(context, "Teacher registered successfully", Toast.LENGTH_SHORT).show()
+
+        //redirect to login
+        redirectToLogin()
+    }
+
+    private fun redirectToLogin() {
+        Intent(requireContext(), LoginActivity::class.java).also {
+            startActivity(it)
+            requireActivity().finish()
         }
     }
 
     private fun initViews() {
         first_name_et = view?.findViewById(R.id.first_name_et)!!
         last_name_et = view?.findViewById(R.id.last_name_et)!!
+        cin_et = view?.findViewById(R.id.cin_et)!!
         email_et = view?.findViewById(R.id.email_et)!!
         password_et = view?.findViewById(R.id.password_et)!!
         confirm_password_et = view?.findViewById(R.id.confirm_password_et)!!
         register_btn = view?.findViewById(R.id.register_btn)!!
+    }
+
+    private fun validateInputs(): Boolean {
+        val first_name = first_name_et.text.toString()
+        val last_name = last_name_et.text.toString()
+        val cin = cin_et.text.toString()
+        val email = email_et.text.toString()
+        val password = password_et.text.toString()
+        val confirm_password = confirm_password_et.text.toString()
+
+        return when {
+            first_name.isEmpty() -> {
+                first_name_et.error = "First name is required"
+                false
+            }
+            last_name.isEmpty() -> {
+                last_name_et.error = "Last name is required"
+                false
+            }
+            cin.isEmpty() -> {
+                cin_et.error = "CIN is required"
+                false
+            }
+            email.isEmpty() -> {
+                email_et.error = "Email is required"
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                email_et.error = "Email is not valid"
+                false
+            }
+            password.isEmpty() -> {
+                password_et.error = "Password is required"
+                false
+            }
+            password.length < 6 -> {
+                password_et.error = "Password must be at least 6 characters"
+                false
+            }
+            confirm_password.isEmpty() -> {
+                confirm_password_et.error = "Confirm password is required"
+                false
+            }
+            password != confirm_password -> {
+                confirm_password_et.error = "Passwords don't match"
+                false
+            }
+            else -> true
+        }
     }
 
     private fun switchToLogin() {
