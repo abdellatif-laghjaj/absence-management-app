@@ -92,13 +92,15 @@ class StudentRegisterFragment : Fragment() {
                 val id = FirebaseAuth.getInstance().currentUser!!.uid
                 ref.child(id).setValue(student).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        FancyToast.makeText(
-                            requireContext(),
-                            "You have been registered successfully",
-                            FancyToast.LENGTH_LONG,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
+                        this.context?.let {
+                            FancyToast.makeText(
+                                it,
+                                "You have been registered successfully",
+                                FancyToast.LENGTH_LONG,
+                                FancyToast.SUCCESS,
+                                false
+                            ).show()
+                        }
                         redirectToLogin()
                     } else {
                         FancyToast.makeText(

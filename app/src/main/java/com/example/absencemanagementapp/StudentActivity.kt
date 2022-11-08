@@ -50,7 +50,7 @@ class StudentActivity : AppCompatActivity() {
 
     //logout
     private fun logout() {
-        MaterialDialog.Builder(this)
+        val dialog = MaterialDialog.Builder(this)
             .setTitle("Logout")
             .setMessage("Are you sure you want to logout?")
             .setCancelable(false)
@@ -62,7 +62,7 @@ class StudentActivity : AppCompatActivity() {
                 dialogInterface.dismiss()
             }
             .build()
-            .show()
+        dialog.show()
     }
 
     //redirect to login activity

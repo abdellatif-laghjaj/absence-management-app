@@ -40,4 +40,5 @@
 
     <!-- Strings related to teacher dashboard -->
     <string name="generate_qr">Generate QR Code</string>
+    <string name="absence_list">Absence List</string>
 </resources>
