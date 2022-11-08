@@ -223,9 +223,8 @@ class StudentRegisterFragment : Fragment() {
     }
 
     private fun redirectToLogin() {
-        Intent(requireContext(), LoginActivity::class.java).also {
+        Intent(activity!!.applicationContext, LoginActivity::class.java).also {
             startActivity(it)
-            requireActivity().finish()
         }
     }
 }
