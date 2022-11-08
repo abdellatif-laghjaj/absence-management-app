@@ -142,6 +142,7 @@
                 android:columnCount="2"
                 android:rowCount="3">
 
+                <!-- Generate QR Code -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -182,6 +183,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- Scan QR Code -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -210,18 +212,20 @@
                             android:layout_height="84dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/reset_password" />
+                            android:src="@drawable/scan_qr_code" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/reset_password"
+                            android:text="@string/scan_qr_code"
                             android:textAlignment="center"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
+                <!-- Profile -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -262,13 +266,14 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- Show absence list -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="1"
                     android:layout_rowWeight="1"
                     android:layout_column="1"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="2"
                     android:layout_margin="8dp"
                     android:background="@drawable/card_ui"
                     android:elevation="12dp"
@@ -295,7 +300,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/logout"
+                            android:text="Absences"
                             android:textAlignment="center"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -303,6 +308,7 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- Reset password -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -331,19 +337,19 @@
                             android:layout_height="84dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/logout" />
+                            android:src="@drawable/reset_password" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/logout"
+                            android:text="@string/reset_password"
                             android:textAlignment="center"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
 
+                <!-- Logout -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
