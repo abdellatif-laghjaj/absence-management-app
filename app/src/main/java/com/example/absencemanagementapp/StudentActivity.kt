@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.absencemanagementapp.models.Student
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -50,16 +49,7 @@ class StudentActivity : AppCompatActivity() {
 
     //logout
     private fun logout() {
-        //alert
-        SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-            .setTitleText("Are you sure?")
-            .setContentText("You will be logged out!")
-            .setConfirmText("Yes, logout!")
-            .setConfirmClickListener { sDialog ->
-                sDialog.dismissWithAnimation()
-                auth.signOut()
-                redirectToLogin()
-            }
+
     }
 
     //redirect to login activity
