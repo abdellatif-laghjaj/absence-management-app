@@ -18,10 +18,12 @@ class Helper {
                     .setMessage("Please check your internet connection and try again")
                     .setCancelable(false)
                     .setPositiveButton("Ok") { _, _ ->
-
+                        checkInternetConnection(activity, appCompatActivity)
                     }
                     .build()
                     .show()
+            } else {
+                appCompatActivity.recreate()
             }
         }
 
