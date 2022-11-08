@@ -37,4 +37,7 @@
     <string name="reset_password">Reset Password</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+
+    <!-- Strings related to teacher dashboard -->
+    <string name="generate_qr">Generate QR Code</string>
 </resources>
