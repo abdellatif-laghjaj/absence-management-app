@@ -137,38 +137,47 @@ class TeacherRegisterFragment : Fragment() {
         return when {
             first_name.isEmpty() -> {
                 first_name_et.error = "First name is required"
+                first_name_et.requestFocus()
                 false
             }
             last_name.isEmpty() -> {
                 last_name_et.error = "Last name is required"
+                last_name_et.requestFocus()
                 false
             }
             cin.isEmpty() -> {
                 cin_et.error = "CIN is required"
+                cin_et.requestFocus()
                 false
             }
             email.isEmpty() -> {
                 email_et.error = "Email is required"
+                email_et.requestFocus()
                 false
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                 email_et.error = "Email is not valid"
+                email_et.requestFocus()
                 false
             }
             password.isEmpty() -> {
                 password_et.error = "Password is required"
+                password_et.requestFocus()
                 false
             }
             password.length < 6 -> {
                 password_et.error = "Password must be at least 6 characters"
+                password_et.requestFocus()
                 false
             }
             confirm_password.isEmpty() -> {
                 confirm_password_et.error = "Confirm password is required"
+                confirm_password_et.requestFocus()
                 false
             }
             password != confirm_password -> {
                 confirm_password_et.error = "Passwords don't match"
+                confirm_password_et.requestFocus()
                 false
             }
             else -> true
