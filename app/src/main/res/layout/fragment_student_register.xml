@@ -288,4 +288,26 @@
         android:text="@string/register"
         android:textColor="#FFF"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/linear_layout"
+        android:layout_marginBottom="22dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_have_an_account" />
+
+        <TextView
+            android:id="@+id/login_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/login"
+            android:textColor="?android:colorPrimary" />
+    </LinearLayout>
 </LinearLayout>
