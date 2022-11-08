@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView
 import com.example.absencemanagementapp.models.Student
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
     private lateinit var user_name_tv: TextView
@@ -37,7 +38,7 @@ class StudentActivity : AppCompatActivity() {
 
         //dashboard cards handling
         logout_cv.setOnClickListener {
-            auth.signOut()
+            logout()
             //redirect to login activity
         }
     }
@@ -49,7 +50,19 @@ class StudentActivity : AppCompatActivity() {
 
     //logout
     private fun logout() {
-
+        MaterialDialog.Builder(this)
+            .setTitle("Logout")
+            .setMessage("Are you sure you want to logout?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialogInterface, which ->
+                auth.signOut()
+                redirectToLogin()
+            }
+            .setNegativeButton("No") { dialogInterface, which ->
+                dialogInterface.dismiss()
+            }
+            .build()
+            .show()
     }
 
     //redirect to login activity
