@@ -92,7 +92,9 @@ class LoginActivity : AppCompatActivity() {
                     .setTitle("Login Failed")
                     .setMessage("Invalid email or password")
                     .setCancelable(false)
-                    .setPositiveButton("Ok") { _, _ -> }
+                    .setPositiveButton("Ok") { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                    }
                     .build()
                     .show()
             }
@@ -112,10 +114,12 @@ class LoginActivity : AppCompatActivity() {
         return when {
             email.isEmpty() -> {
                 email_et.error = "Email is required"
+                email_et.requestFocus()
                 false
             }
             password.isEmpty() -> {
                 password_et.error = "Password is required"
+                password_et.requestFocus()
                 false
             }
             else -> true

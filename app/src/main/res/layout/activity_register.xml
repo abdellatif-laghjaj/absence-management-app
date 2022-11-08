@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/login"
-            android:textColor="?android:colorPrimary" />
+            android:textColor="?android:colorPrimary"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>
