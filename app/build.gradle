@@ -46,4 +46,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "com.airbnb.android:lottie:3.4.0"
     implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+    implementation 'cn.pedant.sweetalert:library:1.3'
 }
