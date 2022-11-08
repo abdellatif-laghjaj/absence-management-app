@@ -14,6 +14,7 @@ import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.shashank.sony.fancytoastlib.FancyToast
 import java.util.*
 
 class StudentRegisterFragment : Fragment() {
@@ -91,23 +92,32 @@ class StudentRegisterFragment : Fragment() {
                 val id = FirebaseAuth.getInstance().currentUser!!.uid
                 ref.child(id).setValue(student).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(
+                        FancyToast.makeText(
                             requireContext(),
-                            "Student registered successfully",
-                            Toast.LENGTH_SHORT
+                            "You have been registered successfully",
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.SUCCESS,
+                            false
                         ).show()
                         redirectToLogin()
                     } else {
-                        Toast.makeText(
+                        FancyToast.makeText(
                             requireContext(),
                             "Error: ${task.exception?.message}",
-                            Toast.LENGTH_SHORT
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.ERROR,
+                            false
                         ).show()
                     }
                 }
             } else {
-                Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
-                    .show()
+                FancyToast.makeText(
+                    requireContext(),
+                    "Error: ${task.exception?.message}",
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.ERROR,
+                    false
+                ).show()
             }
         }
 
@@ -148,50 +158,62 @@ class StudentRegisterFragment : Fragment() {
         return when {
             first_name.isEmpty() -> {
                 first_name_et.error = "First name is required"
+                first_name_et.requestFocus()
                 false
             }
             last_name.isEmpty() -> {
                 last_name_et.error = "Last name is required"
+                last_name_et.requestFocus()
                 false
             }
             cin.isEmpty() -> {
                 cin_et.error = "CIN is required"
+                cin_et.requestFocus()
                 false
             }
             cne.isEmpty() -> {
                 cne_et.error = "CNE is required"
+                cne_et.requestFocus()
                 false
             }
             filiere.isEmpty() -> {
                 filiere_dropdown.error = "Filiere is required"
+                filiere_dropdown.requestFocus()
                 false
             }
             semester.isEmpty() -> {
                 semester_dropdown.error = "Semester is required"
+                semester_dropdown.requestFocus()
                 false
             }
             email.isEmpty() -> {
                 email_et.error = "Email is required"
+                email_et.requestFocus()
                 false
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                 email_et.error = "Email is not valid"
+                email_et.requestFocus()
                 false
             }
             password.isEmpty() -> {
                 password_et.error = "Password is required"
+                password_et.requestFocus()
                 false
             }
             password.length < 6 -> {
                 password_et.error = "Password must be at least 6 characters"
+                password_et.requestFocus()
                 false
             }
             confirm_password.isEmpty() -> {
                 confirm_password_et.error = "Confirm password is required"
+                confirm_password_et.requestFocus()
                 false
             }
             password != confirm_password -> {
                 confirm_password_et.error = "Passwords don't match"
+                confirm_password_et.requestFocus()
                 false
             }
             else -> true
