@@ -61,79 +61,79 @@
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/my_stats"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/card_ui">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:contentDescription="@string/card_image"
-                android:src="@drawable/card_image_ui" />
+                android:layout_marginBottom="16dp"
+                android:text="@string/my_stats"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/card_ui">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="Total absence"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/card_image"
+                    android:src="@drawable/card_image_ui" />
 
-                <TextView
-                    android:id="@+id/user_total_absence_tv"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4"
-                    android:textColor="@color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
 
-            <ImageView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="Total absence"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/user_total_absence_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_checklist" />
+
+            </RelativeLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_checklist" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/dashboard"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_marginBottom="16dp"
+                android:text="@string/dashboard"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <GridLayout
                 android:id="@+id/dashboard_gv"
@@ -171,7 +171,7 @@
                             android:layout_height="84dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/scan_qr_code" />
+                            android:src="@drawable/generate_qr_code" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -295,12 +295,12 @@
                             android:layout_height="84dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/logout" />
+                            android:src="@drawable/absence_list" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="Absences"
+                            android:text="@string/absence_list"
                             android:textAlignment="center"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -391,7 +391,6 @@
 
                 </androidx.cardview.widget.CardView>
             </GridLayout>
-        </ScrollView>
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
