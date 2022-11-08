@@ -54,11 +54,11 @@ class StudentActivity : AppCompatActivity() {
             .setTitle("Logout")
             .setMessage("Are you sure you want to logout?")
             .setCancelable(false)
-            .setPositiveButton("Yes") { dialogInterface, which ->
+            .setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
                 redirectToLogin()
             }
-            .setNegativeButton("No") { dialogInterface, which ->
+            .setNegativeButton("No") { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }
             .build()
