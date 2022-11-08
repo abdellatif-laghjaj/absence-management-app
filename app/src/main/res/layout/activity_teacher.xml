@@ -138,7 +138,7 @@
             <GridLayout
                 android:id="@+id/dashboard_gv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:columnCount="2"
                 android:rowCount="3">
 
@@ -159,8 +159,8 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
                         android:orientation="vertical"
@@ -175,7 +175,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="@string/generate_qr"
                             android:textAlignment="center"
                             android:textSize="20sp"
@@ -200,8 +200,8 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
                         android:orientation="vertical"
@@ -216,7 +216,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="@string/scan_qr_code"
                             android:textAlignment="center"
                             android:textSize="20sp"
