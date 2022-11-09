@@ -133,7 +133,10 @@ class LoginActivity : AppCompatActivity() {
             val dialog = MaterialDialog.Builder(this)
                 .setTitle("No Internet Connection")
                 .setMessage("Please check your internet connection and try again")
-                .setCancelable(false)
+                .setNegativeButton("Exit") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    finish()
+                }
                 .setPositiveButton("Ok") { _, _ ->
                     checkInternetConnection(this, this)
                 }
