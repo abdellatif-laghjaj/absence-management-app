@@ -12,8 +12,9 @@ class Helper {
             activity: Activity,
             appCompatActivity: AppCompatActivity
         ) {
+            var dialog: MaterialDialog = null!!
             if (!isConnected(appCompatActivity)) {
-                MaterialDialog.Builder(activity)
+                dialog = MaterialDialog.Builder(activity)
                     .setTitle("No Internet Connection")
                     .setMessage("Please check your internet connection and try again")
                     .setCancelable(false)
@@ -21,9 +22,10 @@ class Helper {
                         checkInternetConnection(activity, appCompatActivity)
                     }
                     .build()
-                    .show()
+                dialog.show()
             } else {
-                appCompatActivity.recreate()
+                dialog.dismiss()
+                checkInternetConnection(activity, appCompatActivity)
             }
         }
 

@@ -130,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         //check if user is connected to the internet
         if (!isConnected(this)) {
-            MaterialDialog.Builder(this)
+            val dialog = MaterialDialog.Builder(this)
                 .setTitle("No Internet Connection")
                 .setMessage("Please check your internet connection and try again")
                 .setCancelable(false)
@@ -138,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
                     checkInternetConnection(this, this)
                 }
                 .build()
-                .show()
+            dialog.show()
         }
     }
 }
