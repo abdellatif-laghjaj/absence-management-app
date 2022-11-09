@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else {
                 // If sign in fails, display a dialog to the user.
-                MaterialDialog.Builder(this)
+                val dialog = MaterialDialog.Builder(this)
                     .setTitle("Login Failed")
                     .setMessage("Invalid email or password")
                     .setCancelable(false)
@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                         dialogInterface.dismiss()
                     }
                     .build()
-                    .show()
+                dialog.show()
             }
         }
     }
@@ -133,7 +133,10 @@ class LoginActivity : AppCompatActivity() {
             MaterialDialog.Builder(this)
                 .setTitle("No Internet Connection")
                 .setMessage("Please check your internet connection and try again")
-                .setCancelable(false)
+                .setNegativeButton("Exit") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    finish()
+                }
                 .setPositiveButton("Ok") { _, _ ->
                     checkInternetConnection(this, this)
                 }

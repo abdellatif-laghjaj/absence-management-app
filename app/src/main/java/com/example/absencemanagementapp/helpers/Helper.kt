@@ -17,13 +17,19 @@ class Helper {
                     .setTitle("No Internet Connection")
                     .setMessage("Please check your internet connection and try again")
                     .setCancelable(false)
+
+                    .setNegativeButton("Exit") { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                        activity.finish()
+                    }
                     .setPositiveButton("Ok") { _, _ ->
                         checkInternetConnection(activity, appCompatActivity)
                     }
-                    .build()
-                    .show()
+                    .build().show()
             } else {
-                appCompatActivity.recreate()
+                //close the dialog if the user is connected to the internet
+                activity.finish()
+                appCompatActivity.startActivity(activity.intent)
             }
         }
 
