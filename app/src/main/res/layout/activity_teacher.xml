@@ -138,10 +138,11 @@
             <GridLayout
                 android:id="@+id/dashboard_gv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:columnCount="2"
                 android:rowCount="3">
 
+                <!-- 0 0 -->
                 <!-- Generate QR Code -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -159,7 +160,7 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="140dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
@@ -175,7 +176,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="@string/generate_qr"
                             android:textAlignment="center"
                             android:textSize="20sp"
@@ -183,6 +184,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- 0 1 -->
                 <!-- Scan QR Code -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -200,7 +202,7 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
@@ -216,7 +218,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="@string/scan_qr_code"
                             android:textAlignment="center"
                             android:textSize="20sp"
@@ -225,6 +227,7 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- 1 0 -->
                 <!-- Profile -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -242,7 +245,7 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
@@ -266,6 +269,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- 1 1 -->
                 <!-- Show absence list -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -283,7 +287,7 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
@@ -308,6 +312,7 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- 2 0 -->
                 <!-- Reset password -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -325,7 +330,7 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
@@ -349,6 +354,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- 2 1 -->
                 <!-- Logout -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -366,7 +372,7 @@
                     app:cardElevation="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:gravity="center"
