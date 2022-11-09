@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else {
                 // If sign in fails, display a dialog to the user.
-                MaterialDialog.Builder(this)
+                val dialog = MaterialDialog.Builder(this)
                     .setTitle("Login Failed")
                     .setMessage("Invalid email or password")
                     .setCancelable(false)
@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                         dialogInterface.dismiss()
                     }
                     .build()
-                    .show()
+                dialog.show()
             }
         }
     }

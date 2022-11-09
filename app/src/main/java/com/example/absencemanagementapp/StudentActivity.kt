@@ -53,6 +53,7 @@ class StudentActivity : AppCompatActivity() {
         val dialog = MaterialDialog.Builder(this)
             .setTitle("Logout")
             .setMessage("Are you sure you want to logout?")
+            .setAnimation("logout.json")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
