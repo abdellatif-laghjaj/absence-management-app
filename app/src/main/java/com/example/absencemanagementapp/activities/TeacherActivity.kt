@@ -1,7 +1,8 @@
-package com.example.absencemanagementapp
+package com.example.absencemanagementapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.absencemanagementapp.R
 
 class TeacherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import com.example.absencemanagementapp.activities.LoginActivity
+import com.example.absencemanagementapp.activities.StudentActivity
+import com.example.absencemanagementapp.activities.TeacherActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 

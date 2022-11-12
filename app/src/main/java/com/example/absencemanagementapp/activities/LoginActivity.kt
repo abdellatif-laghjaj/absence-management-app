@@ -1,15 +1,12 @@
-package com.example.absencemanagementapp
+package com.example.absencemanagementapp.activities
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.helpers.Helper.Companion.checkInternetConnection
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
 import com.example.absencemanagementapp.models.Student

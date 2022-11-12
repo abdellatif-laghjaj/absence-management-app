@@ -15,28 +15,28 @@
         android:theme="@style/Theme.AbsenceManagementApp"
         tools:targetApi="31">
         <activity
-            android:name=".TeacherActivity"
+            android:name=".activities.TeacherActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StudentActivity"
+            android:name=".activities.StudentActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
