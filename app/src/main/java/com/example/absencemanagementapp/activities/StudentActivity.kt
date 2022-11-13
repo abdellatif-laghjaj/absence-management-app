@@ -1,8 +1,10 @@
 package com.example.absencemanagementapp.activities
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.absencemanagementapp.R
@@ -42,6 +44,9 @@ class StudentActivity : AppCompatActivity() {
         }
 
         //dashboard cards handling
+        reset_password_cv.setOnClickListener {
+            showResetPasswordDialog()
+        }
 
         logout_cv.setOnClickListener {
             logout()
@@ -87,5 +92,39 @@ class StudentActivity : AppCompatActivity() {
         //scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
         profile_cv = findViewById(R.id.profile_cv)
         reset_password_cv = findViewById(R.id.reset_password_cv)
+    }
+
+    private fun showResetPasswordDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.reset_password_bottom_sheet_layout)
+
+        val email_et = dialog.findViewById<TextView>(R.id.email_et)
+        val reset_password_btn = dialog.findViewById<TextView>(R.id.reset_password_btn)
+
+        reset_password_btn.setOnClickListener {
+            val email = email_et.text.toString()
+            if (email.isEmpty()) {
+                email_et.error = "Email is required"
+                email_et.requestFocus()
+                return@setOnClickListener
+            }
+            auth.sendPasswordResetEmail(email).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    dialog.dismiss()
+                    MaterialDialog.Builder(this).setTitle("Reset Password")
+                        .setMessage("Password reset link has been sent to your email")
+                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                        }.build().show()
+                } else {
+                    MaterialDialog.Builder(this).setTitle("Reset Password")
+                        .setMessage("Failed to send password reset link")
+                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                        }.build().show()
+                }
+            }
+        }
     }
 }
