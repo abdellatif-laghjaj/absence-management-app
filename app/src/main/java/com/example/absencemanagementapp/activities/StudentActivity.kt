@@ -105,20 +105,12 @@ class StudentActivity : AppCompatActivity() {
     }
 
     private fun showResetPasswordDialog() {
-        val dialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
-        val view = layoutInflater.inflate(
-            R.layout.reset_password_bottom_sheet_layout,
-            findViewById(R.id.reset_password_bottom_sheet_container)
-        )
-
-        dialog.create().apply {
-            window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
-        val email_et = view.findViewById<TextInputEditText>(R.id.email_et)
-        val reset_password_btn = view.findViewById<Button>(R.id.reset_password_btn)
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.reset_password_bottom_sheet_layout)
+        val email_et = dialog.findViewById<TextInputEditText>(R.id.email_et)
+        val reset_password_btn = dialog.findViewById<Button>(R.id.reset_password_btn)
 
         reset_password_btn.setOnClickListener {
             val email = email_et.text.toString()
@@ -144,7 +136,11 @@ class StudentActivity : AppCompatActivity() {
                 }
             }
         }
-        dialog.setContentView(view)
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.show()
     }
 }
