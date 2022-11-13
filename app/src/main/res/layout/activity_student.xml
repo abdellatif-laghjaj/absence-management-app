@@ -37,15 +37,15 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/user_image_civ"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/student_image_civ"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             android:src="@drawable/profile"
-            app:civ_border_color="#FF000000"
+            app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
     </RelativeLayout>
 
