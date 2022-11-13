@@ -147,8 +147,9 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         //check if user is connected to the internet
         if (!isConnected(this)) {
-            MaterialDialog.Builder(this)
+            val dialog_not_internet = MaterialDialog.Builder(this)
                 .setTitle("No Internet Connection")
+                .setAnimation(R.raw.no_internet)
                 .setMessage("Please check your internet connection and try again")
                 .setNegativeButton("Exit") { dialogInterface, _ ->
                     dialogInterface.dismiss()
@@ -158,7 +159,13 @@ class LoginActivity : AppCompatActivity() {
                     checkInternetConnection(this, this)
                 }
                 .build()
-                .show()
+                dialog_not_internet.show()
+
+            val animationView: LottieAnimationView = dialog_not_internet.getAnimationView()
+
+            //scale animation view
+            animationView.scaleX = 0.5f
+            animationView.scaleY = 0.5f
         }
     }
 

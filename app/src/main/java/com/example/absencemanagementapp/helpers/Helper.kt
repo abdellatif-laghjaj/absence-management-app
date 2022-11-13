@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.absencemanagementapp.R
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class Helper {
@@ -15,6 +16,7 @@ class Helper {
             if (!isConnected(appCompatActivity)) {
                 MaterialDialog.Builder(activity)
                     .setTitle("No Internet Connection")
+                    .setAnimation(R.raw.no_internet)
                     .setMessage("Please check your internet connection and try again")
                     .setCancelable(false)
 
