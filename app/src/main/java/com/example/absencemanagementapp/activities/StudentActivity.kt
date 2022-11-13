@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.view.setPadding
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
@@ -104,7 +103,7 @@ class StudentActivity : AppCompatActivity() {
         user_image_cv = findViewById(R.id.user_image_cv)
         user_name_tv = findViewById(R.id.user_name_tv)
         logout_cv = findViewById(R.id.logout_cv)
-        //scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
+        scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
         profile_cv = findViewById(R.id.profile_cv)
         reset_password_cv = findViewById(R.id.reset_password_cv)
     }
