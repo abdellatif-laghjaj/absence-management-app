@@ -145,6 +145,7 @@
                 <!-- 0 0 -->
                 <!-- Generate QR Code -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/generate_qr_code_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
@@ -187,6 +188,7 @@
                 <!-- 0 1 -->
                 <!-- Scan QR Code -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/scan_qr_code_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
@@ -230,6 +232,7 @@
                 <!-- 1 0 -->
                 <!-- Profile -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/profile_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="1"
@@ -272,6 +275,7 @@
                 <!-- 1 1 -->
                 <!-- Show absence list -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/absence_list_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="1"
@@ -315,6 +319,7 @@
                 <!-- 2 0 -->
                 <!-- Reset password -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/reset_password_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="2"
@@ -357,6 +362,7 @@
                 <!-- 2 1 -->
                 <!-- Logout -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/logout_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="2"
