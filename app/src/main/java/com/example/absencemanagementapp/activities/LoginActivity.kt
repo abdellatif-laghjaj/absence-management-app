@@ -1,8 +1,14 @@
 package com.example.absencemanagementapp.activities
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -17,6 +23,7 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var forget_password_tv: TextView
     private lateinit var register_tv: TextView
     private lateinit var email_et: TextInputEditText
     private lateinit var password_et: TextInputEditText
@@ -54,6 +61,10 @@ class LoginActivity : AppCompatActivity() {
             if (validateInputs()) {
                 login(email, password)
             }
+        }
+
+        forget_password_tv.setOnClickListener {
+            showResetPasswordDialog()
         }
     }
 
@@ -99,6 +110,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        forget_password_tv = findViewById(R.id.forget_password_tv)
         register_tv = findViewById(R.id.register_tv)
         email_et = findViewById(R.id.email_et)
         password_et = findViewById(R.id.password_et)
@@ -140,5 +152,47 @@ class LoginActivity : AppCompatActivity() {
                 .build()
                 .show()
         }
+    }
+
+    private fun showResetPasswordDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.reset_password_bottom_sheet_layout)
+        val email_et = dialog.findViewById<TextInputEditText>(R.id.email_et)
+        val reset_password_btn = dialog.findViewById<Button>(R.id.reset_password_btn)
+
+        reset_password_btn.setOnClickListener {
+            val email = email_et.text.toString()
+            if (email.isEmpty()) {
+                email_et.error = "Email is required"
+                email_et.requestFocus()
+                return@setOnClickListener
+            }
+            auth.sendPasswordResetEmail(email).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    dialog.dismiss()
+                    MaterialDialog.Builder(this).setTitle("Reset Password")
+                        .setMessage("Password reset link has been sent to your email")
+                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                        }.build().show()
+                } else {
+                    MaterialDialog.Builder(this).setTitle("Reset Password")
+                        .setMessage("Failed to send password reset link")
+                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                        }.build().show()
+                }
+            }
+        }
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setGravity(Gravity.BOTTOM)
+        dialog.window?.attributes?.windowAnimations = R.style.BottomSheetDialogAnimation
+        dialog.show()
     }
 }
