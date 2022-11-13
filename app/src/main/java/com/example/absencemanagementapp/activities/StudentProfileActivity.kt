@@ -2,10 +2,10 @@ package com.example.absencemanagementapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.absencemanagementapp.R
@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class StudentProfileActivity : AppCompatActivity() {
+    private lateinit var back_iv: ImageView
     private lateinit var user_name_tv: TextView
     private lateinit var user_email_tv: TextView
     private lateinit var first_name_et: TextInputEditText
@@ -27,7 +28,6 @@ class StudentProfileActivity : AppCompatActivity() {
     private lateinit var cne_et: TextInputEditText
     private lateinit var filiere_dropdown: AutoCompleteTextView
     private lateinit var semester_dropdown: AutoCompleteTextView
-    private lateinit var email_et: TextInputEditText
     private lateinit var update_btn: Button
 
     private val semesters = arrayOf("1", "2", "3", "4", "5", "6")
@@ -46,6 +46,11 @@ class StudentProfileActivity : AppCompatActivity() {
         initViews()
         initDropDowns()
         fillData()
+
+        back_iv.setOnClickListener {
+            finish()
+        }
+
         filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
             //adapterView.getItemAtPosition(i)
         }
@@ -57,6 +62,7 @@ class StudentProfileActivity : AppCompatActivity() {
         //regsitration logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
+                val email = getCurrentUserEmail()
                 val student = Student(
                     first_name_et.text.toString(),
                     last_name_et.text.toString(),
@@ -64,7 +70,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     cne_et.text.toString(),
                     filiere_dropdown.text.toString(),
                     semester_dropdown.text.toString(),
-                    email_et.text.toString()
+                    email
                 )
                 database.reference.child("students").child(auth.currentUser!!.uid)
                     .setValue(student)
@@ -97,7 +103,6 @@ class StudentProfileActivity : AppCompatActivity() {
         val cne = cne_et.text.toString()
         val filiere = filiere_dropdown.text.toString()
         val semester = semester_dropdown.text.toString()
-        val email = email_et.text.toString()
         return when {
             first_name.isEmpty() -> {
                 first_name_et.error = "First name is required"
@@ -129,16 +134,6 @@ class StudentProfileActivity : AppCompatActivity() {
                 semester_dropdown.requestFocus()
                 false
             }
-            email.isEmpty() -> {
-                email_et.error = "Email is required"
-                email_et.requestFocus()
-                false
-            }
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                email_et.error = "Email is not valid"
-                email_et.requestFocus()
-                false
-            }
             else -> true
         }
     }
@@ -151,6 +146,7 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     public fun initViews() {
+        back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
         user_email_tv = findViewById(R.id.user_email_tv)
         first_name_et = findViewById(R.id.first_name_et)
@@ -159,7 +155,6 @@ class StudentProfileActivity : AppCompatActivity() {
         cne_et = findViewById(R.id.cne_et)
         filiere_dropdown = findViewById(R.id.filiere_dropdown)
         semester_dropdown = findViewById(R.id.semester_dropdown)
-        email_et = findViewById(R.id.email_et)
         update_btn = findViewById(R.id.update_btn)
     }
 
@@ -177,7 +172,6 @@ class StudentProfileActivity : AppCompatActivity() {
                 cne_et.setText(student.cne)
                 filiere_dropdown.setText(student.filiere)
                 semester_dropdown.setText(student.semester)
-                email_et.setText(student.email)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -190,5 +184,10 @@ class StudentProfileActivity : AppCompatActivity() {
                 ).show()
             }
         })
+    }
+
+    public fun getCurrentUserEmail(): String {
+        val user = auth.currentUser
+        return user!!.email.toString()
     }
 }
