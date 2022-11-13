@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp
+package com.example.absencemanagementapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.RegisterTabsAdapter
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.textfield.TextInputEditText
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var login_tv: TextView

@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.absencemanagementapp.LoginActivity
+import com.example.absencemanagementapp.activities.LoginActivity
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText

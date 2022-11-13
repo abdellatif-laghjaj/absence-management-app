@@ -10,15 +10,13 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
-import com.example.absencemanagementapp.LoginActivity
+import com.example.absencemanagementapp.activities.LoginActivity
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.models.Student
 import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.shashank.sony.fancytoastlib.FancyToast
-import java.util.*
 
 class TeacherRegisterFragment : Fragment() {
     private lateinit var first_name_et: TextInputEditText
