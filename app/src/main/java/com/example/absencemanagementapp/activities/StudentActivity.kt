@@ -4,20 +4,17 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -79,6 +76,7 @@ class StudentActivity : AppCompatActivity() {
     private fun logout() {
         val dialog = MaterialDialog.Builder(this).setTitle("Logout")
             .setMessage("Are you sure you want to logout?").setCancelable(false)
+            .setAnimation(R.raw.logout)
             .setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
                 redirectToLogin()
@@ -86,6 +84,20 @@ class StudentActivity : AppCompatActivity() {
                 dialogInterface.dismiss()
             }.build()
         dialog.show()
+
+        val animationView: LottieAnimationView = dialog.getAnimationView()
+
+        //reduce size of animation
+        animationView.layoutParams.width = 200
+        animationView.layoutParams.height = 200
+
+        //center animation
+        animationView.layoutParams = (animationView.layoutParams as ViewGroup.MarginLayoutParams).apply {
+            setMargins(0, 0, 0, 0)
+            layoutDirection = Gravity.CENTER
+        }
+
+        animationView.requestLayout()
     }
 
     //redirect to login activity
