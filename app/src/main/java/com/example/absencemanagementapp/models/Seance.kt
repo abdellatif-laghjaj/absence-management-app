@@ -3,13 +3,13 @@ package com.example.absencemanagementapp.models
 class Seance {
     var id: String? = null
     private var date: String? = null
-    private var startTime: String? = null
-    private var endTime: String? = null
+    private var start_time: String? = null
+    private var end_time: String? = null
     private var type: String? = null
     private var branch: String? = null
-    private var nSalle: Int? = null
+    private var n_salle: Int? = null
     private var semester: Int? = null
-    private var nModule: Int? = null
+    private var n_module: Int? = null
 
     constructor()
 
@@ -26,12 +26,12 @@ class Seance {
     ) {
         this.id = id
         this.date = date
-        this.startTime = start_time
-        this.endTime = end_time
+        this.start_time = start_time
+        this.end_time = end_time
         this.type = type
         this.branch = branch
-        this.nSalle = n_salle
+        this.n_salle = n_salle
         this.semester = semester
-        this.nModule = n_module
+        this.n_module = n_module
     }
 }
