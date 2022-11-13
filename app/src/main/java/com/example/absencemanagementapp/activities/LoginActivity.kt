@@ -12,6 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.helpers.Helper.Companion.checkInternetConnection
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
@@ -98,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
                 // If sign in fails, display a dialog to the user.
                 val dialog = MaterialDialog.Builder(this)
                     .setTitle("Login Failed")
+                    .setAnimation(R.raw.invalid)
                     .setMessage("Invalid email or password")
                     .setCancelable(false)
                     .setPositiveButton("Ok") { dialogInterface, _ ->
@@ -105,6 +107,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     .build()
                 dialog.show()
+
+                val animationView: LottieAnimationView = dialog.getAnimationView()
+
+                //scale animation view
+                animationView.scaleX = 0.5f
+                animationView.scaleY = 0.5f
             }
         }
     }
@@ -139,8 +147,9 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         //check if user is connected to the internet
         if (!isConnected(this)) {
-            MaterialDialog.Builder(this)
+            val dialog_not_internet = MaterialDialog.Builder(this)
                 .setTitle("No Internet Connection")
+                .setAnimation(R.raw.no_internet)
                 .setMessage("Please check your internet connection and try again")
                 .setNegativeButton("Exit") { dialogInterface, _ ->
                     dialogInterface.dismiss()
@@ -150,7 +159,13 @@ class LoginActivity : AppCompatActivity() {
                     checkInternetConnection(this, this)
                 }
                 .build()
-                .show()
+                dialog_not_internet.show()
+
+            val animationView: LottieAnimationView = dialog_not_internet.getAnimationView()
+
+            //scale animation view
+            animationView.scaleX = 0.5f
+            animationView.scaleY = 0.5f
         }
     }
 
@@ -171,17 +186,34 @@ class LoginActivity : AppCompatActivity() {
             auth.sendPasswordResetEmail(email).addOnCompleteListener {
                 if (it.isSuccessful) {
                     dialog.dismiss()
-                    MaterialDialog.Builder(this).setTitle("Reset Password")
-                        .setMessage("Password reset link has been sent to your email")
+                    val dialog_success = MaterialDialog.Builder(this).setTitle("Reset Password")
+                        .setMessage("Password reset link has been sent to your email. If you don't see the email, please check your spam folder")
+                        .setAnimation(R.raw.success)
                         .setPositiveButton("Ok") { dialogInterface, _ ->
                             dialogInterface.dismiss()
-                        }.build().show()
+                        }.build()
+
+                    dialog_success.show()
+
+                    val animationView: LottieAnimationView = dialog_success.getAnimationView()
+
+                    //scale animation
+                    animationView.scaleX = 0.5f
+                    animationView.scaleY = 0.5f
                 } else {
-                    MaterialDialog.Builder(this).setTitle("Reset Password")
+                    val dialog_failed = MaterialDialog.Builder(this).setTitle("Reset Password")
                         .setMessage("Failed to send password reset link")
+                        .setAnimation(R.raw.failed)
                         .setPositiveButton("Ok") { dialogInterface, _ ->
                             dialogInterface.dismiss()
-                        }.build().show()
+                        }.build()
+                    dialog_failed.show()
+
+                    val animationView: LottieAnimationView = dialog_failed.getAnimationView()
+
+                    //scale animation
+                    animationView.scaleX = 0.5f
+                    animationView.scaleY = 0.5f
                 }
             }
         }

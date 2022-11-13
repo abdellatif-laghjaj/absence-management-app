@@ -4,20 +4,17 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -79,6 +76,7 @@ class StudentActivity : AppCompatActivity() {
     private fun logout() {
         val dialog = MaterialDialog.Builder(this).setTitle("Logout")
             .setMessage("Are you sure you want to logout?").setCancelable(false)
+            .setAnimation(R.raw.logout)
             .setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
                 redirectToLogin()
@@ -86,6 +84,12 @@ class StudentActivity : AppCompatActivity() {
                 dialogInterface.dismiss()
             }.build()
         dialog.show()
+
+        val animationView: LottieAnimationView = dialog.getAnimationView()
+
+        //scale animation
+        animationView.scaleX = 0.5f
+        animationView.scaleY = 0.5f
     }
 
     //redirect to login activity
@@ -99,7 +103,7 @@ class StudentActivity : AppCompatActivity() {
         user_image_cv = findViewById(R.id.user_image_cv)
         user_name_tv = findViewById(R.id.user_name_tv)
         logout_cv = findViewById(R.id.logout_cv)
-        //scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
+        scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
         profile_cv = findViewById(R.id.profile_cv)
         reset_password_cv = findViewById(R.id.reset_password_cv)
     }
