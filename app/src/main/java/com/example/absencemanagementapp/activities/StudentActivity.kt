@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.absencemanagementapp.R
@@ -24,6 +25,7 @@ class StudentActivity : AppCompatActivity() {
     private lateinit var profile_cv: CardView
     private lateinit var reset_password_cv: CardView
     private lateinit var logout_cv: CardView
+    private lateinit var email_et: AutoCompleteTextView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -90,6 +92,7 @@ class StudentActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        email_et = findViewById(R.id.email_et)
         user_image_cv = findViewById(R.id.user_image_cv)
         user_name_tv = findViewById(R.id.user_name_tv)
         logout_cv = findViewById(R.id.logout_cv)
