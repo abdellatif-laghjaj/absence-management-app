@@ -57,13 +57,35 @@ class StudentProfileActivity : AppCompatActivity() {
         //regsitration logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
-                FancyToast.makeText(
-                    this,
-                    "Updating...",
-                    FancyToast.LENGTH_SHORT,
-                    FancyToast.INFO,
-                    false
-                ).show()
+                val student = Student(
+                    first_name_et.text.toString(),
+                    last_name_et.text.toString(),
+                    cin_et.text.toString(),
+                    cne_et.text.toString(),
+                    filiere_dropdown.text.toString(),
+                    semester_dropdown.text.toString(),
+                    email_et.text.toString()
+                )
+                database.reference.child("students").child(auth.currentUser!!.uid)
+                    .setValue(student)
+                    .addOnSuccessListener {
+                        FancyToast.makeText(
+                            this,
+                            "Profile updated successfully",
+                            Toast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,
+                            false
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        FancyToast.makeText(
+                            this,
+                            "Error: ${it.message}",
+                            Toast.LENGTH_SHORT,
+                            FancyToast.ERROR,
+                            false
+                        ).show()
+                    }
             }
         }
     }
