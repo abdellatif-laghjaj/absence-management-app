@@ -2,8 +2,12 @@ package com.example.absencemanagementapp.activities
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -126,5 +130,14 @@ class StudentActivity : AppCompatActivity() {
                 }
             }
         }
+
+        dialog.show()
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.BottomSheetDialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
     }
 }
