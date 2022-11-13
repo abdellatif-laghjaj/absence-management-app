@@ -117,111 +117,71 @@
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/ic_verify">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cne_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/cne"
-                    android:inputType="text"
-                    android:paddingVertical="20dp"
-                    android:textColor="#B81F262E" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/ic_verify">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cin_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/cin"
-                    android:inputType="text"
-                    android:paddingVertical="20dp"
-                    android:textColor="#B81F262E" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/ic_filiere">
-
-                <AutoCompleteTextView
-                    android:id="@+id/filiere_dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/branch"
-                    android:inputType="text"
-                    android:paddingVertical="20dp"
-                    android:textColor="#B81F262E" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/ic_semester">
-
-                <AutoCompleteTextView
-                    android:id="@+id/semester_dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/semester"
-                    android:inputType="text"
-                    android:paddingVertical="20dp"
-                    android:textColor="#B81F262E" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="2dp"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_verify">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_et"
+                android:id="@+id/cne_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
+                android:hint="@string/cne"
+                android:inputType="text"
+                android:paddingVertical="20dp"
+                android:textColor="#B81F262E" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="2dp"
+            app:startIconDrawable="@drawable/ic_verify">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cin_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cin"
+                android:inputType="text"
+                android:paddingVertical="20dp"
+                android:textColor="#B81F262E" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="2dp"
+            app:startIconDrawable="@drawable/ic_filiere">
+
+            <AutoCompleteTextView
+                android:id="@+id/filiere_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/branch"
+                android:inputType="text"
+                android:paddingVertical="20dp"
+                android:textColor="#B81F262E" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="2dp"
+            app:startIconDrawable="@drawable/ic_semester">
+
+            <AutoCompleteTextView
+                android:id="@+id/semester_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/semester"
+                android:inputType="text"
                 android:paddingVertical="20dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
