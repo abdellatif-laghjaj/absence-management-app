@@ -42,4 +42,6 @@
     <string name="generate_qr">Generate QR Code</string>
     <string name="absence_list">Absence List</string>
     <string name="my_profile">My Profile</string>
+    <string name="update">Update</string>
+    <string name="update_your_profile">Update your profile</string>
 </resources>

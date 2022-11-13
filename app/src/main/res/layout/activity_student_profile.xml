@@ -73,6 +73,14 @@
         android:orientation="vertical"
         android:padding="12dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/update_your_profile"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
@@ -253,5 +261,16 @@
                 android:paddingVertical="20dp"
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/update_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:background="@drawable/button_layout"
+            android:paddingVertical="18dp"
+            android:text="@string/update"
+            android:textColor="#FFF"
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>
