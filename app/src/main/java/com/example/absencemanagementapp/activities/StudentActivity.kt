@@ -42,6 +42,7 @@ class StudentActivity : AppCompatActivity() {
         }
 
         //dashboard cards handling
+
         logout_cv.setOnClickListener {
             logout()
         }
