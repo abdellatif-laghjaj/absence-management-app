@@ -112,14 +112,10 @@ class StudentActivity : AppCompatActivity() {
         )
 
         dialog.create().apply {
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.window?.setLayout(
+            window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            dialog.setContentView(view)
-            dialog.show()
-            setContentView(view)
         }
         val email_et = view.findViewById<TextInputEditText>(R.id.email_et)
         val reset_password_btn = view.findViewById<Button>(R.id.reset_password_btn)
@@ -148,12 +144,7 @@ class StudentActivity : AppCompatActivity() {
                 }
             }
         }
-//        dialog.setContentView(view)
-//
-//        dialog.window?.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//        dialog.show()
+        dialog.setContentView(view)
+        dialog.show()
     }
 }
