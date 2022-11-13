@@ -37,7 +37,7 @@ class StudentProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
-
+        
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
