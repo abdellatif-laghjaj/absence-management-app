@@ -13,6 +13,9 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
     private lateinit var user_name_tv: TextView
+    private lateinit var scan_qr_code_cv: CardView
+    private lateinit var profile_cv: CardView
+    private lateinit var reset_password_cv: CardView
     private lateinit var logout_cv: CardView
 
     private lateinit var auth: FirebaseAuth
@@ -40,29 +43,25 @@ class StudentActivity : AppCompatActivity() {
         //dashboard cards handling
         logout_cv.setOnClickListener {
             logout()
-            //redirect to login activity
         }
-    }
 
-    private fun initViews() {
-        user_name_tv = findViewById(R.id.user_name_tv)
-        logout_cv = findViewById(R.id.logout_cv)
+        profile_cv.setOnClickListener {
+            Intent(this, StudentProfileActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     //logout
     private fun logout() {
-        val dialog = MaterialDialog.Builder(this)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout?")
-            .setCancelable(false)
+        val dialog = MaterialDialog.Builder(this).setTitle("Logout")
+            .setMessage("Are you sure you want to logout?").setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
                 redirectToLogin()
-            }
-            .setNegativeButton("No") { dialogInterface, _ ->
+            }.setNegativeButton("No") { dialogInterface, _ ->
                 dialogInterface.dismiss()
-            }
-            .build()
+            }.build()
         dialog.show()
     }
 
@@ -71,5 +70,13 @@ class StudentActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun initViews() {
+        user_name_tv = findViewById(R.id.user_name_tv)
+        logout_cv = findViewById(R.id.logout_cv)
+        //scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
+        profile_cv = findViewById(R.id.profile_cv)
+        reset_password_cv = findViewById(R.id.reset_password_cv)
     }
 }

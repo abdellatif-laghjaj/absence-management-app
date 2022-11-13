@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.StudentProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="?android:colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:src="@drawable/card_image_ui" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/user_image_cv"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:elevation="12dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:id="@+id/user_image_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/user_image"
+                android:src="@drawable/avatar" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/user_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_image_cv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Abdellatif Laghjaj"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/user_email_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_name_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="abdellatiflaghjaj@gmail.com"
+            android:textColor="#DFDFDF"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+
+</LinearLayout>
