@@ -31,32 +31,21 @@
             android:layout_marginEnd="0dp"
             android:src="@drawable/card_image_ui" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/user_image_cv"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image_civ"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="6dp"
-            android:elevation="12dp"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            app:cardCornerRadius="40dp">
-
-            <ImageView
-                android:id="@+id/user_image_iv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@string/user_image"
-                android:src="@drawable/avatar" />
-        </androidx.cardview.widget.CardView>
+            android:src="@drawable/profile"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_image_cv"
+            android:layout_below="@+id/profile_image_civ"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:text="Abdellatif Laghjaj"

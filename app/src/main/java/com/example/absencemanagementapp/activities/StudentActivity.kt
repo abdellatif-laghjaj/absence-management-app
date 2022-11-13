@@ -18,10 +18,11 @@ import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
-    private lateinit var user_image_cv: CardView
+    private lateinit var user_image_civ: CircleImageView
     private lateinit var user_name_tv: TextView
     private lateinit var scan_qr_code_cv: CardView
     private lateinit var profile_cv: CardView
@@ -65,7 +66,7 @@ class StudentActivity : AppCompatActivity() {
             }
         }
 
-        user_image_cv.setOnClickListener {
+        user_image_civ.setOnClickListener {
             Intent(this, StudentProfileActivity::class.java).also {
                 startActivity(it)
             }
@@ -100,7 +101,7 @@ class StudentActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        user_image_cv = findViewById(R.id.user_image_cv)
+        user_image_civ = findViewById(R.id.user_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
         logout_cv = findViewById(R.id.logout_cv)
         scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
