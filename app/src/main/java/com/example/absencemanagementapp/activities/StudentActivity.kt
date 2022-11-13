@@ -107,7 +107,7 @@ class StudentActivity : AppCompatActivity() {
     private fun showResetPasswordDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
         dialog.setContentView(R.layout.reset_password_bottom_sheet_layout)
         val email_et = dialog.findViewById<TextInputEditText>(R.id.email_et)
         val reset_password_btn = dialog.findViewById<Button>(R.id.reset_password_btn)
@@ -141,6 +141,9 @@ class StudentActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setGravity(Gravity.BOTTOM)
+        dialog.window?.attributes?.windowAnimations = R.style.BottomSheetDialogAnimation
         dialog.show()
     }
 }
