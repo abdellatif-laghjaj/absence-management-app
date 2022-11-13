@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
@@ -14,7 +15,7 @@ class Helper {
             appCompatActivity: AppCompatActivity
         ) {
             if (!isConnected(appCompatActivity)) {
-                MaterialDialog.Builder(activity)
+                val dialog_no_internet = MaterialDialog.Builder(activity)
                     .setTitle("No Internet Connection")
                     .setAnimation(R.raw.no_internet)
                     .setMessage("Please check your internet connection and try again")
@@ -27,7 +28,14 @@ class Helper {
                     .setPositiveButton("Ok") { _, _ ->
                         checkInternetConnection(activity, appCompatActivity)
                     }
-                    .build().show()
+                    .build()
+                    dialog_no_internet.show()
+
+                val animationView: LottieAnimationView = dialog_no_internet.getAnimationView()
+
+                //scale animation view
+                animationView.scaleX = 0.5f
+                animationView.scaleY = 0.5f
             } else {
                 //close the dialog if the user is connected to the internet
                 activity.finish()
