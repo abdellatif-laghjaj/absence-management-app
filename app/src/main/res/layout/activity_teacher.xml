@@ -38,27 +38,16 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/user_image_cv"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/teacher_image_civ"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
-            android:elevation="12dp"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            app:cardCornerRadius="40dp">
-
-            <ImageView
-                android:id="@+id/user_image_iv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@string/user_image"
-                android:src="@drawable/profile" />
-        </androidx.cardview.widget.CardView>
+            android:src="@drawable/profile"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
     </RelativeLayout>
 
     <ScrollView
