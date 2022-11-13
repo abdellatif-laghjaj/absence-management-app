@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.view.setPadding
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
@@ -87,17 +88,9 @@ class StudentActivity : AppCompatActivity() {
 
         val animationView: LottieAnimationView = dialog.getAnimationView()
 
-        //reduce size of animation
-        animationView.layoutParams.width = 200
-        animationView.layoutParams.height = 200
-
-        //center animation
-        animationView.layoutParams = (animationView.layoutParams as ViewGroup.MarginLayoutParams).apply {
-            setMargins(0, 0, 0, 0)
-            layoutDirection = Gravity.CENTER
-        }
-
-        animationView.requestLayout()
+        //scale animation
+        animationView.scaleX = 0.5f
+        animationView.scaleY = 0.5f
     }
 
     //redirect to login activity
