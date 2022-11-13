@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -136,12 +137,13 @@ class StudentActivity : AppCompatActivity() {
                 }
             }
         }
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setLayout(
+        dialog.setContentView(view)
+        //make dialog full width
+        dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.setContentView(view)
+        
         dialog.show()
     }
 }
