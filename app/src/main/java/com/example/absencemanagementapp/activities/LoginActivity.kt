@@ -99,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
                 // If sign in fails, display a dialog to the user.
                 val dialog = MaterialDialog.Builder(this)
                     .setTitle("Login Failed")
+                    .setAnimation(R.raw.invalid)
                     .setMessage("Invalid email or password")
                     .setCancelable(false)
                     .setPositiveButton("Ok") { dialogInterface, _ ->
@@ -106,6 +107,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     .build()
                 dialog.show()
+
+                val animationView: LottieAnimationView = dialog.getAnimationView()
+
+                //scale animation view
+                animationView.scaleX = 0.5f
+                animationView.scaleY = 0.5f
             }
         }
     }
