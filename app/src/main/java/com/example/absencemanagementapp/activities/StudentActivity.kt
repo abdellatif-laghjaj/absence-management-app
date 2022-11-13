@@ -9,10 +9,16 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
@@ -102,9 +108,8 @@ class StudentActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.reset_password_bottom_sheet_layout)
-
-        val email_et = dialog.findViewById<TextView>(R.id.email_et)
-        val reset_password_btn = dialog.findViewById<TextView>(R.id.reset_password_btn)
+        val email_et = dialog.findViewById<TextInputEditText>(R.id.email_et)
+        val reset_password_btn = dialog.findViewById<Button>(R.id.reset_password_btn)
 
         reset_password_btn.setOnClickListener {
             val email = email_et.text.toString()
@@ -131,13 +136,13 @@ class StudentActivity : AppCompatActivity() {
             }
         }
 
-        dialog.show()
-        dialog.window!!.setLayout(
+        dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.BottomSheetDialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setGravity(Gravity.BOTTOM)
+        dialog.window?.attributes?.windowAnimations = R.style.BottomSheetDialogAnimation
+        dialog.show()
     }
 }
