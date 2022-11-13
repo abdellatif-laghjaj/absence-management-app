@@ -2,10 +2,10 @@ package com.example.absencemanagementapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.absencemanagementapp.R
@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class StudentProfileActivity : AppCompatActivity() {
+    private lateinit var back_iv: ImageView
     private lateinit var user_name_tv: TextView
     private lateinit var user_email_tv: TextView
     private lateinit var first_name_et: TextInputEditText
@@ -37,7 +38,7 @@ class StudentProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
-        
+
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
@@ -45,6 +46,11 @@ class StudentProfileActivity : AppCompatActivity() {
         initViews()
         initDropDowns()
         fillData()
+
+        back_iv.setOnClickListener {
+            finish()
+        }
+
         filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
             //adapterView.getItemAtPosition(i)
         }
@@ -140,6 +146,7 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     public fun initViews() {
+        back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
         user_email_tv = findViewById(R.id.user_email_tv)
         first_name_et = findViewById(R.id.first_name_et)
