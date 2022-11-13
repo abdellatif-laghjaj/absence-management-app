@@ -226,42 +226,6 @@
                 android:textColor="#B81F262E" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:paddingVertical="20dp"
-                android:textColor="#B81F262E" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirm_password_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/confirm_password"
-                android:inputType="textPassword"
-                android:paddingVertical="20dp"
-                android:textColor="#B81F262E" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/update_btn"
             android:layout_width="match_parent"
