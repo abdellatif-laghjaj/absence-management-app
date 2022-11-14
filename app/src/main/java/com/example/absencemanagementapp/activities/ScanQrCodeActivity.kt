@@ -52,7 +52,8 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
         //add zoom feature
         zoom_slider.addOnChangeListener { slider, value, fromUser ->
-            code_scanner.zoom = value.toInt() * 2
+            code_scanner.zoom = value.toInt() * 5
+            slider.value = value.toInt().toFloat()
         }
 
         code_scanner.decodeCallback = DecodeCallback {
