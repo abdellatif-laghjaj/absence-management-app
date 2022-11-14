@@ -131,18 +131,19 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/scan_qr_code_cv"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/card_ui"
-                    android:elevation="12dp"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:innerRadius="0dp"
                     android:shape="ring"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -167,20 +168,21 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/reset_password_cv"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/card_ui"
-                    android:elevation="12dp"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:innerRadius="0dp"
                     android:shape="ring"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -205,7 +207,7 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <LinearLayout
@@ -214,18 +216,19 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/profile_cv"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/card_ui"
-                    android:elevation="12dp"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:innerRadius="0dp"
                     android:shape="ring"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -250,20 +253,21 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/logout_cv"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/card_ui"
-                    android:elevation="12dp"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:innerRadius="0dp"
                     android:shape="ring"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -288,7 +292,7 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
