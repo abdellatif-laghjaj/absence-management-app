@@ -13,11 +13,13 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.absencemanagementapp.R
+import com.google.android.material.slider.Slider
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class ScanQrCodeActivity : AppCompatActivity() {
     private lateinit var code_scanner: CodeScanner
     private lateinit var scanner_view: CodeScannerView
+    private lateinit var zoom_slider: Slider
     private final val CAMERA_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scan_qr_code_acticty)
 
         scanner_view = findViewById(R.id.scanner_view)
+        zoom_slider = findViewById(R.id.zoom_slider)
 
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.CAMERA
@@ -44,11 +47,13 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
         code_scanner.autoFocusMode = AutoFocusMode.SAFE
         code_scanner.scanMode = ScanMode.SINGLE
-        code_scanner.isAutoFocusEnabled = true
+        code_scanner.isAutoFocusEnabled = false
         code_scanner.isFlashEnabled = false
 
         //add zoom feature
-        code_scanner.zoom = 3
+        zoom_slider.addOnChangeListener { slider, value, fromUser ->
+            code_scanner.zoom = value.toInt() * 2
+        }
 
         code_scanner.decodeCallback = DecodeCallback {
             runOnUiThread {
