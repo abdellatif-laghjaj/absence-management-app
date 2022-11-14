@@ -18,6 +18,8 @@ import com.shashank.sony.fancytoastlib.FancyToast
 class ScanQrCodeActivity : AppCompatActivity() {
     private lateinit var code_scanner: CodeScanner
     private lateinit var scanner_view: CodeScannerView
+    private final val CAMERA_REQUEST_CODE = 101
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_qr_code_acticty)
@@ -26,7 +28,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_DENIED
         ) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 0)
         } else {
@@ -68,5 +70,47 @@ class ScanQrCodeActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        //start scanning
+        scanner_view.setOnClickListener {
+            code_scanner.startPreview()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //permission granted
+                startScanning()
+            } else {
+                //permission denied
+                FancyToast.makeText(
+                    this,
+                    "Camera permission is required to use this feature",
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::code_scanner.isInitialized) {
+            code_scanner.startPreview()
+        }
+    }
+
+    override fun onPause() {
+        if (::code_scanner.isInitialized) {
+            code_scanner.releaseResources()
+        }
+        super.onPause()
     }
 }
