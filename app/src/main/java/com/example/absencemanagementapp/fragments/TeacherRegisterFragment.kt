@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.example.absencemanagementapp.activities.LoginActivity
 import com.example.absencemanagementapp.R
@@ -29,6 +30,7 @@ class TeacherRegisterFragment : Fragment() {
     private lateinit var password_et: TextInputEditText
     private lateinit var confirm_password_et: TextInputEditText
     private lateinit var register_btn: Button
+    private lateinit var login_tv: TextView
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -56,6 +58,11 @@ class TeacherRegisterFragment : Fragment() {
                 val password = password_et.text.toString().trim()
                 registerTeacher(email, password)
             }
+        }
+
+        login_tv.setOnClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -122,6 +129,7 @@ class TeacherRegisterFragment : Fragment() {
         password_et = view?.findViewById(R.id.password_et)!!
         confirm_password_et = view?.findViewById(R.id.confirm_password_et)!!
         register_btn = view?.findViewById(R.id.register_btn)!!
+        login_tv = view?.findViewById(R.id.login_tv)!!
     }
 
     private fun validateInputs(): Boolean {

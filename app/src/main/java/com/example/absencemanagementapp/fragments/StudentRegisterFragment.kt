@@ -28,6 +28,7 @@ class StudentRegisterFragment : Fragment() {
     private lateinit var password_et: TextInputEditText
     private lateinit var confirm_password_et: TextInputEditText
     private lateinit var register_btn: Button
+    private lateinit var login_tv: TextView
 
     private val semsters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
@@ -68,6 +69,11 @@ class StudentRegisterFragment : Fragment() {
                 //register student
                 registerStudent(email, password)
             }
+        }
+
+        login_tv.setOnClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -138,6 +144,7 @@ class StudentRegisterFragment : Fragment() {
         password_et = view?.findViewById(R.id.password_et)!!
         confirm_password_et = view?.findViewById(R.id.confirm_password_et)!!
         register_btn = view?.findViewById(R.id.register_btn)!!
+        login_tv = view?.findViewById(R.id.login_tv)!!
     }
 
     private fun initDropDowns() {
