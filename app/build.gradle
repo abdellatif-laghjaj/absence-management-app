@@ -56,4 +56,7 @@ dependencies {
 
     //Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Qr Code Scanner
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 }
