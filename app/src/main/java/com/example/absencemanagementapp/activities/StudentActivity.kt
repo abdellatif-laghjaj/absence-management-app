@@ -130,6 +130,9 @@ class StudentActivity : AppCompatActivity() {
                         .setMessage("Password reset link has been sent to your email. If you don't see the email, please check your spam folder.")
                         .setPositiveButton("Ok") { dialogInterface, _ ->
                             dialogInterface.dismiss()
+                            //logout
+                            auth.signOut()
+                            redirectToLogin()
                         }.build()
                     email_sent_dialog.show()
 

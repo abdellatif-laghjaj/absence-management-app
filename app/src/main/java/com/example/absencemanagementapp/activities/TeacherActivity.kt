@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.firebase.auth.FirebaseAuth
@@ -52,6 +53,7 @@ class TeacherActivity : AppCompatActivity() {
     private fun logout() {
         val dialog = MaterialDialog.Builder(this)
             .setTitle("Logout")
+            .setAnimation(R.raw.logout)
             .setMessage("Are you sure you want to logout?")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
@@ -63,6 +65,11 @@ class TeacherActivity : AppCompatActivity() {
             }
             .build()
         dialog.show()
+
+        //scale animation
+        val animationView: LottieAnimationView = dialog.getAnimationView()
+        animationView.scaleX = 0.5f
+        animationView.scaleY = 0.5f
     }
 
     //redirect to login activity
