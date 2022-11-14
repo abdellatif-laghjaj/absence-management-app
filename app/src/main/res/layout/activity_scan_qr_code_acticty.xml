@@ -6,4 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.ScanQrCodeActivity">
 
+    <com.budiyev.android.codescanner.CodeScannerView
+        android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
