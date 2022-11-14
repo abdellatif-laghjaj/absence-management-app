@@ -11,7 +11,6 @@ import com.example.absencemanagementapp.adapters.RegisterTabsAdapter
 import com.google.android.material.tabs.TabLayout
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var login_tv: TextView
     private lateinit var tab_layout: TabLayout
     private lateinit var view_pager: ViewPager
 
@@ -27,17 +26,9 @@ class RegisterActivity : AppCompatActivity() {
         //initiate views and adapters for dropdowns
         initViews()
         initTabs()
-
-        login_tv.setOnClickListener {
-            Intent(this, LoginActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
-        }
     }
 
     private fun initViews() {
-        login_tv = findViewById(R.id.login_tv)
         tab_layout = findViewById(R.id.tab_layout)
         view_pager = findViewById(R.id.view_pager)
     }

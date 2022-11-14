@@ -138,46 +138,6 @@
             android:textColor="#B81F262E" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    <RadioGroup-->
-    <!--        android:id="@+id/user_role_rg"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginVertical="4dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:weightSum="2">-->
-
-    <!--        <RadioButton-->
-    <!--            android:id="@+id/student_rb"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginEnd="3dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@drawable/radio_button"-->
-    <!--            android:button="@android:color/transparent"-->
-    <!--            android:gravity="center"-->
-    <!--            android:paddingVertical="20dp"-->
-    <!--            android:text="@string/student"-->
-    <!--            android:textColor="@drawable/radio_button_text"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <RadioButton-->
-    <!--            android:id="@+id/teacher_rb"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="3dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@drawable/radio_button"-->
-    <!--            android:button="@android:color/transparent"-->
-    <!--            android:gravity="center"-->
-    <!--            android:paddingVertical="20dp"-->
-    <!--            android:text="@string/teacher"-->
-    <!--            android:textColor="@drawable/radio_button_text"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-    <!--    </RadioGroup>-->
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register_btn"
         android:layout_width="match_parent"
@@ -188,4 +148,26 @@
         android:text="@string/register"
         android:textColor="#FFF"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_have_an_account" />
+
+        <TextView
+            android:id="@+id/login_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/login"
+            android:textColor="?android:colorPrimary"
+            android:textStyle="bold" />
+    </LinearLayout>
 </LinearLayout>
