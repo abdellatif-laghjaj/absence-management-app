@@ -71,6 +71,12 @@ class StudentActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+
+        scan_qr_code_cv.setOnClickListener {
+            Intent(this, ScanQrCodeActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     //logout
