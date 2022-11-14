@@ -47,6 +47,9 @@ class ScanQrCodeActivity : AppCompatActivity() {
         code_scanner.isAutoFocusEnabled = true
         code_scanner.isFlashEnabled = false
 
+        //add zoom feature
+        code_scanner.zoom = 3
+
         code_scanner.decodeCallback = DecodeCallback {
             runOnUiThread {
                 FancyToast.makeText(
