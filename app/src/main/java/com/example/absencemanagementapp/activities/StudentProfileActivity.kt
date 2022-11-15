@@ -71,7 +71,7 @@ class StudentProfileActivity : AppCompatActivity() {
             )
 
             //check if the permissions are granted
-            if (EasyPermissions.hasPermissions(this, *perms)) {
+            if (EasyPermissions.hasPermissions(this, perms.toString())) {
                 //if the permissions are granted, open the camera
                 pickImage()
             } else {
@@ -80,7 +80,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     this,
                     "Please grant the permissions",
                     REQUEST_CODE,
-                    *perms
+                    perms.toString()
                 )
             }
         }
@@ -192,8 +192,8 @@ class StudentProfileActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val student = snapshot.getValue(Student::class.java)
                 user_name_tv.text = student!!.email
-                user_email_tv.text = student!!.email
-                first_name_et.setText(student!!.first_name)
+                user_email_tv.text = student.email
+                first_name_et.setText(student.first_name)
                 last_name_et.setText(student.last_name)
                 cin_et.setText(student.cin)
                 cne_et.setText(student.cne)
