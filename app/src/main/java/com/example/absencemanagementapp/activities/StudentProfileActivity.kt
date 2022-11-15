@@ -28,11 +28,10 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.IOException
-import java.net.URI
 
 
 class StudentProfileActivity : AppCompatActivity() {
-    private lateinit var profile_image_picker_civ: CircleImageView
+    private lateinit var profile_image_picker_btn: ImageButton
     private lateinit var student_profile_image_civ: CircleImageView
     private lateinit var back_iv: ImageView
     private lateinit var user_name_tv: TextView
@@ -93,7 +92,7 @@ class StudentProfileActivity : AppCompatActivity() {
             //adapterView.getItemAtPosition(i)
         }
 
-        profile_image_picker_civ.setOnClickListener {
+        profile_image_picker_btn.setOnClickListener {
             Dexter.withContext(this)
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(object : PermissionListener {
@@ -228,7 +227,7 @@ class StudentProfileActivity : AppCompatActivity() {
 
     public fun initViews() {
         student_profile_image_civ = findViewById(R.id.student_profile_image_civ)
-        profile_image_picker_civ = findViewById(R.id.profile_image_picker_civ)
+        profile_image_picker_btn = findViewById(R.id.profile_image_picker_btn)
         back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
         user_email_tv = findViewById(R.id.user_email_tv)
