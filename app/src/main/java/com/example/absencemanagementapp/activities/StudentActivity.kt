@@ -23,6 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
+    private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     private lateinit var student_image_civ: CircleImageView
     private lateinit var user_name_tv: TextView
     private lateinit var scan_qr_code_cv: CardView
@@ -39,6 +40,8 @@ class StudentActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
+
+        swipeToRefresh()
 
         //initiate views
         initViews()
@@ -90,6 +93,14 @@ class StudentActivity : AppCompatActivity() {
         }
     }
 
+    private fun swipeToRefresh() {
+        swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
+        swipe_refresh_layout.setOnRefreshListener {
+            swipe_refresh_layout.isRefreshing = false
+            recreate()
+        }
+    }
+
     //logout
     private fun logout() {
         val dialog = MaterialDialog.Builder(this).setTitle("Logout")
@@ -117,6 +128,7 @@ class StudentActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
         logout_cv = findViewById(R.id.logout_cv)
