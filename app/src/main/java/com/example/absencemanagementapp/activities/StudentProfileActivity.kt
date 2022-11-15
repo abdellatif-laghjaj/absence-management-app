@@ -28,6 +28,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.IOException
+import java.net.URI
 
 
 class StudentProfileActivity : AppCompatActivity() {
@@ -43,12 +44,13 @@ class StudentProfileActivity : AppCompatActivity() {
     private lateinit var filiere_dropdown: AutoCompleteTextView
     private lateinit var semester_dropdown: AutoCompleteTextView
     private lateinit var update_btn: Button
-    private lateinit var bit_map: Bitmap
+    private lateinit var bitmap: Bitmap
 
     private val semesters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     private final val REQUEST_CODE = 100
+    private lateinit var uri: Uri
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -123,7 +125,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     last_name_et.text.toString(),
                     cin_et.text.toString(),
                     cne_et.text.toString(),
-                    "https://firebasestorage.googleapis.com/v0/b/absence-management-app-465ef.appspot.com/o/profile_images%2Favatar.png?alt=media&token=51241a8c-1dd0-4a1c-8286-083cc6da0aee",
+                    bitmap.toString(),
                     filiere_dropdown.text.toString(),
                     semester_dropdown.text.toString(),
                     email
@@ -134,6 +136,29 @@ class StudentProfileActivity : AppCompatActivity() {
                         FancyToast.makeText(
                             this,
                             "Profile updated successfully",
+                            Toast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,
+                            false
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        FancyToast.makeText(
+                            this,
+                            "Error: ${it.message}",
+                            Toast.LENGTH_SHORT,
+                            FancyToast.ERROR,
+                            false
+                        ).show()
+                    }
+
+                //save the image
+                val storageRef = storage.reference
+                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
+                imageRef.putFile(uri)
+                    .addOnSuccessListener {
+                        FancyToast.makeText(
+                            this,
+                            "Image uploaded successfully",
                             Toast.LENGTH_SHORT,
                             FancyToast.SUCCESS,
                             false
@@ -251,9 +276,9 @@ class StudentProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            val uri = data.data
+            uri = data.data!!
             try {
-                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                 student_profile_image_civ.setImageBitmap(bitmap)
             } catch (e: IOException) {
                 FancyToast.makeText(
