@@ -1,13 +1,12 @@
 package com.example.absencemanagementapp.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.provider.MediaStore
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
@@ -18,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
+import pub.devrel.easypermissions.EasyPermissions
 
 class StudentProfileActivity : AppCompatActivity() {
     private lateinit var profile_image_picker_civ: CircleImageView
@@ -34,6 +34,8 @@ class StudentProfileActivity : AppCompatActivity() {
 
     private val semesters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
+
+    private final val REQUEST_CODE = 100
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -62,7 +64,25 @@ class StudentProfileActivity : AppCompatActivity() {
         }
 
         profile_image_picker_civ.setOnClickListener {
+            //Camera and storage permission
+            val perms = arrayOf<String>(
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
 
+            //check if the permissions are granted
+            if (EasyPermissions.hasPermissions(this, *perms)) {
+                //if the permissions are granted, open the camera
+                pickImage()
+            } else {
+                //if the permissions are not granted, request them
+                EasyPermissions.requestPermissions(
+                    this,
+                    "Please grant the permissions",
+                    REQUEST_CODE,
+                    *perms
+                )
+            }
         }
 
         //update logic
@@ -196,5 +216,42 @@ class StudentProfileActivity : AppCompatActivity() {
     public fun getCurrentUserEmail(): String {
         val user = auth.currentUser
         return user!!.email.toString()
+    }
+
+    public fun pickImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 0)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //handle the permissions result
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            val uri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            profile_image_picker_civ.setImageBitmap(bitmap)
+            uploadImageToFirebaseStorage()
+        }
+    }
+
+    private fun uploadImageToFirebaseStorage() {
+        FancyToast.makeText(
+            this,
+            "Uploading image...",
+            Toast.LENGTH_SHORT,
+            FancyToast.INFO,
+            false
+        ).show()
     }
 }
