@@ -41,6 +41,21 @@
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
 
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_picker_civ"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@+id/student_image_civ"
+            android:layout_alignBottom="@+id/student_image_civ"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/ic_photo_camera"
+            app:civ_border_color="?android:colorAccent"
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="@color/black" />
+
         <TextView
             android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
