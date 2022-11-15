@@ -70,4 +70,7 @@ dependencies {
 
     //Dexter
     implementation 'com.karumi:dexter:6.2.3'
+
+    //Swipe Refresh Layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }
