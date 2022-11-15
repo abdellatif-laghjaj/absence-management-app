@@ -77,6 +77,7 @@ class TeacherRegisterFragment : Fragment() {
                     first_name_et.text.toString().trim(),
                     last_name_et.text.toString().trim(),
                     cin_et.text.toString().trim(),
+                    "https://firebasestorage.googleapis.com/v0/b/absence-management-app-465ef.appspot.com/o/profile_images%2Favatar.png?alt=media&token=51241a8c-1dd0-4a1c-8286-083cc6da0aee",
                     email_et.text.toString().trim()
                 )
                 database = FirebaseDatabase.getInstance()

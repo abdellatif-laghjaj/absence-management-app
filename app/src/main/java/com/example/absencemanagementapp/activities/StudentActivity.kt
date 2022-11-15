@@ -51,6 +51,21 @@ class StudentActivity : AppCompatActivity() {
             }
         }
 
+        //get user image
+        database.getReference("students").child(user_id).child("avatar").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    val image = it.value.toString()
+                    student_image_civ.setImageResource(
+                        resources.getIdentifier(
+                            image,
+                            "drawable",
+                            packageName
+                        )
+                    )
+                }
+            }
+
         //dashboard cards handling
         reset_password_cv.setOnClickListener {
             showResetPasswordDialog()
