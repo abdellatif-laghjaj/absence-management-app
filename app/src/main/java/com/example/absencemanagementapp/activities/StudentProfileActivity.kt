@@ -61,7 +61,11 @@ class StudentProfileActivity : AppCompatActivity() {
             //adapterView.getItemAtPosition(i)
         }
 
-        //regsitration logic
+        profile_image_picker_civ.setOnClickListener {
+
+        }
+
+        //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
                 val email = getCurrentUserEmail()
@@ -148,6 +152,7 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     public fun initViews() {
+        profile_image_picker_civ = findViewById(R.id.profile_image_picker_civ)
         back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
         user_email_tv = findViewById(R.id.user_email_tv)
