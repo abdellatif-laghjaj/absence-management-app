@@ -3,6 +3,8 @@ package com.example.absencemanagementapp.activities
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.*
@@ -15,12 +17,20 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
-import pub.devrel.easypermissions.EasyPermissions
+import java.io.IOException
+
 
 class StudentProfileActivity : AppCompatActivity() {
     private lateinit var profile_image_picker_civ: CircleImageView
+    private lateinit var student_profile_image_civ: CircleImageView
     private lateinit var back_iv: ImageView
     private lateinit var user_name_tv: TextView
     private lateinit var user_email_tv: TextView
@@ -31,6 +41,7 @@ class StudentProfileActivity : AppCompatActivity() {
     private lateinit var filiere_dropdown: AutoCompleteTextView
     private lateinit var semester_dropdown: AutoCompleteTextView
     private lateinit var update_btn: Button
+    private lateinit var bit_map: Bitmap
 
     private val semesters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
@@ -64,25 +75,26 @@ class StudentProfileActivity : AppCompatActivity() {
         }
 
         profile_image_picker_civ.setOnClickListener {
-            //Camera and storage permission
-            val perms = arrayOf<String>(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
+            Dexter.withContext(this)
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                        //open gallery
+                        val intent = Intent(Intent.ACTION_PICK)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, REQUEST_CODE)
+                    }
 
-            //check if the permissions are granted
-            if (EasyPermissions.hasPermissions(this, perms.toString())) {
-                //if the permissions are granted, open the camera
-                pickImage()
-            } else {
-                //if the permissions are not granted, request them
-                EasyPermissions.requestPermissions(
-                    this,
-                    "Please grant the permissions",
-                    REQUEST_CODE,
-                    perms.toString()
-                )
-            }
+                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permission: PermissionRequest?,
+                        token: PermissionToken?
+                    ) {
+                        token?.continuePermissionRequest()
+                    }
+                }).check()
         }
 
         //update logic
@@ -172,6 +184,7 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     public fun initViews() {
+        student_profile_image_civ = findViewById(R.id.student_profile_image_civ)
         profile_image_picker_civ = findViewById(R.id.profile_image_picker_civ)
         back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
@@ -218,38 +231,31 @@ class StudentProfileActivity : AppCompatActivity() {
         return user!!.email.toString()
     }
 
-    public fun pickImage() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 0)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //handle the permissions result
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
-
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val uri = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-            profile_image_picker_civ.setImageBitmap(bitmap)
-            uploadImageToFirebaseStorage()
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                student_profile_image_civ.setImageBitmap(bitmap)
+            } catch (e: IOException) {
+                FancyToast.makeText(
+                    this,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+                e.printStackTrace()
+            }
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun uploadImageToFirebaseStorage() {
+    private fun uploadImageToFirebaseStorage(uri: Uri?) {
         FancyToast.makeText(
             this,
             "Uploading image...",
-            Toast.LENGTH_SHORT,
+            FancyToast.LENGTH_SHORT,
             FancyToast.INFO,
             false
         ).show()
