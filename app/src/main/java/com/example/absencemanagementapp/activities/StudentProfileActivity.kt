@@ -17,8 +17,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.shashank.sony.fancytoastlib.FancyToast
+import de.hdodenhof.circleimageview.CircleImageView
 
 class StudentProfileActivity : AppCompatActivity() {
+    private lateinit var profile_image_picker_civ: CircleImageView
     private lateinit var back_iv: ImageView
     private lateinit var user_name_tv: TextView
     private lateinit var user_email_tv: TextView
