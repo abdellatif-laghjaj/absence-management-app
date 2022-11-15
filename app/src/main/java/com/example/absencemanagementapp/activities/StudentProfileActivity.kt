@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
@@ -61,6 +62,18 @@ class StudentProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
 
+        //get user id
+        val user_id = auth.currentUser!!.uid
+
+        database.getReference("students").child(user_id).child("avatar").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    //get the image
+                    val image = it.value.toString()
+                    Glide.with(this).load(image).into(student_profile_image_civ)
+                }
+            }
+
         //put the code here
         initViews()
         initDropDowns()
@@ -110,6 +123,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     last_name_et.text.toString(),
                     cin_et.text.toString(),
                     cne_et.text.toString(),
+                    "https://firebasestorage.googleapis.com/v0/b/absence-management-app-465ef.appspot.com/o/profile_images%2Favatar.png?alt=media&token=51241a8c-1dd0-4a1c-8286-083cc6da0aee",
                     filiere_dropdown.text.toString(),
                     semester_dropdown.text.toString(),
                     email

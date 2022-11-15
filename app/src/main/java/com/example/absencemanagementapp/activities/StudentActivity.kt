@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
@@ -55,14 +56,9 @@ class StudentActivity : AppCompatActivity() {
         database.getReference("students").child(user_id).child("avatar").get()
             .addOnSuccessListener {
                 if (it.exists()) {
+                    //get the image
                     val image = it.value.toString()
-                    student_image_civ.setImageResource(
-                        resources.getIdentifier(
-                            image,
-                            "drawable",
-                            packageName
-                        )
-                    )
+                    Glide.with(this).load(image).into(student_image_civ)
                 }
             }
 
