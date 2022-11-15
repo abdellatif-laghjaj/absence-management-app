@@ -96,9 +96,18 @@ class StudentActivity : AppCompatActivity() {
     private fun swipeToRefresh() {
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         swipe_refresh_layout.setOnRefreshListener {
+            startActivity(Intent(this, StudentActivity::class.java))
+            finish()
+            overridePendingTransition(0, 0)
             swipe_refresh_layout.isRefreshing = false
-            recreate()
         }
+
+        //change the color of the swipe refresh layout
+        swipe_refresh_layout.setColorSchemeResources(
+            R.color.blue,
+            R.color.white,
+            R.color.yellow
+        )
     }
 
     //logout
