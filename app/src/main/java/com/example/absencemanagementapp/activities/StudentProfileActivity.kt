@@ -124,8 +124,8 @@ class StudentProfileActivity : AppCompatActivity() {
                     first_name_et.text.toString(),
                     last_name_et.text.toString(),
                     cin_et.text.toString(),
+                    uri.toString(),
                     cne_et.text.toString(),
-                    bitmap.toString(),
                     filiere_dropdown.text.toString(),
                     semester_dropdown.text.toString(),
                     email
