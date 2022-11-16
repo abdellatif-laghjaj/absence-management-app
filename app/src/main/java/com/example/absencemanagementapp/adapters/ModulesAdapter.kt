@@ -25,8 +25,6 @@ class ModulesAdapter(private val mList: List<Module>) : RecyclerView.Adapter<Mod
         var module = mList[position];
         holder.module_intitule.setText(module.inititule);
         holder.module_semestre.setText(module.semestre.toString());
-
-        holder?.containerView?.setOnClickListener { clickListener(item) }
     }
 
     override fun getItemCount(): Int {
