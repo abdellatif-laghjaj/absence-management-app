@@ -32,7 +32,7 @@
             android:src="@drawable/card_image_ui" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/student_image_civ"
+            android:id="@+id/student_profile_image_civ"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_centerHorizontal="true"
@@ -41,11 +41,29 @@
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
 
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/profile_image_picker_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@+id/student_profile_image_civ"
+            android:layout_alignBottom="@+id/student_profile_image_civ"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/pick_image_bg"
+            android:foregroundGravity="center"
+            android:padding="12dp"
+            android:src="@drawable/ic_photo_camera"
+            app:civ_border_color="?android:colorAccent"
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="@color/black" />
+
         <TextView
             android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/student_image_civ"
+            android:layout_below="@+id/student_profile_image_civ"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:text="Abdellatif Laghjaj"

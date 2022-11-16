@@ -60,4 +60,17 @@ dependencies {
 
     //Qr Code Scanner
     implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    //Kotlinx Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    //Dexter
+    implementation 'com.karumi:dexter:6.2.3'
+
+    //Swipe Refresh Layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

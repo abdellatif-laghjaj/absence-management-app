@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
@@ -22,6 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
+    private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     private lateinit var student_image_civ: CircleImageView
     private lateinit var user_name_tv: TextView
     private lateinit var scan_qr_code_cv: CardView
@@ -39,6 +41,8 @@ class StudentActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        swipeToRefresh()
+
         //initiate views
         initViews()
 
@@ -50,6 +54,16 @@ class StudentActivity : AppCompatActivity() {
                 user_name_tv.text = student!!.first_name
             }
         }
+
+        //get user image
+        database.getReference("students").child(user_id).child("avatar").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    //get the image
+                    val image = it.value.toString()
+                    Glide.with(this).load(image).into(student_image_civ)
+                }
+            }
 
         //dashboard cards handling
         reset_password_cv.setOnClickListener {
@@ -79,6 +93,23 @@ class StudentActivity : AppCompatActivity() {
         }
     }
 
+    private fun swipeToRefresh() {
+        swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
+        swipe_refresh_layout.setOnRefreshListener {
+            startActivity(Intent(this, StudentActivity::class.java))
+            finish()
+            overridePendingTransition(0, 0)
+            swipe_refresh_layout.isRefreshing = false
+        }
+
+        //change the color of the swipe refresh layout
+        swipe_refresh_layout.setColorSchemeResources(
+            R.color.blue,
+            R.color.white,
+            R.color.yellow
+        )
+    }
+
     //logout
     private fun logout() {
         val dialog = MaterialDialog.Builder(this).setTitle("Logout")
@@ -106,6 +137,7 @@ class StudentActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
         logout_cv = findViewById(R.id.logout_cv)

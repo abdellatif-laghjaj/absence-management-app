@@ -9,6 +9,7 @@ class Student() : User() {
         first_name: String,
         last_name: String,
         cin: String,
+        avatar: String,
         cne: String,
         filiere: String,
         semester: String,
@@ -17,6 +18,7 @@ class Student() : User() {
         this.first_name = first_name
         this.last_name = last_name
         this.cin = cin
+        this.avatar = avatar
         this.cne = cne
         this.filiere = filiere
         this.semester = semester
@@ -27,6 +29,7 @@ class Student() : User() {
         first_name: String,
         last_name: String,
         cin: String,
+        avatar: String,
         cne: String,
         filiere: String,
         semester: String,
@@ -36,6 +39,7 @@ class Student() : User() {
         this.first_name = first_name
         this.last_name = last_name
         this.cin = cin
+        this.avatar = avatar
         this.cne = cne
         this.filiere = filiere
         this.semester = semester
