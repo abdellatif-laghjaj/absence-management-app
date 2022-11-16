@@ -1,7 +1,7 @@
 package com.example.absencemanagementapp.models
 
 class Module {
-    var id: String? = null;
+    var id: Int? = null;
     var inititule: String? = null;
     var abrv: String? = null;
     var semestre: Int? = null;
