@@ -9,7 +9,6 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Module
 
 class ModulesAdapter(private val mList: List<Module>) : RecyclerView.Adapter<ModulesAdapter.ViewHolder>()  {
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var module_intitule: TextView = itemView.findViewById(R.id.module_intitule);
         val module_semestre: TextView = itemView.findViewById(R.id.module_semestre);
@@ -26,6 +25,8 @@ class ModulesAdapter(private val mList: List<Module>) : RecyclerView.Adapter<Mod
         var module = mList[position];
         holder.module_intitule.setText(module.inititule);
         holder.module_semestre.setText(module.semestre.toString());
+
+        holder?.containerView?.setOnClickListener { clickListener(item) }
     }
 
     override fun getItemCount(): Int {
