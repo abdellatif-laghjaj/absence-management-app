@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/module_intitule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -34,7 +35,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/user_total_absence_tv"
+                android:id="@+id/module_semestre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4"
@@ -42,13 +43,6 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_checklist" />
 
     </RelativeLayout>
 </RelativeLayout>
