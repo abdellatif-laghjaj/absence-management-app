@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.adapters.ModulesAdapter
+import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Student
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -20,7 +24,22 @@ class TeacherActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher)
+        setContentView(R.layout.activity_teacher);
+
+        //region: Display all modules of teacher
+        val rv = findViewById<RecyclerView>(R.id.recyclerview);
+        rv.layoutManager = LinearLayoutManager(this);
+        val modules = ArrayList<Module>();
+        modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
+        modules.add(Module(2, "Analyse 1", "ALG1", 1, 9))
+        modules.add(Module(3, "Physique 1", "ALG1", 1, 9))
+        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, 9))
+        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, 9))
+        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, 9))
+        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, 9))
+        val modulesAdapter = ModulesAdapter(modules);
+        rv.adapter = modulesAdapter;
+        //endregion
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
@@ -38,18 +57,17 @@ class TeacherActivity : AppCompatActivity() {
         }
 
         //dashboard cards handling
-        logout_cv.setOnClickListener {
-            logout()
+//        logout_cv.setOnClickListener {
+//            logout()
             //redirect to login activity
-        }
+//        }
     }
 
     private fun initViews() {
         user_name_tv = findViewById(R.id.user_name_tv)
-        logout_cv = findViewById(R.id.logout_cv)
     }
 
-    //logout
+ /*   //logout
     private fun logout() {
         val dialog = MaterialDialog.Builder(this)
             .setTitle("Logout")
@@ -71,7 +89,7 @@ class TeacherActivity : AppCompatActivity() {
         animationView.scaleX = 0.5f
         animationView.scaleY = 0.5f
     }
-
+*/
     //redirect to login activity
     private fun redirectToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
