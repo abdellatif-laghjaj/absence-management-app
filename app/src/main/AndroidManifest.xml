@@ -17,6 +17,9 @@
         android:theme="@style/Theme.AbsenceManagementApp"
         tools:targetApi="31">
         <activity
+            android:name=".ModuleActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ScanQrCodeActivity"
             android:exported="false">
             <meta-data
