@@ -6,9 +6,7 @@ class Seance {
     private var start_time: String? = null
     private var end_time: String? = null
     private var type: String? = null
-    private var branch: String? = null
     private var n_salle: Int? = null
-    private var semester: Int? = null
     private var n_module: Int? = null
 
     constructor()
@@ -29,9 +27,7 @@ class Seance {
         this.start_time = start_time
         this.end_time = end_time
         this.type = type
-        this.branch = branch
         this.n_salle = n_salle
-        this.semester = semester
         this.n_module = n_module
     }
 }
