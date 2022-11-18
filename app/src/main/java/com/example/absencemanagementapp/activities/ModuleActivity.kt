@@ -12,6 +12,7 @@ import com.example.absencemanagementapp.models.Seance
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
+    private lateinit var back_iv: TextView
     var id = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,8 @@ class ModuleActivity : AppCompatActivity() {
         //
         module_name_tv = findViewById(R.id.module_intitule_tv)
         module_name_tv.setText(modules[id].inititule)
+        back_iv = findViewById(R.id.back_iv)
+        back_iv.setOnClickListener({ back() })
         //
 
         // region: Display all seances of module
