@@ -2,6 +2,7 @@ package com.example.absencemanagementapp.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -143,6 +144,16 @@ class StudentProfileActivity : AppCompatActivity() {
         //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
+
+                val upload_dialog = Dialog(this)
+                upload_dialog.setContentView(R.layout.dialog_uploading)
+                upload_dialog.window!!.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                upload_dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+                upload_dialog.show()
+
                 val email = getCurrentUserEmail()
                 val student = Student(
                     first_name_et.text.toString(),
@@ -154,6 +165,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     semester_dropdown.text.toString(),
                     email
                 )
+
                 database.reference.child("students").child(auth.currentUser!!.uid)
                     .setValue(student)
                     .addOnSuccessListener {
@@ -187,6 +199,8 @@ class StudentProfileActivity : AppCompatActivity() {
                             FancyToast.SUCCESS,
                             false
                         ).show()
+
+                        upload_dialog.dismiss()
                     }
                     .addOnFailureListener {
                         FancyToast.makeText(
@@ -196,6 +210,8 @@ class StudentProfileActivity : AppCompatActivity() {
                             FancyToast.ERROR,
                             false
                         ).show()
+
+                        upload_dialog.dismiss()
                     }
             }
         }
