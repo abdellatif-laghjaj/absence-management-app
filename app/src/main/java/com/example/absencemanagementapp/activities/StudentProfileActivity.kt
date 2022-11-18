@@ -2,6 +2,7 @@ package com.example.absencemanagementapp.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -82,6 +83,22 @@ class StudentProfileActivity : AppCompatActivity() {
 
         back_iv.setOnClickListener {
             finish()
+        }
+
+        student_profile_image_civ.setOnClickListener {
+            //show image in dialog
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_user_image)
+            val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
+            //get current user image
+            database.getReference("students").child(user_id).child("avatar").get()
+                .addOnSuccessListener {
+                    if (it.exists()) {
+                        //get the image
+                        val image_url = it.value.toString()
+                        Glide.with(this).load(image_url).into(image)
+                    }
+                }
         }
 
         filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
