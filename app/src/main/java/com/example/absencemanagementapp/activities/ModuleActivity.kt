@@ -3,6 +3,7 @@ package com.example.absencemanagementapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,10 +12,13 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
+import kotlin.random.Random
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
     private lateinit var back_iv: ImageView
+    private lateinit var nb_students_tv: TextView
+    private lateinit var new_seance_btn: Button
     var id = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,21 +26,7 @@ class ModuleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_module)
 
         //
-        val modules = ArrayList<Module>();
-        modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
-        modules.add(Module(2, "Analyse 1", "ALG1", 1, 9))
-        modules.add(Module(3, "Physique 1", "ALG1", 1, 9))
-        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, 9))
-        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, 9))
-        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, 9))
-        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, 9))
-        //
-
-        //
-        module_name_tv = findViewById(R.id.module_intitule_tv)
-        module_name_tv.setText(modules[id].inititule)
-        back_iv = findViewById(R.id.back_iv)
-        back_iv.setOnClickListener({ back() })
+        initView()
         //
 
         // region: Display all seances of module
@@ -54,7 +44,36 @@ class ModuleActivity : AppCompatActivity() {
         // endregion
     }
 
+    private fun initView() {
+        val modules = ArrayList<Module>();
+        modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
+        modules.add(Module(2, "Analyse 1", "ALG1", 1, 9))
+        modules.add(Module(3, "Physique 1", "ALG1", 1, 9))
+        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, 9))
+        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, 9))
+        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, 9))
+        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, 9))
+
+        module_name_tv = findViewById(R.id.module_intitule_tv)
+        module_name_tv.setText(modules[4].inititule)
+
+        back_iv = findViewById(R.id.back_arrow)
+        back_iv.setOnClickListener({ back() })
+
+        nb_students_tv = findViewById(R.id.nb_students_tv)
+        nb_students_tv.setText("77")
+
+        new_seance_btn = findViewById(R.id.new_seance_btn)
+        new_seance_btn.setOnClickListener({ toNewSeanceView() })
+    }
+
     private fun back() {
+        val intent = Intent(this, TeacherActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun toNewSeanceView() {
         val intent = Intent(this, TeacherActivity::class.java)
         startActivity(intent)
         finish()
