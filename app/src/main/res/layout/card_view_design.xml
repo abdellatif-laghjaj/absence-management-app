@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:layout_marginBottom="16dp"
+    android:layout_marginBottom="12dp"
     android:background="@drawable/card_ui">
 
     <ImageView
@@ -30,7 +30,8 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/module_semestre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -52,5 +53,4 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
