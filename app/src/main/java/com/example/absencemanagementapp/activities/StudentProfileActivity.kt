@@ -62,6 +62,14 @@ class StudentProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
 
+        val upload_dialog = Dialog(this)
+        upload_dialog.setContentView(R.layout.dialog_uploading)
+        upload_dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        upload_dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
@@ -144,14 +152,6 @@ class StudentProfileActivity : AppCompatActivity() {
         //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
-
-                val upload_dialog = Dialog(this)
-                upload_dialog.setContentView(R.layout.dialog_uploading)
-                upload_dialog.window!!.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                upload_dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
                 upload_dialog.show()
 
                 val email = getCurrentUserEmail()
