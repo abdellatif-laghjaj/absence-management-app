@@ -27,7 +27,7 @@ class TeacherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_teacher);
 
         //region: Display all modules of teacher
-        val rv = findViewById<RecyclerView>(R.id.recyclerview);
+        val rv = findViewById<RecyclerView>(R.id.module_rv);
         rv.layoutManager = LinearLayoutManager(this);
         val modules = ArrayList<Module>();
         modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
@@ -37,7 +37,7 @@ class TeacherActivity : AppCompatActivity() {
         modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, 9))
         modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, 9))
         modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, 9))
-        val modulesAdapter = ModulesAdapter(modules);
+        val modulesAdapter = ModulesAdapter(modules, this);
         rv.adapter = modulesAdapter;
         //endregion
 

@@ -2,14 +2,17 @@ package com.example.absencemanagementapp.models
 
 class Seance {
     var id: String? = null
-    private var date: String? = null
-    private var start_time: String? = null
-    private var end_time: String? = null
-    private var type: String? = null
-    private var n_salle: Int? = null
-    private var n_module: Int? = null
+    var date: String? = null
+    var start_time: String? = null
+    var end_time: String? = null
+    var type: String? = "Cour"
+    var n_salle: Int? = 0
+    var n_module: Int? = 0
+    var total_absences: Int? = 0
 
     constructor()
+
+
 
     constructor(
         id: String?,
@@ -29,5 +32,11 @@ class Seance {
         this.type = type
         this.n_salle = n_salle
         this.n_module = n_module
+    }
+
+    constructor(date: String?, type: String?, total_absences: Int?) {
+        this.date = date
+        this.type = type
+        this.total_absences = total_absences
     }
 }

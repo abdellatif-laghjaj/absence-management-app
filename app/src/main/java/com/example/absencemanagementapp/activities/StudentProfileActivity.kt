@@ -135,7 +135,7 @@ class StudentProfileActivity : AppCompatActivity() {
                         FancyToast.makeText(
                             this,
                             "Profile updated successfully",
-                            Toast.LENGTH_SHORT,
+                            FancyToast.LENGTH_SHORT,
                             FancyToast.SUCCESS,
                             false
                         ).show()
@@ -144,7 +144,7 @@ class StudentProfileActivity : AppCompatActivity() {
                         FancyToast.makeText(
                             this,
                             "Error: ${it.message}",
-                            Toast.LENGTH_SHORT,
+                            FancyToast.LENGTH_SHORT,
                             FancyToast.ERROR,
                             false
                         ).show()
@@ -158,7 +158,7 @@ class StudentProfileActivity : AppCompatActivity() {
                         FancyToast.makeText(
                             this,
                             "Image uploaded successfully",
-                            Toast.LENGTH_SHORT,
+                            FancyToast.LENGTH_SHORT,
                             FancyToast.SUCCESS,
                             false
                         ).show()
@@ -167,7 +167,7 @@ class StudentProfileActivity : AppCompatActivity() {
                         FancyToast.makeText(
                             this,
                             "Error: ${it.message}",
-                            Toast.LENGTH_SHORT,
+                            FancyToast.LENGTH_SHORT,
                             FancyToast.ERROR,
                             false
                         ).show()
@@ -283,7 +283,7 @@ class StudentProfileActivity : AppCompatActivity() {
                 FancyToast.makeText(
                     this,
                     "Error: ${e.message}",
-                    Toast.LENGTH_SHORT,
+                    FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
                 ).show()
