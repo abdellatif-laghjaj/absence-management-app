@@ -31,3 +31,4 @@ google-services.json
 /android/app/google-services.json
 # Android Profiling
 *.hprof
+.idea/misc.xml
