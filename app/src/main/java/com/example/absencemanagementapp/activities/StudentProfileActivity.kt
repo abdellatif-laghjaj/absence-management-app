@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -99,6 +100,13 @@ class StudentProfileActivity : AppCompatActivity() {
                         Glide.with(this).load(image_url).into(image)
                     }
                 }
+
+            dialog.window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+            dialog.show()
         }
 
         filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
