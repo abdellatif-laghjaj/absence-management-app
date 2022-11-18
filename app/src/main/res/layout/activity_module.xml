@@ -95,8 +95,10 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/seance_view_design">
 
             </androidx.recyclerview.widget.RecyclerView>
         </ScrollView>
