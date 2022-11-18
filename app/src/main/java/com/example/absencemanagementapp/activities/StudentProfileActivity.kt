@@ -2,11 +2,14 @@ package com.example.absencemanagementapp.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -59,6 +62,14 @@ class StudentProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
 
+        val upload_dialog = Dialog(this)
+        upload_dialog.setContentView(R.layout.dialog_uploading)
+        upload_dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        upload_dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
@@ -82,6 +93,29 @@ class StudentProfileActivity : AppCompatActivity() {
 
         back_iv.setOnClickListener {
             finish()
+        }
+
+        student_profile_image_civ.setOnClickListener {
+            //show image in dialog
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_user_image)
+            val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
+            //get current user image
+            database.getReference("students").child(user_id).child("avatar").get()
+                .addOnSuccessListener {
+                    if (it.exists()) {
+                        //get the image
+                        val image_url = it.value.toString()
+                        Glide.with(this).load(image_url).into(image)
+                    }
+                }
+
+            dialog.window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+            dialog.show()
         }
 
         filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
@@ -118,6 +152,8 @@ class StudentProfileActivity : AppCompatActivity() {
         //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
+                upload_dialog.show()
+
                 val email = getCurrentUserEmail()
                 val student = Student(
                     first_name_et.text.toString(),
@@ -129,6 +165,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     semester_dropdown.text.toString(),
                     email
                 )
+
                 database.reference.child("students").child(auth.currentUser!!.uid)
                     .setValue(student)
                     .addOnSuccessListener {
@@ -162,6 +199,8 @@ class StudentProfileActivity : AppCompatActivity() {
                             FancyToast.SUCCESS,
                             false
                         ).show()
+
+                        upload_dialog.dismiss()
                     }
                     .addOnFailureListener {
                         FancyToast.makeText(
@@ -171,6 +210,8 @@ class StudentProfileActivity : AppCompatActivity() {
                             FancyToast.ERROR,
                             false
                         ).show()
+
+                        upload_dialog.dismiss()
                     }
             }
         }
