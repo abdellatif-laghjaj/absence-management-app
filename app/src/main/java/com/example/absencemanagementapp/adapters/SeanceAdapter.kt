@@ -14,13 +14,14 @@ import com.example.absencemanagementapp.models.Seance
 
 class SeanceAdapter(private val seances: List<Seance>, val context: Context) : RecyclerView.Adapter<SeanceAdapter.ViewHolder>()  {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var module_intitule: TextView = itemView.findViewById(R.id.module_intitule);
-        val module_semestre: TextView = itemView.findViewById(R.id.module_semestre);
+        var seance_date_tv: TextView = itemView.findViewById(R.id.seance_date);
+        val seance_absences_tv: TextView = itemView.findViewById(R.id.seance_absences);
+        val seance_type_tv: TextView = itemView.findViewById(R.id.seance_type);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context)
-            .inflate(R.layout.card_view_design, parent, false)
+            .inflate(R.layout.seance_view_design, parent, false)
 
         return ViewHolder(view)
     }
@@ -31,7 +32,9 @@ class SeanceAdapter(private val seances: List<Seance>, val context: Context) : R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var seance = seances[position]
-        holder.module_intitule.setText(seance.id)
+        holder.seance_date_tv.setText(seance.date)
+        holder.seance_absences_tv.setText(seance.total_absences.toString())
+        holder.seance_type_tv.setText(seance.type)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, TeacherActivity::class.java)
