@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.LoginActivity
+import com.example.absencemanagementapp.activities.ModuleActivity
 import com.example.absencemanagementapp.models.Module
 
 class ModulesAdapter(private val modules: List<Module>, val context: Context) : RecyclerView.Adapter<ModulesAdapter.ViewHolder>()  {
@@ -28,10 +29,10 @@ class ModulesAdapter(private val modules: List<Module>, val context: Context) : 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var module = modules[position];
         holder.module_intitule.setText(module.inititule);
-        holder.module_semestre.setText("S" + module.semestre.toString());
+        holder.module_semestre.setText(module.semestre.toString());
 
         holder.itemView.setOnClickListener({
-            val intent = Intent(context, LoginActivity::class.java)
+            val intent = Intent(context, ModuleActivity::class.java)
             intent.putExtra("id", module.id)
             startActivity(context, intent, null)
         })
