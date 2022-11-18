@@ -3,7 +3,9 @@ package com.example.absencemanagementapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.SeanceAdapter
@@ -12,7 +14,7 @@ import com.example.absencemanagementapp.models.Seance
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
-    private lateinit var back_iv: TextView
+    private lateinit var back_iv: ImageView
     var id = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +41,14 @@ class ModuleActivity : AppCompatActivity() {
 
         // region: Display all seances of module
         val rv = findViewById<RecyclerView>(R.id.seances_rv)
+        rv.layoutManager = LinearLayoutManager(this)
         val seances = ArrayList<Seance>()
         seances.add(Seance("16/11/2022", "TP", 4))
         seances.add(Seance("15/11/2022", "Cour", 12))
         seances.add(Seance("08/11/2022", "Cour", 9))
         seances.add(Seance("01/11/2022", "Cour", 4))
+        seances.add(Seance("24/10/2022", "TP", 4))
+        seances.add(Seance("17/10/2022", "Cour", 4))
         val seanceAdapter = SeanceAdapter(seances, this)
         rv.adapter = seanceAdapter
         // endregion
