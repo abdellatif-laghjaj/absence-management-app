@@ -4,18 +4,15 @@
     <item
         android:id="@+id/dashboard"
         android:icon="@drawable/ic_dashboard"
-        android:title="Dashboard"
-        app:cnb_iconColor="@color/home" />
+        android:title="Dashboard"/>
 
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
-        android:title="Profile"
-        app:cnb_iconColor="@color/profile" />
+        android:title="Profile" />
 
     <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
-        android:title="Logout"
-        app:cnb_iconColor="@color/profile" />
+        android:title="Logout" />
 </menu>
