@@ -9,10 +9,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.SeanceActivity
 import com.example.absencemanagementapp.activities.TeacherActivity
 import com.example.absencemanagementapp.models.Seance
 
-class SeanceAdapter(private val seances: List<Seance>, val context: Context) : RecyclerView.Adapter<SeanceAdapter.ViewHolder>()  {
+class SeanceAdapter(private val seances: List<Seance>, val context: Context, val intitule: String?) : RecyclerView.Adapter<SeanceAdapter.ViewHolder>()  {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var seance_date_tv: TextView = itemView.findViewById(R.id.seance_date);
         val seance_absences_tv: TextView = itemView.findViewById(R.id.seance_absences);
@@ -37,8 +38,9 @@ class SeanceAdapter(private val seances: List<Seance>, val context: Context) : R
         holder.seance_type_tv.setText(seance.type)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, TeacherActivity::class.java)
-            intent.putExtra("id", seance.id)
+            val intent = Intent(context, SeanceActivity::class.java)
+            intent.putExtra("id", position)
+            intent.putExtra("module_intitule", intitule)
             startActivity(context, intent, null)
         }
     }

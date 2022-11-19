@@ -52,7 +52,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:id="@+id/modules_swipe">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
