@@ -22,6 +22,8 @@ class NewSeanceActivity : AppCompatActivity() {
 
     lateinit var update_btn: AppCompatButton
 
+    var id = 0
+
     var types = arrayOf("Cours", "TP", "Exam")
     var startHours = arrayOf("08:30", "10:30", "12:30", "14:30", "16:30")
     var endHours = arrayOf("10:15", "12:15", "14:15", "16:15", "18:15")
@@ -37,6 +39,7 @@ class NewSeanceActivity : AppCompatActivity() {
         back_iv = this.findViewById(R.id.back_iv)
         back_iv.setOnClickListener({ back() })
 
+        id = intent.getIntExtra("id", 0)
         initFields()
     }
 
@@ -103,7 +106,8 @@ class NewSeanceActivity : AppCompatActivity() {
 
     private fun back() {
         intent = Intent(this, ModuleActivity::class.java)
-        intent.putExtra("id", intent.getIntExtra("id", 0))
+        intent.putExtra("id", id)
+        startActivity(intent)
         finish()
     }
 }

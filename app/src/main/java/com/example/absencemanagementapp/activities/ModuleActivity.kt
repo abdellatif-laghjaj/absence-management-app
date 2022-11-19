@@ -13,6 +13,7 @@ import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
+import kotlin.properties.Delegates
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
@@ -21,6 +22,8 @@ class ModuleActivity : AppCompatActivity() {
     private lateinit var rv: RecyclerView
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
+
+    var id by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +44,19 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        var id = intent.getIntExtra("id", 0)
+        id = intent.getIntExtra("id", 0)
         var modules = getCurrentModule(id)
+        println()
+        println()
+        println()
+        println("=====================================================")
+        println()
+        println(id)
+        println()
+        println("=====================================================")
+        println()
+        println()
+        println()
 
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
         module_name_tv.setText(modules.inititule)
@@ -96,7 +110,7 @@ class ModuleActivity : AppCompatActivity() {
 
     private fun toNewSeanceView() {
         val intent = Intent(this, NewSeanceActivity::class.java)
-        intent.putExtra("id", intent.getIntExtra("id", 0))
+        intent.putExtra("id", id)
         startActivity(intent)
         finish()
     }
