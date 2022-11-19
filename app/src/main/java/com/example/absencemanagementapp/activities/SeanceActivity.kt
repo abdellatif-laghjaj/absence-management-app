@@ -36,16 +36,16 @@ class SeanceActivity : AppCompatActivity() {
         seance_date_tv.setText(getCurrentSeance(seance_id).date)
 
         seance_start_time_tv = this.findViewById(R.id.seance_start_time_tv)
-        seance_type_tv.setText(getCurrentSeance(seance_id).start_time)
+        seance_start_time_tv.setText(getCurrentSeance(seance_id).start_time)
 
         seance_end_time_tv = this.findViewById(R.id.seance_end_time_tv)
-        seance_type_tv.setText(getCurrentSeance(seance_id).end_time)
+        seance_end_time_tv.setText(getCurrentSeance(seance_id).end_time)
 
         salle_nb_tv = this.findViewById(R.id.salle_nb_tv)
-        seance_type_tv.setText(getCurrentSeance(seance_id).n_salle)
+        salle_nb_tv.setText(getCurrentSeance(seance_id).n_salle)
 
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
-        seance_type_tv.setText(getCurrentSeance(seance_id).total_absences)
+        total_absence_tv.setText(getCurrentSeance(seance_id).total_absences.toString())
     }
 
     private fun getCurrentSeance(id: Int): Seance {
