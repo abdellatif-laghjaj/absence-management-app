@@ -47,4 +47,5 @@
     <string name="bottom_sheet_handle">bottom sheet handle</string>
     <string name="forget_password">Forget Password?</string>
     <string name="my_stats">My stats</string>
+    <string name="scan">Scan</string>
 </resources>
