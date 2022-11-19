@@ -1,15 +1,19 @@
 package com.example.absencemanagementapp.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import com.example.absencemanagementapp.R
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
+    private lateinit var back_iv: ImageView
+
     lateinit var type_dropdown: AutoCompleteTextView
     lateinit var seance_date: AutoCompleteTextView
     lateinit var start_dropdown: AutoCompleteTextView
@@ -30,6 +34,9 @@ class NewSeanceActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        back_iv = this.findViewById(R.id.back_iv)
+        back_iv.setOnClickListener({ back() })
+
         initFields()
     }
 
@@ -92,5 +99,11 @@ class NewSeanceActivity : AppCompatActivity() {
             "Info2",
             "Info3"
         )
+    }
+
+    private fun back() {
+        intent = Intent(this, ModuleActivity::class.java)
+        intent.putExtra("id", intent.getIntExtra("id", 0))
+        finish()
     }
 }
