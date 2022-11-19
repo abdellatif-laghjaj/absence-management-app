@@ -17,6 +17,11 @@
         android:theme="@style/Theme.AbsenceManagementApp"
         tools:targetApi="31">
         <activity
+            android:name=".SeanceActivity"
+            android:exported="false"
+            android:label="@string/title_activity_seance"
+            android:theme="@style/Theme.AbsenceManagementApp.NoActionBar" />
+        <activity
             android:name=".activities.TeacherActivity"
             android:exported="false" />
         <activity

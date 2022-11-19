@@ -12,7 +12,6 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
-import kotlin.random.Random
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
@@ -38,7 +37,7 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        var modules = getModules()
+        var modules = getCurrentModule()
 
         var id = intent.getIntExtra("id", 0)
         module_name_tv = findViewById(R.id.module_intitule_tv)
@@ -54,7 +53,7 @@ class ModuleActivity : AppCompatActivity() {
         new_seance_btn.setOnClickListener({ toNewSeanceView() })
     }
 
-    private fun getModules(): List<Module> {
+    private fun getCurrentModule(): List<Module> {
         val modules = ArrayList<Module>();
 
         modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
