@@ -10,8 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="24dp"
-        android:background="?android:colorPrimary">
+        android:background="?android:colorPrimary"
+        android:paddingVertical="24dp">
 
         <ImageView
             android:id="@+id/back_iv"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/update_your_profile"
+            android:text="Séance details"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -63,52 +63,28 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="2dp"
-                    android:layout_weight="1"
                     app:boxCornerRadiusBottomEnd="10dp"
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_student">
+                    app:startIconDrawable="@drawable/ic_baseline_class_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/first_name_et"
+                    <AutoCompleteTextView
+                        android:id="@+id/type_dropdown"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/first_name"
+                        android:layout_height="match_parent"
+                        android:hint="Type of séance"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="2dp"
-                    android:layout_weight="1"
-                    app:boxCornerRadiusBottomEnd="10dp"
-                    app:boxCornerRadiusBottomStart="10dp"
-                    app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_student">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/last_name_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/last_name"
-                        android:inputType="text"
-                        android:paddingVertical="20dp"
-                        android:textColor="#B81F262E" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="2dp"
@@ -116,20 +92,20 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_verify">
+                    app:startIconDrawable="@drawable/ic_baseline_date_range_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/cne_et"
+                    <AutoCompleteTextView
+                        android:id="@+id/seance_date"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/cne"
+                        android:layout_height="match_parent"
+                        android:hint="Date of séance"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="2dp"
@@ -137,13 +113,34 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_verify">
+                    app:startIconDrawable="@drawable/ic_baseline_access_time_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/cin_et"
+                    <AutoCompleteTextView
+                        android:id="@+id/start_dropdown"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/cin"
+                        android:layout_height="match_parent"
+                        android:hint="Start time"
+                        android:inputType="text"
+                        android:paddingVertical="20dp"
+                        android:textColor="#B81F262E" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="2dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/end_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="End time"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
@@ -161,47 +158,26 @@
                     app:startIconDrawable="@drawable/ic_filiere">
 
                     <AutoCompleteTextView
-                        android:id="@+id/filiere_dropdown"
+                        android:id="@+id/salle_dropdown"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/branch"
+                        android:hint="Salle"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/update_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="2dp"
-                    app:boxCornerRadiusBottomEnd="10dp"
-                    app:boxCornerRadiusBottomStart="10dp"
-                    app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_semester">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/semester_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/semester"
-                        android:inputType="text"
-                        android:paddingVertical="20dp"
-                        android:textColor="#B81F262E" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginVertical="4dp"
+                    android:background="@drawable/button_layout"
+                    android:paddingVertical="18dp"
+                    android:text="ADD"
+                    android:textColor="#FFF"
+                    android:textSize="18sp" />
             </LinearLayout>
         </ScrollView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/update_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
-            android:background="@drawable/button_layout"
-            android:paddingVertical="18dp"
-            android:text="@string/update"
-            android:textColor="#FFF"
-            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>
