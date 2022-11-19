@@ -23,7 +23,7 @@ class ModuleActivity : AppCompatActivity() {
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
 
-    var id by Delegates.notNull<Int>()
+    var currentModuleId by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +44,8 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        id = intent.getIntExtra("id", 0)
-        var modules = getCurrentModule(id)
-        println()
-        println()
-        println()
-        println("=====================================================")
-        println()
-        println(id)
-        println()
-        println("=====================================================")
-        println()
-        println()
-        println()
+        currentModuleId = intent.getIntExtra("id", 0)
+        var modules = getCurrentModule(currentModuleId)
 
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
         module_name_tv.setText(modules.inititule)
@@ -110,7 +99,7 @@ class ModuleActivity : AppCompatActivity() {
 
     private fun toNewSeanceView() {
         val intent = Intent(this, NewSeanceActivity::class.java)
-        intent.putExtra("id", id)
+        intent.putExtra("id", currentModuleId)
         startActivity(intent)
         finish()
     }
