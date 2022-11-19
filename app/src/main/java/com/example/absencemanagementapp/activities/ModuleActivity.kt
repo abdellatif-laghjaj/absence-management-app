@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
@@ -16,6 +17,8 @@ import com.google.android.material.card.MaterialCardView
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
     private lateinit var back_iv: ImageView
+    private lateinit var seances_swipe: SwipeRefreshLayout
+    private lateinit var rv: RecyclerView
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
 
@@ -28,29 +31,40 @@ class ModuleActivity : AppCompatActivity() {
         //
 
         // region: Display all seances of module
-        val rv = findViewById<RecyclerView>(R.id.seances_rv)
+        initSeances()
+        // endregion
+    }
+
+    private fun initSeances() {
+        rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val seances = getSeances()
         val seanceAdapter =
             SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).inititule)
         rv.adapter = seanceAdapter
-        // endregion
     }
 
     private fun initView() {
         var id = intent.getIntExtra("id", 0)
         var modules = getCurrentModule(id)
-        module_name_tv = findViewById(R.id.module_intitule_tv)
+
+        module_name_tv = this.findViewById(R.id.module_intitule_tv)
         module_name_tv.setText(modules.inititule)
 
-        back_iv = findViewById(R.id.back_arrow)
+        back_iv = this.findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
 
-        absence_list_cv = findViewById(R.id.absence_list_cv)
+        absence_list_cv = this.findViewById(R.id.absence_list_cv)
         absence_list_cv.setOnClickListener({ toAbsenceListView() })
 
-        new_seance_cv = findViewById(R.id.new_seance_cv)
+        new_seance_cv = this.findViewById(R.id.new_seance_cv)
         new_seance_cv.setOnClickListener({ toNewSeanceView() })
+
+        seances_swipe = this.findViewById(R.id.seances_swipe)
+        seances_swipe.setOnRefreshListener {
+            initSeances()
+            seances_swipe.isRefreshing = false
+        }
     }
 
     private fun getCurrentModule(id: Int): Module {
