@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -34,6 +35,7 @@ import java.io.IOException
 
 
 class StudentProfileActivity : AppCompatActivity() {
+    private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var profile_image_picker_btn: ImageButton
     private lateinit var student_profile_image_civ: CircleImageView
     private lateinit var back_iv: ImageView
@@ -90,6 +92,29 @@ class StudentProfileActivity : AppCompatActivity() {
         initViews()
         initDropDowns()
         fillData()
+
+        //set dashboard selected
+        bottom_navigation.selectedItemId = R.id.profile
+        //set bottom navigation listener
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.dashboard -> {
+                    startActivity(Intent(this, StudentActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.profile -> {
+                    startActivity(Intent(this, StudentProfileActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.logout -> {
+                    Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
 
         back_iv.setOnClickListener {
             finish()
@@ -267,6 +292,7 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     public fun initViews() {
+        bottom_navigation = findViewById(R.id.bottom_navigation)
         student_profile_image_civ = findViewById(R.id.student_profile_image_civ)
         profile_image_picker_btn = findViewById(R.id.profile_image_picker_btn)
         back_iv = findViewById(R.id.back_iv)

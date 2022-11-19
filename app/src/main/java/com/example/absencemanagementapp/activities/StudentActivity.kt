@@ -16,6 +16,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -30,6 +31,7 @@ class StudentActivity : AppCompatActivity() {
     private lateinit var profile_cv: CardView
     private lateinit var reset_password_cv: CardView
     private lateinit var logout_cv: CardView
+    private lateinit var bottom_navigation: BottomNavigationView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -37,6 +39,7 @@ class StudentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student)
+
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
@@ -46,6 +49,28 @@ class StudentActivity : AppCompatActivity() {
         //initiate views
         initViews()
 
+        //set dashboard selected
+        bottom_navigation.selectedItemId = R.id.dashboard
+        //set bottom navigation listener
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.dashboard -> {
+                    startActivity(Intent(this, StudentActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.profile -> {
+                    startActivity(Intent(this, StudentProfileActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.logout -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
         //get user name
         val user_id = auth.currentUser!!.uid
         database.getReference("students").child(user_id).get().addOnSuccessListener {
@@ -137,6 +162,7 @@ class StudentActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        bottom_navigation = findViewById(R.id.bottom_navigation)
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
