@@ -52,5 +52,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
-        android:src="@drawable/splash_screen_image" />
+        android:src="@drawable/card_image_ui" />
 </RelativeLayout>
