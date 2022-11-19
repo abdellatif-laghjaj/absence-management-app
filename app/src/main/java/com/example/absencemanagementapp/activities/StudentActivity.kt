@@ -55,8 +55,6 @@ class StudentActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
-                    startActivity(Intent(this, StudentActivity::class.java))
-                    overridePendingTransition(0, 0)
                     true
                 }
                 R.id.profile -> {

@@ -104,8 +104,6 @@ class StudentProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.profile -> {
-                    startActivity(Intent(this, StudentProfileActivity::class.java))
-                    overridePendingTransition(0, 0)
                     true
                 }
                 R.id.logout -> {
