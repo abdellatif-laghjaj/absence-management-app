@@ -3,7 +3,6 @@ package com.example.absencemanagementapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +11,14 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
-import kotlin.random.Random
+import com.google.android.material.card.MaterialCardView
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
-    private lateinit var back_iv: ImageView
     private lateinit var nb_students_tv: TextView
-    private lateinit var new_seance_btn: Button
+    private lateinit var back_iv: ImageView
+    private lateinit var absence_list_cv: MaterialCardView
+    private lateinit var new_seance_cv: MaterialCardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,8 @@ class ModuleActivity : AppCompatActivity() {
         val rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val seances = getSeances()
-        val seanceAdapter = SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).inititule)
+        val seanceAdapter =
+            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).inititule)
         rv.adapter = seanceAdapter
         // endregion
     }
@@ -49,11 +50,14 @@ class ModuleActivity : AppCompatActivity() {
         nb_students_tv = findViewById(R.id.nb_students_tv)
         nb_students_tv.setText("77")
 
-        new_seance_btn = findViewById(R.id.new_seance_btn)
-        new_seance_btn.setOnClickListener({ toNewSeanceView() })
+        absence_list_cv = findViewById(R.id.absence_list_cv)
+        absence_list_cv.setOnClickListener({ toAbsenceListView() })
+
+        new_seance_cv = findViewById(R.id.new_seance_cv)
+        new_seance_cv.setOnClickListener({ toNewSeanceView() })
     }
 
-    private fun getCurrentModule(id : Int): Module {
+    private fun getCurrentModule(id: Int): Module {
         val modules = ArrayList<Module>();
 
         modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
@@ -85,6 +89,12 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun toNewSeanceView() {
+        val intent = Intent(this, TeacherActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun toAbsenceListView() {
         val intent = Intent(this, TeacherActivity::class.java)
         startActivity(intent)
         finish()
