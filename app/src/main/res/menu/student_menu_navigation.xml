@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/dashboard"
+        android:icon="@drawable/ic_dashboard"
+        android:title="Dahsboard"
+        app:cnb_iconColor="@color/home" />
+    <item
+        android:id="@+id/generate_qr_code"
+        android:icon="@drawable/ic_generate_qr_code"
+        android:title="Generate QR Code"
+        app:cnb_iconColor="@color/generate_qr_code" />
+
+    <item
+        android:id="@+id/scan_qr_code"
+        android:icon="@drawable/ic_scan_qr_code"
+        android:title="Scan QR Code"
+        app:cnb_iconColor="@color/scan_qr_code" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"
+        app:cnb_iconColor="@color/profile" />
+
+</menu>
