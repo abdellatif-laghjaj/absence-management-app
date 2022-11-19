@@ -1,6 +1,8 @@
 package com.example.absencemanagementapp.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.absencemanagementapp.R
@@ -8,6 +10,8 @@ import com.example.absencemanagementapp.models.Seance
 
 class SeanceActivity : AppCompatActivity() {
     lateinit var module_intitule_tv: TextView
+    lateinit var back_iv: ImageView
+
     lateinit var seance_type_tv: TextView
     lateinit var seance_date_tv: TextView
     lateinit var seance_start_time_tv: TextView
@@ -28,6 +32,9 @@ class SeanceActivity : AppCompatActivity() {
 
         module_intitule_tv = this.findViewById(R.id.module_intitule_tv)
         module_intitule_tv.setText(module_intitule)
+
+        back_iv = findViewById(R.id.back_arrow)
+        back_iv.setOnClickListener({ back() })
 
         seance_type_tv = this.findViewById(R.id.seance_type_tv)
         seance_type_tv.setText(getCurrentSeance(seance_id).type)
@@ -57,5 +64,11 @@ class SeanceActivity : AppCompatActivity() {
         seances.add(Seance("24/10/2022", "TP", 4))
         seances.add(Seance("17/10/2022", "Cour", 4))
         return seances[id]
+    }
+
+    private fun back() {
+        val intent = Intent(this, ModuleActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
