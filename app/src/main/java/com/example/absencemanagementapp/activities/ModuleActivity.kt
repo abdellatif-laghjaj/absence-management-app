@@ -15,7 +15,6 @@ import com.google.android.material.card.MaterialCardView
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
-    private lateinit var nb_students_tv: TextView
     private lateinit var back_iv: ImageView
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
@@ -46,9 +45,6 @@ class ModuleActivity : AppCompatActivity() {
 
         back_iv = findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
-
-        nb_students_tv = findViewById(R.id.nb_students_tv)
-        nb_students_tv.setText("77")
 
         absence_list_cv = findViewById(R.id.absence_list_cv)
         absence_list_cv.setOnClickListener({ toAbsenceListView() })
