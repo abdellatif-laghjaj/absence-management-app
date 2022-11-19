@@ -7,10 +7,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Seance
+import com.google.android.material.card.MaterialCardView
 
 class SeanceActivity : AppCompatActivity() {
     lateinit var module_intitule_tv: TextView
     lateinit var back_iv: ImageView
+
+    lateinit var absence_list_cv: MaterialCardView
+    lateinit var show_qr_code: MaterialCardView
 
     lateinit var seance_type_tv: TextView
     lateinit var seance_date_tv: TextView
@@ -35,6 +39,16 @@ class SeanceActivity : AppCompatActivity() {
 
         back_iv = findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
+
+        absence_list_cv = this.findViewById(R.id.absence_list_cv)
+        absence_list_cv.setOnClickListener({
+            showAbsenceList()
+        })
+
+        show_qr_code = this.findViewById(R.id.show_qr_code)
+        show_qr_code.setOnClickListener({
+            showQrCode()
+        })
 
         seance_type_tv = this.findViewById(R.id.seance_type_tv)
         seance_type_tv.setText(getCurrentSeance(seance_id).type)
@@ -70,5 +84,13 @@ class SeanceActivity : AppCompatActivity() {
         val intent = Intent(this, ModuleActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun showQrCode() {
+        println("showQrCode")
+    }
+
+    private fun showAbsenceList() {
+        println("showAbsenceList")
     }
 }
