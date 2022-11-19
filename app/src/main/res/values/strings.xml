@@ -46,6 +46,7 @@
     <string name="enter_your_email_address_and_we_will_send_you_a_link_to_reset_your_password">Enter your email address and we will send you a link to reset your password. If you don\'t receive an email, please check your spam folder.</string>
     <string name="bottom_sheet_handle">bottom sheet handle</string>
     <string name="forget_password">Forget Password?</string>
+    <string name="pick_image">Pick image</string>
     <string name="my_stats">My stats</string>
     <string name="scan">Scan</string>
 </resources>
