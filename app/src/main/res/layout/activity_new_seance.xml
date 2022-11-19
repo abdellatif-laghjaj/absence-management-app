@@ -18,10 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
             android:src="@drawable/ic_back" />
 
 
@@ -29,7 +27,7 @@
             android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="8dp"
             android:text="ADD NEW SEANCE"
             android:textColor="@color/white"
