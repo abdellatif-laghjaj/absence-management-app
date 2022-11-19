@@ -5,6 +5,6 @@ data class Module(
     var inititule: String? = null,
     var abrv: String? = null,
     var semestre: Int? = null,
-    var formation: Int? = null
+    var formation: String? = "GI"
 ) {
 }
