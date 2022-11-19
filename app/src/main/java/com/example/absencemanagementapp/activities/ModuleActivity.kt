@@ -26,13 +26,9 @@ class ModuleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_module)
 
-        //
         initView()
-        //
 
-        // region: Display all seances of module
         initSeances()
-        // endregion
     }
 
     private fun initSeances() {
