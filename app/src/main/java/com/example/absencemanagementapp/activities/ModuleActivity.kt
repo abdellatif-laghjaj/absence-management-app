@@ -95,7 +95,7 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun toNewSeanceView() {
-        val intent = Intent(this, TeacherActivity::class.java)
+        val intent = Intent(this, NewSeanceActivity::class.java)
         startActivity(intent)
         finish()
     }
