@@ -12,6 +12,7 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
+import kotlin.random.Random
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
