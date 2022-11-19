@@ -31,17 +31,16 @@ class ModuleActivity : AppCompatActivity() {
         val rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val seances = getSeances()
-        val seanceAdapter = SeanceAdapter(seances, this)
+        val seanceAdapter = SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).inititule)
         rv.adapter = seanceAdapter
         // endregion
     }
 
     private fun initView() {
-        var modules = getCurrentModule()
-
         var id = intent.getIntExtra("id", 0)
+        var modules = getCurrentModule(id)
         module_name_tv = findViewById(R.id.module_intitule_tv)
-        module_name_tv.setText(modules[id].inititule)
+        module_name_tv.setText(modules.inititule)
 
         back_iv = findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
@@ -53,7 +52,7 @@ class ModuleActivity : AppCompatActivity() {
         new_seance_btn.setOnClickListener({ toNewSeanceView() })
     }
 
-    private fun getCurrentModule(): List<Module> {
+    private fun getCurrentModule(id : Int): Module {
         val modules = ArrayList<Module>();
 
         modules.add(Module(1, "Algebre 1", "ALG1", 1, 9))
@@ -64,7 +63,7 @@ class ModuleActivity : AppCompatActivity() {
         modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, 9))
         modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, 9))
 
-        return modules
+        return modules[id]
     }
 
     private fun getSeances(): List<Seance> {
