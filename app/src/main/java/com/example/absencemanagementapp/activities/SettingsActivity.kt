@@ -32,7 +32,7 @@ class SettingsActivity : AppCompatActivity() {
         initViews()
 
         //set dashboard selected
-        bottom_navigation.selectedItemId = R.id.profile
+        bottom_navigation.selectedItemId = R.id.settings
         //set bottom navigation listener
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
