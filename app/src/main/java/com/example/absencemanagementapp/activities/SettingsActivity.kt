@@ -76,6 +76,10 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+        change_language_layout.setOnClickListener {
+            showChangeLanguageDialog()
+        }
+        
         logout_layout.setOnClickListener {
             logout()
         }
