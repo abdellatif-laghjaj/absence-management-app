@@ -25,10 +25,18 @@
         </activity>
         <activity
             android:name=".activities.NewSeanceActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".activities.TeacherActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".activities.ScanQrCodeActivity"
             android:exported="false">
@@ -45,13 +53,6 @@
         </activity>
         <activity
             android:name=".activities.ModuleActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.NewSeanceActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
