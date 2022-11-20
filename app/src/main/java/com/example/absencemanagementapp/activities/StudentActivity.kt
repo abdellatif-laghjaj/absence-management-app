@@ -165,10 +165,6 @@ class StudentActivity : AppCompatActivity() {
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
-        logout_cv = findViewById(R.id.logout_cv)
-        scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
-        profile_cv = findViewById(R.id.profile_cv)
-        reset_password_cv = findViewById(R.id.reset_password_cv)
     }
 
     private fun showResetPasswordDialog() {

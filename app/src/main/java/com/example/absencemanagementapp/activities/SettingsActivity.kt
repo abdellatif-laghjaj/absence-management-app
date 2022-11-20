@@ -13,13 +13,8 @@ import com.google.firebase.database.FirebaseDatabase
 import de.hdodenhof.circleimageview.CircleImageView
 
 class SettingsActivity : AppCompatActivity() {
-    private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    private lateinit var student_image_civ: CircleImageView
-    private lateinit var user_name_tv: TextView
-    private lateinit var scan_qr_code_cv: CardView
-    private lateinit var profile_cv: CardView
-    private lateinit var reset_password_cv: CardView
-    private lateinit var logout_cv: CardView
+    private lateinit var reset_password_cv: ImageView
+    private lateinit var logout_cv: ImageView
     private lateinit var back_iv: ImageView
     private lateinit var bottom_navigation: BottomNavigationView
 
@@ -72,13 +67,8 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun initViews() {
         bottom_navigation = findViewById(R.id.bottom_navigation)
-        swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
-        student_image_civ = findViewById(R.id.student_image_civ)
-        user_name_tv = findViewById(R.id.user_name_tv)
-        logout_cv = findViewById(R.id.logout_cv)
-        scan_qr_code_cv = findViewById(R.id.scan_qr_code_cv)
-        profile_cv = findViewById(R.id.profile_cv)
+        logout_cv = findViewById(R.id.logout_iv)
         back_iv = findViewById(R.id.back_iv)
-        reset_password_cv = findViewById(R.id.reset_password_cv)
+        reset_password_cv = findViewById(R.id.reset_password_iv)
     }
 }
