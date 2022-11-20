@@ -69,6 +69,7 @@
                     android:padding="16dp">
 
                     <RelativeLayout
+                        android:id="@+id/change_language_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -119,6 +120,7 @@
                     android:padding="16dp">
 
                     <RelativeLayout
+                        android:id="@+id/reset_password_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -150,6 +152,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/logout_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
@@ -201,6 +204,7 @@
                     android:padding="16dp">
 
                     <RelativeLayout
+                        android:id="@+id/about_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -232,6 +236,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/credits_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">

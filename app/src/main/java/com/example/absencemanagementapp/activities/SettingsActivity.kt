@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.airbnb.lottie.LottieAnimationView
@@ -23,8 +24,11 @@ import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class SettingsActivity : AppCompatActivity() {
-    private lateinit var reset_password_cv: ImageView
-    private lateinit var logout_cv: ImageView
+    private lateinit var change_language_layout: RelativeLayout
+    private lateinit var reset_password_layout: RelativeLayout
+    private lateinit var logout_layout: RelativeLayout
+    private lateinit var about_layout: RelativeLayout
+    private lateinit var credits_layout: RelativeLayout
     private lateinit var back_iv: ImageView
     private lateinit var bottom_navigation: BottomNavigationView
 
@@ -71,6 +75,49 @@ class SettingsActivity : AppCompatActivity() {
         back_iv.setOnClickListener {
             finish()
         }
+
+        logout_layout.setOnClickListener {
+            logout()
+        }
+
+        reset_password_layout.setOnClickListener {
+            showResetPasswordDialog()
+        }
+
+        credits_layout.setOnClickListener {
+            showCreditsDialog()
+        }
+
+        about_layout.setOnClickListener {
+            showAboutDialog()
+        }
+    }
+
+    //show change language dialog
+    private fun showChangeLanguageDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_change_language)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        val cancel_btn = dialog.findViewById<Button>(R.id.cancel_btn)
+        val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
+
+        cancel_btn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        confirm_btn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     //show About dialog
@@ -199,9 +246,12 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        bottom_navigation = findViewById(R.id.bottom_navigation)
-        logout_cv = findViewById(R.id.logout_iv)
         back_iv = findViewById(R.id.back_iv)
-        reset_password_cv = findViewById(R.id.reset_password_iv)
+        bottom_navigation = findViewById(R.id.bottom_navigation)
+        change_language_layout = findViewById(R.id.change_language_layout)
+        logout_layout = findViewById(R.id.logout_layout)
+        reset_password_layout = findViewById(R.id.reset_password_layout)
+        credits_layout = findViewById(R.id.credits_layout)
+        about_layout = findViewById(R.id.about_layout)
     }
 }
