@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="wrap_content"
         android:background="?android:colorPrimary"
         tools:ignore="UselessParent">
 
@@ -23,59 +23,63 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_back" />
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
-            android:src="@drawable/card_image_ui" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/student_profile_image_civ"
-            android:layout_width="116dp"
-            android:layout_height="116dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="6dp"
-            android:src="@drawable/profile"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp" />
-
         <TextView
             android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/student_profile_image_civ"
             android:layout_centerHorizontal="true"
+            android:layout_marginVertical="20dp"
             android:layout_marginTop="8dp"
-            android:text="Abdellatif Laghjaj"
+            android:text="Settings"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/user_email_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/user_name_tv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="abdellatiflaghjaj@gmail.com"
-            android:textColor="#DFDFDF"
-            android:textSize="16sp"
-            android:textStyle="normal"
             tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/action_sign_in_short">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="20dp"
+            android:background="@drawable/settings_item_bg"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/change_language_iv"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/language" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/change_language_iv"
+                    android:text="Change Language"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="6dp"
+                    android:src="@drawable/ic_right_arrow" />
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
