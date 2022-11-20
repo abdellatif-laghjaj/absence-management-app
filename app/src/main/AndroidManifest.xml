@@ -17,14 +17,14 @@
         android:theme="@style/Theme.AbsenceManagementApp"
         tools:targetApi="31">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".NewSeanceActivity"
+            android:name=".activities.NewSeanceActivity"
             android:exported="false" />
         <activity
             android:name=".activities.TeacherActivity"

@@ -27,10 +27,6 @@ class StudentActivity : AppCompatActivity() {
     private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     private lateinit var student_image_civ: CircleImageView
     private lateinit var user_name_tv: TextView
-    private lateinit var scan_qr_code_cv: CardView
-    private lateinit var profile_cv: CardView
-    private lateinit var reset_password_cv: CardView
-    private lateinit var logout_cv: CardView
     private lateinit var bottom_navigation: BottomNavigationView
 
     private lateinit var auth: FirebaseAuth
@@ -89,29 +85,8 @@ class StudentActivity : AppCompatActivity() {
                 }
             }
 
-        //dashboard cards handling
-        reset_password_cv.setOnClickListener {
-            showResetPasswordDialog()
-        }
-
-        logout_cv.setOnClickListener {
-            logout()
-        }
-
-        profile_cv.setOnClickListener {
-            Intent(this, StudentProfileActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
         student_image_civ.setOnClickListener {
             Intent(this, StudentProfileActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
-        scan_qr_code_cv.setOnClickListener {
-            Intent(this, ScanQrCodeActivity::class.java).also {
                 startActivity(it)
             }
         }
