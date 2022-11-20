@@ -79,7 +79,9 @@
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/info" />
+                            android:background="@drawable/round_back_language"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_language" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -130,7 +132,9 @@
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/info" />
+                            android:background="@drawable/round_back_language"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_reset_password" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -163,7 +167,9 @@
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/info" />
+                            android:background="@drawable/round_back_language"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_logout" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -214,7 +220,9 @@
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/info" />
+                            android:background="@drawable/round_back_language"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_info" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -247,7 +255,9 @@
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/info" />
+                            android:background="@drawable/round_back_language"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_credits" />
 
                         <TextView
                             android:layout_width="wrap_content"
