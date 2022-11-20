@@ -114,25 +114,6 @@ class StudentActivity : AppCompatActivity() {
         )
     }
 
-    //logout
-    private fun logout() {
-        val dialog = MaterialDialog.Builder(this).setTitle("Logout")
-            .setMessage("Are you sure you want to logout?").setCancelable(false)
-            .setAnimation(R.raw.logout).setPositiveButton("Yes") { _, _ ->
-                auth.signOut()
-                redirectToLogin()
-            }.setNegativeButton("No") { dialogInterface, _ ->
-                dialogInterface.dismiss()
-            }.build()
-        dialog.show()
-
-        val animationView: LottieAnimationView = dialog.getAnimationView()
-
-        //scale animation
-        animationView.scaleX = 0.5f
-        animationView.scaleY = 0.5f
-    }
-
     //redirect to login activity
     private fun redirectToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
@@ -145,65 +126,5 @@ class StudentActivity : AppCompatActivity() {
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
-    }
-
-    private fun showResetPasswordDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.reset_password_bottom_sheet_layout)
-        val email_et = dialog.findViewById<TextInputEditText>(R.id.email_et)
-        val reset_password_btn = dialog.findViewById<Button>(R.id.reset_password_btn)
-
-        reset_password_btn.setOnClickListener {
-            val email = email_et.text.toString()
-            if (email.isEmpty()) {
-                email_et.error = "Email is required"
-                email_et.requestFocus()
-                return@setOnClickListener
-            }
-            auth.sendPasswordResetEmail(email).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    dialog.dismiss()
-                    val email_sent_dialog = MaterialDialog.Builder(this).setTitle("Reset Password")
-                        .setAnimation(R.raw.success)
-                        .setMessage("Password reset link has been sent to your email. If you don't see the email, please check your spam folder.")
-                        .setPositiveButton("Ok") { dialogInterface, _ ->
-                            dialogInterface.dismiss()
-                            //logout
-                            auth.signOut()
-                            redirectToLogin()
-                        }.build()
-                    email_sent_dialog.show()
-
-                    //scale animation
-                    val animationView: LottieAnimationView = email_sent_dialog.getAnimationView()
-                    animationView.scaleX = 0.5f
-                    animationView.scaleY = 0.5f
-                } else {
-                    val email_not_sent_dialog =
-                        MaterialDialog.Builder(this).setTitle("Reset Password")
-                            .setMessage("Failed to send password reset link")
-                            .setAnimation(R.raw.failed)
-                            .setPositiveButton("Ok") { dialogInterface, _ ->
-                                dialogInterface.dismiss()
-                            }.build()
-                    email_not_sent_dialog.show()
-
-                    //scale animation
-                    val animationView: LottieAnimationView =
-                        email_not_sent_dialog.getAnimationView()
-                    animationView.scaleX = 0.5f
-                    animationView.scaleY = 0.5f
-                }
-            }
-        }
-
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.setGravity(Gravity.BOTTOM)
-        dialog.window?.attributes?.windowAnimations = R.style.BottomSheetDialogAnimation
-        dialog.show()
     }
 }
