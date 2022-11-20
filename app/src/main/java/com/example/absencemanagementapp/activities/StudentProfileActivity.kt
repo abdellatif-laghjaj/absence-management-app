@@ -106,8 +106,9 @@ class StudentProfileActivity : AppCompatActivity() {
                 R.id.profile -> {
                     true
                 }
-                R.id.logout -> {
-                    Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                R.id.settings -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
                     true
                 }
                 else -> false

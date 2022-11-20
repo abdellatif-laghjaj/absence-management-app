@@ -62,8 +62,9 @@ class StudentActivity : AppCompatActivity() {
                     overridePendingTransition(0, 0)
                     true
                 }
-                R.id.logout -> {
-                    logout()
+                R.id.settings -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
                     true
                 }
                 else -> false
