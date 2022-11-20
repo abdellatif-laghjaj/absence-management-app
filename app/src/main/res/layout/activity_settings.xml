@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="270dp"
         android:background="?android:colorPrimary"
         tools:ignore="UselessParent">
 
@@ -66,16 +66,18 @@
             android:textSize="16sp"
             android:textStyle="normal"
             tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_email_tv"
-            android:background="?android:colorAccent"
-            android:text="Edit Profile"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
