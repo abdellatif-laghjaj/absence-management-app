@@ -217,7 +217,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/app_version_iv"
-                            android:text="App Version"
+                            android:text="About App"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
