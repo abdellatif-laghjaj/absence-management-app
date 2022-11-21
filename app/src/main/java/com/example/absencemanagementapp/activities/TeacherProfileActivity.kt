@@ -96,7 +96,7 @@ class TeacherProfileActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
-                    startActivity(Intent(this, StudentActivity::class.java))
+                    startActivity(Intent(this, TeacherActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
@@ -104,7 +104,7 @@ class TeacherProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.settings -> {
-                    startActivity(Intent(this, SettingsActivity::class.java))
+                    startActivity(Intent(this, TeacherSettingsActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
@@ -254,7 +254,7 @@ class TeacherProfileActivity : AppCompatActivity() {
     private fun initDropDowns() {
     }
 
-    public fun initViews() {
+    private fun initViews() {
         bottom_navigation = findViewById(R.id.bottom_navigation)
         teacher_profile_image_civ = findViewById(R.id.teacher_profile_image_civ)
         profile_image_picker_btn = findViewById(R.id.profile_image_picker_btn)
@@ -267,7 +267,7 @@ class TeacherProfileActivity : AppCompatActivity() {
         update_btn = findViewById(R.id.update_btn)
     }
 
-    public fun fillData() {
+    private fun fillData() {
         val user = auth.currentUser
         val userRef = database.getReference("teachers").child(user!!.uid)
         userRef.addValueEventListener(object : ValueEventListener {
@@ -292,7 +292,7 @@ class TeacherProfileActivity : AppCompatActivity() {
         })
     }
 
-    public fun getCurrentUserEmail(): String {
+    private fun getCurrentUserEmail(): String {
         val user = auth.currentUser
         return user!!.email.toString()
     }

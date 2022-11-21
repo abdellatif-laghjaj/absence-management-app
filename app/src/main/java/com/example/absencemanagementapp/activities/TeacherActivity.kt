@@ -51,7 +51,7 @@ class TeacherActivity : AppCompatActivity() {
                     true
                 }
                 R.id.settings -> {
-                    startActivity(Intent(this, SettingsActivity::class.java))
+                    startActivity(Intent(this, TeacherSettingsActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
