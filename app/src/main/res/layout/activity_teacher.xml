@@ -103,6 +103,6 @@
             app:itemBackground="@android:color/transparent"
             app:itemIconTint="@drawable/bottom_navigation_selector"
             app:itemTextColor="@drawable/bottom_navigation_selector"
-            app:menu="@menu/student_menu_navigation" />
+            app:menu="@menu/teacher_menu_navigation" />
     </RelativeLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
