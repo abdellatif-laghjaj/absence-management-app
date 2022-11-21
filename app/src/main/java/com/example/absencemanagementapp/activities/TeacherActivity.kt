@@ -14,12 +14,14 @@ import com.example.absencemanagementapp.adapters.ModulesAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Student
 import com.example.absencemanagementapp.models.Teacher
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class TeacherActivity : AppCompatActivity() {
     private lateinit var user_name_tv: TextView
+    private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var modules_swipe: SwipeRefreshLayout
 
     private lateinit var auth: FirebaseAuth
@@ -35,6 +37,33 @@ class TeacherActivity : AppCompatActivity() {
         //initiate views
         initViews()
 
+        //set dashboard selected
+        bottom_navigation.selectedItemId = R.id.dashboard
+        //set bottom navigation listener
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.dashboard -> {
+                    true
+                }
+                R.id.scan_qr_code -> {
+                    startActivity(Intent(this, NewSeanceActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.profile -> {
+                    startActivity(Intent(this, StudentProfileActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.settings -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                else -> false
+            }
+        }
+
         //get user name
         val user_id = auth.currentUser!!.uid
         database.getReference("teachers").child(user_id).get().addOnSuccessListener {
@@ -45,7 +74,7 @@ class TeacherActivity : AppCompatActivity() {
         }
     }
 
-    private fun getModules() : List<Module> {
+    private fun getModules(): List<Module> {
         val modules = ArrayList<Module>();
 
         modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI"))
