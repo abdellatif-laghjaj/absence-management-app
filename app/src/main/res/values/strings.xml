@@ -52,7 +52,7 @@
     <string name="settings">Settings</string>
     <string name="change_language">Change language</string>
     <string name="language">Language</string>
-    <string name="arabic">Arabic</string>
-    <string name="frensh">Frensh</string>
+    <string name="arabic">العربية</string>
+    <string name="frensh">Français</string>
     <string name="english">English</string>
 </resources>
