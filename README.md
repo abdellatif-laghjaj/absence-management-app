@@ -1,8 +1,6 @@
 # absence-management-app
 # Screenshots
-
-<p float="left">
-</p>
+<img src="https://user-images.githubusercontent.com/79521157/202935351-036bb2ed-42cb-4313-82cb-f2e04a07f890.png" width="300" />
 
 # Contributors
 
