@@ -51,12 +51,12 @@ class TeacherSettingsActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
-                    startActivity(Intent(this, StudentActivity::class.java))
+                    startActivity(Intent(this, TeacherActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
                 R.id.profile -> {
-                    startActivity(Intent(this, StudentProfileActivity::class.java))
+                    startActivity(Intent(this, TeacherProfileActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
