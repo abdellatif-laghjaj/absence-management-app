@@ -141,10 +141,7 @@ class StudentActivity : AppCompatActivity() {
             .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                    //check if the user is logged in
-                    if (auth.currentUser == null) {
-                        redirectToLogin()
-                    }
+                    //do nothing
                 }
 
                 override fun onPermissionDenied(response: PermissionDeniedResponse) {

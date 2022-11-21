@@ -97,6 +97,7 @@ class TeacherActivity : AppCompatActivity() {
 
     private fun initViews() {
         initModules()
+        bottom_navigation = findViewById(R.id.bottom_navigation)
         user_name_tv = findViewById(R.id.user_name_tv)
 
         modules_swipe = this.findViewById(R.id.modules_swipe)
