@@ -110,12 +110,7 @@ class SettingsActivity : AppCompatActivity() {
         )
         dialog.window?.setGravity(Gravity.CENTER)
 
-        val cancel_btn = dialog.findViewById<Button>(R.id.cancel_btn)
         val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
-
-        cancel_btn.setOnClickListener {
-            dialog.dismiss()
-        }
 
         confirm_btn.setOnClickListener {
             dialog.dismiss()

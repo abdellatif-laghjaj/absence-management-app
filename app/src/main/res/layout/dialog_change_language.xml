@@ -4,15 +4,13 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="20dp"
     android:background="@drawable/dialog_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/change_language"
@@ -33,9 +31,8 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/radio_button"
             android:button="@android:color/transparent"
-            android:drawableStart="@drawable/ic_logout"
+            android:drawableStart="@drawable/english_lang"
             android:drawablePadding="16dp"
-            android:drawableTint="@color/black"
             android:gravity="center_vertical"
             android:padding="16dp"
             android:text="@string/english"
@@ -48,9 +45,8 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/radio_button"
             android:button="@android:color/transparent"
-            android:drawableStart="@drawable/ic_logout"
+            android:drawableStart="@drawable/frensh_lang"
             android:drawablePadding="16dp"
-            android:drawableTint="@color/black"
             android:gravity="center_vertical"
             android:padding="16dp"
             android:text="@string/frensh"
@@ -63,9 +59,8 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/radio_button"
             android:button="@android:color/transparent"
-            android:drawableStart="@drawable/ic_logout"
+            android:drawableStart="@drawable/arabic_lang"
             android:drawablePadding="16dp"
-            android:drawableTint="@color/black"
             android:gravity="center_vertical"
             android:padding="16dp"
             android:text="@string/arabic"
@@ -73,29 +68,13 @@
 
     </RadioGroup>
 
-    <LinearLayout
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/confirm_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:weightSum="2">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/yellow"
-            android:padding="8dp"
-            android:text="Done" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/confirm_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/blue"
-            android:padding="8dp"
-            android:text="Done" />
-    </LinearLayout>
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/button_layout"
+        android:padding="8dp"
+        android:text="Set it !"
+        android:textColor="@color/white" />
 </LinearLayout>
