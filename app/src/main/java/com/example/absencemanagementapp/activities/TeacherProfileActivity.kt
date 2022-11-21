@@ -13,7 +13,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.models.Student
 import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
@@ -34,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.io.IOException
 
 
-class TecherProfileActivity : AppCompatActivity() {
+class TeacherProfileActivity : AppCompatActivity() {
     private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var profile_image_picker_btn: ImageButton
     private lateinit var teacher_profile_image_civ: CircleImageView
@@ -45,8 +44,6 @@ class TecherProfileActivity : AppCompatActivity() {
     private lateinit var last_name_et: TextInputEditText
     private lateinit var cin_et: TextInputEditText
     private lateinit var cne_et: TextInputEditText
-    private lateinit var filiere_dropdown: AutoCompleteTextView
-    private lateinit var semester_dropdown: AutoCompleteTextView
     private lateinit var update_btn: Button
     private lateinit var bitmap: Bitmap
 
@@ -255,15 +252,11 @@ class TecherProfileActivity : AppCompatActivity() {
     }
 
     private fun initDropDowns() {
-        val filiere_adapter = ArrayAdapter(this, R.layout.dropdown_item, branches)
-        filiere_dropdown.setAdapter(filiere_adapter)
-        val semester_adapter = ArrayAdapter(this, R.layout.dropdown_item, semesters)
-        semester_dropdown.setAdapter(semester_adapter)
     }
 
     public fun initViews() {
         bottom_navigation = findViewById(R.id.bottom_navigation)
-        teacher_profile_image_civ = findViewById(R.id.student_profile_image_civ)
+        teacher_profile_image_civ = findViewById(R.id.teacher_profile_image_civ)
         profile_image_picker_btn = findViewById(R.id.profile_image_picker_btn)
         back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
@@ -290,7 +283,7 @@ class TecherProfileActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 FancyToast.makeText(
                     this@TeacherProfileActivity,
-                    error.message,
+                    "Error: ${error.message}",
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false

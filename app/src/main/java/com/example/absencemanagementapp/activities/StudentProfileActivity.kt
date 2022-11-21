@@ -2,7 +2,6 @@ package com.example.absencemanagementapp.activities
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -297,7 +296,7 @@ class StudentProfileActivity : AppCompatActivity() {
 
     public fun initViews() {
         bottom_navigation = findViewById(R.id.bottom_navigation)
-        student_profile_image_civ = findViewById(R.id.student_profile_image_civ)
+        student_profile_image_civ = findViewById(R.id.teacher_profile_image_civ)
         profile_image_picker_btn = findViewById(R.id.profile_image_picker_btn)
         back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)

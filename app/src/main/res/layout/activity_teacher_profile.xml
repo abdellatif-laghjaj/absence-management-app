@@ -39,7 +39,7 @@
                     android:src="@drawable/card_image_ui" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/student_profile_image_civ"
+                    android:id="@+id/teacher_profile_image_civ"
                     android:layout_width="116dp"
                     android:layout_height="116dp"
                     android:layout_centerHorizontal="true"
@@ -53,8 +53,8 @@
                     android:id="@+id/profile_image_picker_btn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_alignEnd="@+id/student_profile_image_civ"
-                    android:layout_alignBottom="@+id/student_profile_image_civ"
+                    android:layout_alignEnd="@+id/teacher_profile_image_civ"
+                    android:layout_alignBottom="@+id/teacher_profile_image_civ"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:background="@drawable/pick_image_bg"
@@ -70,7 +70,7 @@
                     android:id="@+id/user_name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/student_profile_image_civ"
+                    android:layout_below="@+id/teacher_profile_image_civ"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:text="Abdellatif Laghjaj"
