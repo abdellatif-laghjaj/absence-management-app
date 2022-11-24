@@ -56,4 +56,9 @@
     <string name="frensh">Français</string>
     <string name="english">English</string>
     <string name="be_modern_and_save_time">be modern and save time</string>
+    <string name="system_settings">System Settings</string>
+    <string name="session_settings">Session Settings</string>
+    <string name="about">About</string>
+    <string name="about_app">About App</string>
+    <string name="credits">Credits</string>
 </resources>

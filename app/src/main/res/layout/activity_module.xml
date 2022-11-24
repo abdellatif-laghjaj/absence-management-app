@@ -33,6 +33,7 @@
                 android:id="@+id/module_intitule_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/proxima_nova_semibold"
                 android:text="Programmation et algorithmique 1"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -82,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Absence list"
+                    android:fontFamily="@font/proxima_nova_semibold"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -121,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New seance"
+                    android:fontFamily="@font/proxima_nova_semibold"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
