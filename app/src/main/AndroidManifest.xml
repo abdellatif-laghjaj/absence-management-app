@@ -17,21 +17,21 @@
         android:theme="@style/Theme.AbsenceManagementApp"
         tools:targetApi="31">
         <activity
-            android:name=".activities.TeacherSettingsActivity"
+            android:name=".activities.settings.TeacherSettingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.TeacherProfileActivity"
+            android:name=".activities.profile.TeacherProfileActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.StudentSettingsActivity"
+            android:name=".activities.settings.StudentSettingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -45,7 +45,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.TeacherActivity"
+            android:name=".activities.home.TeacherActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -59,7 +59,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.StudentProfileActivity"
+            android:name=".activities.profile.StudentProfileActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -73,14 +73,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.StudentActivity"
+            android:name=".activities.home.StudentActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".activities.auth.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -94,7 +94,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.auth.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

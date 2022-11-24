@@ -11,7 +11,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.example.absencemanagementapp.activities.LoginActivity
+import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.textfield.TextInputEditText

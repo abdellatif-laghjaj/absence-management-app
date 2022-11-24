@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.home
 
 import android.Manifest
 import android.content.Intent
@@ -7,6 +7,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.ScanQrCodeActivity
+import com.example.absencemanagementapp.activities.auth.LoginActivity
+import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
+import com.example.absencemanagementapp.activities.settings.StudentSettingsActivity
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth

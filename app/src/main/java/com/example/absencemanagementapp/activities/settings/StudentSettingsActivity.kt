@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.settings
 
 import android.app.Dialog
 import android.content.Intent
@@ -12,18 +12,19 @@ import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.auth.LoginActivity
+import com.example.absencemanagementapp.activities.ScanQrCodeActivity
+import com.example.absencemanagementapp.activities.home.StudentActivity
+import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
-class TeacherSettingsActivity : AppCompatActivity() {
+class StudentSettingsActivity : AppCompatActivity() {
     private lateinit var change_language_layout: RelativeLayout
     private lateinit var reset_password_layout: RelativeLayout
     private lateinit var logout_layout: RelativeLayout
@@ -37,7 +38,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher_settings)
+        setContentView(R.layout.activity_student_settings)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -51,12 +52,17 @@ class TeacherSettingsActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
-                    startActivity(Intent(this, TeacherActivity::class.java))
+                    startActivity(Intent(this, StudentActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.scan_qr_code -> {
+                    startActivity(Intent(this, ScanQrCodeActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
                 R.id.profile -> {
-                    startActivity(Intent(this, TeacherProfileActivity::class.java))
+                    startActivity(Intent(this, StudentProfileActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }

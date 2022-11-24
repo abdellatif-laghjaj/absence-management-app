@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.activities.LoginActivity
 import com.example.absencemanagementapp.activities.ModuleActivity
 import com.example.absencemanagementapp.models.Module
 

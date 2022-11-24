@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activities.StudentProfileActivity">
+    tools:context=".activities.profile.StudentProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"

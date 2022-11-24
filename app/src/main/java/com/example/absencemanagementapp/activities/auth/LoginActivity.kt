@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.auth
 
 import android.app.Dialog
 import android.content.Intent
@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.home.StudentActivity
+import com.example.absencemanagementapp.activities.home.TeacherActivity
 import com.example.absencemanagementapp.helpers.Helper.Companion.checkInternetConnection
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
 import com.example.absencemanagementapp.models.Student

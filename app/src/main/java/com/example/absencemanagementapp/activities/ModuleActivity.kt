@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.home.TeacherActivity
 import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance

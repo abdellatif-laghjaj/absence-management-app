@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.profile
 
 import android.Manifest
 import android.app.Activity
@@ -12,7 +12,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.models.Student
+import com.example.absencemanagementapp.activities.home.TeacherActivity
+import com.example.absencemanagementapp.activities.settings.TeacherSettingsActivity
+import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -27,10 +29,10 @@ import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
 
 
-class StudentProfileActivity : AppCompatActivity() {
+class TeacherProfileActivity : AppCompatActivity() {
     private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var profile_image_picker_btn: ImageButton
-    private lateinit var student_profile_image_civ: CircleImageView
+    private lateinit var teacher_profile_image_civ: CircleImageView
     private lateinit var back_iv: ImageView
     private lateinit var user_name_tv: TextView
     private lateinit var user_email_tv: TextView
@@ -38,8 +40,6 @@ class StudentProfileActivity : AppCompatActivity() {
     private lateinit var last_name_et: TextInputEditText
     private lateinit var cin_et: TextInputEditText
     private lateinit var cne_et: TextInputEditText
-    private lateinit var filiere_dropdown: AutoCompleteTextView
-    private lateinit var semester_dropdown: AutoCompleteTextView
     private lateinit var update_btn: Button
     private var bitmap: Bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
 
@@ -55,7 +55,7 @@ class StudentProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_student_profile)
+        setContentView(R.layout.activity_teacher_profile)
 
         val upload_dialog = Dialog(this)
         upload_dialog.setContentView(R.layout.dialog_uploading)
@@ -72,12 +72,12 @@ class StudentProfileActivity : AppCompatActivity() {
         //get user id
         val user_id = auth.currentUser!!.uid
 
-        database.getReference("students").child(user_id).child("avatar").get()
+        database.getReference("teachers").child(user_id).child("avatar").get()
             .addOnSuccessListener {
                 if (it.exists()) {
                     //get the image
                     val image = it.value.toString()
-                    Glide.with(this).load(image).into(student_profile_image_civ)
+                    Glide.with(this).load(image).into(teacher_profile_image_civ)
                 }
             }
 
@@ -92,12 +92,7 @@ class StudentProfileActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
-                    startActivity(Intent(this, StudentActivity::class.java))
-                    overridePendingTransition(0, 0)
-                    true
-                }
-                R.id.scan_qr_code -> {
-                    startActivity(Intent(this, ScanQrCodeActivity::class.java))
+                    startActivity(Intent(this, TeacherActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
@@ -105,7 +100,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.settings -> {
-                    startActivity(Intent(this, StudentSettingsActivity::class.java))
+                    startActivity(Intent(this, TeacherSettingsActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
@@ -117,13 +112,13 @@ class StudentProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        student_profile_image_civ.setOnClickListener {
+        teacher_profile_image_civ.setOnClickListener {
             //show image in dialog
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_user_image)
             val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
             //get current user image
-            database.getReference("students").child(user_id).child("avatar").get()
+            database.getReference("teachers").child(user_id).child("avatar").get()
                 .addOnSuccessListener {
                     if (it.exists()) {
                         //get the image
@@ -138,14 +133,6 @@ class StudentProfileActivity : AppCompatActivity() {
             )
             dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
             dialog.show()
-        }
-
-        filiere_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
-            //adapterView.getItemAtPosition(i)
-        }
-
-        semester_dropdown.setOnItemClickListener { adapterView, _, i, _ ->
-            //adapterView.getItemAtPosition(i)
         }
 
         profile_image_picker_btn.setOnClickListener {
@@ -172,19 +159,16 @@ class StudentProfileActivity : AppCompatActivity() {
                 upload_dialog.show()
 
                 val email = getCurrentUserEmail()
-                val student = Student(
+                val teacher = Teacher(
                     first_name_et.text.toString(),
                     last_name_et.text.toString(),
                     cin_et.text.toString(),
                     uri.toString(),
-                    cne_et.text.toString(),
-                    filiere_dropdown.text.toString(),
-                    semester_dropdown.text.toString(),
                     email
                 )
 
-                database.reference.child("students").child(auth.currentUser!!.uid)
-                    .setValue(student)
+                database.reference.child("teachers").child(auth.currentUser!!.uid)
+                    .setValue(teacher)
                     .addOnSuccessListener {
                         FancyToast.makeText(
                             this,
@@ -238,9 +222,6 @@ class StudentProfileActivity : AppCompatActivity() {
         val first_name = first_name_et.text.toString()
         val last_name = last_name_et.text.toString()
         val cin = cin_et.text.toString()
-        val cne = cne_et.text.toString()
-        val filiere = filiere_dropdown.text.toString()
-        val semester = semester_dropdown.text.toString()
         return when {
             first_name.isEmpty() -> {
                 first_name_et.error = "First name is required"
@@ -257,35 +238,16 @@ class StudentProfileActivity : AppCompatActivity() {
                 cin_et.requestFocus()
                 false
             }
-            cne.isEmpty() -> {
-                cne_et.error = "CNE is required"
-                cne_et.requestFocus()
-                false
-            }
-            filiere.isEmpty() -> {
-                filiere_dropdown.error = "Filiere is required"
-                filiere_dropdown.requestFocus()
-                false
-            }
-            semester.isEmpty() -> {
-                semester_dropdown.error = "Semester is required"
-                semester_dropdown.requestFocus()
-                false
-            }
             else -> true
         }
     }
 
     private fun initDropDowns() {
-        val filiere_adapter = ArrayAdapter(this, R.layout.dropdown_item, branches)
-        filiere_dropdown.setAdapter(filiere_adapter)
-        val semester_adapter = ArrayAdapter(this, R.layout.dropdown_item, semesters)
-        semester_dropdown.setAdapter(semester_adapter)
     }
 
-    public fun initViews() {
+    private fun initViews() {
         bottom_navigation = findViewById(R.id.bottom_navigation)
-        student_profile_image_civ = findViewById(R.id.teacher_profile_image_civ)
+        teacher_profile_image_civ = findViewById(R.id.teacher_profile_image_civ)
         profile_image_picker_btn = findViewById(R.id.profile_image_picker_btn)
         back_iv = findViewById(R.id.back_iv)
         user_name_tv = findViewById(R.id.user_name_tv)
@@ -293,32 +255,26 @@ class StudentProfileActivity : AppCompatActivity() {
         first_name_et = findViewById(R.id.first_name_et)
         last_name_et = findViewById(R.id.last_name_et)
         cin_et = findViewById(R.id.cin_et)
-        cne_et = findViewById(R.id.cne_et)
-        filiere_dropdown = findViewById(R.id.filiere_dropdown)
-        semester_dropdown = findViewById(R.id.semester_dropdown)
         update_btn = findViewById(R.id.update_btn)
     }
 
-    public fun fillData() {
+    private fun fillData() {
         val user = auth.currentUser
-        val userRef = database.getReference("students").child(user!!.uid)
+        val userRef = database.getReference("teachers").child(user!!.uid)
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val student = snapshot.getValue(Student::class.java)
-                user_name_tv.text = student!!.email
-                user_email_tv.text = student.email
-                first_name_et.setText(student.first_name)
-                last_name_et.setText(student.last_name)
-                cin_et.setText(student.cin)
-                cne_et.setText(student.cne)
-                filiere_dropdown.setText(student.filiere)
-                semester_dropdown.setText(student.semester)
+                val teacher = snapshot.getValue(Teacher::class.java)
+                user_name_tv.text = teacher!!.email
+                user_email_tv.text = teacher.email
+                first_name_et.setText(teacher.first_name)
+                last_name_et.setText(teacher.last_name)
+                cin_et.setText(teacher.cin)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 FancyToast.makeText(
-                    this@StudentProfileActivity,
-                    error.message,
+                    this@TeacherProfileActivity,
+                    "Error: ${error.message}",
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
@@ -327,7 +283,7 @@ class StudentProfileActivity : AppCompatActivity() {
         })
     }
 
-    public fun getCurrentUserEmail(): String {
+    private fun getCurrentUserEmail(): String {
         val user = auth.currentUser
         return user!!.email.toString()
     }
@@ -335,9 +291,19 @@ class StudentProfileActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            uri = data?.data!!
-            student_profile_image_civ.setImageURI(uri)
+            uri = data!!.data!!
+            teacher_profile_image_civ.setImageURI(uri)
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun uploadImageToFirebaseStorage(uri: Uri?) {
+        FancyToast.makeText(
+            this,
+            "Uploading image...",
+            FancyToast.LENGTH_SHORT,
+            FancyToast.INFO,
+            false
+        ).show()
     }
 }

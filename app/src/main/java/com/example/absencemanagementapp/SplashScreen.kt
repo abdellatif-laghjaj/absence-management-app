@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.airbnb.lottie.LottieAnimationView
-import com.example.absencemanagementapp.activities.LoginActivity
-import com.example.absencemanagementapp.activities.StudentActivity
-import com.example.absencemanagementapp.activities.TeacherActivity
+import com.example.absencemanagementapp.activities.auth.LoginActivity
+import com.example.absencemanagementapp.activities.home.StudentActivity
+import com.example.absencemanagementapp.activities.home.TeacherActivity
 import com.example.absencemanagementapp.helpers.Helper
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
 import com.google.firebase.auth.FirebaseAuth
