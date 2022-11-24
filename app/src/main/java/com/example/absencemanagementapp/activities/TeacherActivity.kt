@@ -83,39 +83,8 @@ class TeacherActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 if (it.exists()) {
                     //get the image
-                    val image = it.value.toString()
-
-                    //ask for permission
-                    Dexter.withContext(this)
-                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .withListener(object : PermissionListener {
-                            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                                //load the image
-                                Glide.with(this@TeacherActivity)
-                                    .load(image)
-                                    .into(teacher_image_civ)
-                            }
-
-                            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                                //show error
-                                MaterialDialog.Builder(this@TeacherActivity)
-                                    .setTitle("Permission Denied")
-                                    .setMessage("You must accept this permission to use this feature")
-                                    .setCancelable(false)
-                                    .setPositiveButton("OK") { dialogInterface, _ ->
-                                        dialogInterface.dismiss()
-                                    }
-                                    .build()
-                                    .show()
-                            }
-
-                            override fun onPermissionRationaleShouldBeShown(
-                                permission: PermissionRequest?,
-                                token: PermissionToken?
-                            ) {
-                                token!!.continuePermissionRequest()
-                            }
-                        }).check()
+                    val image = it.value
+                    Glide.with(this).load(image).into(teacher_image_civ)
                 }
             }
 

@@ -76,4 +76,7 @@ dependencies {
 
     //Swipe Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //Easy Permissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

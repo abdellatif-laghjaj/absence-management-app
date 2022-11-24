@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,10 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
+import pub.devrel.easypermissions.EasyPermissions
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.net.URI
 
 
 class StudentProfileActivity : AppCompatActivity() {
@@ -47,7 +51,7 @@ class StudentProfileActivity : AppCompatActivity() {
     private lateinit var filiere_dropdown: AutoCompleteTextView
     private lateinit var semester_dropdown: AutoCompleteTextView
     private lateinit var update_btn: Button
-    private lateinit var bitmap: Bitmap
+    private var bitmap: Bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
 
     private val semesters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
@@ -150,26 +154,21 @@ class StudentProfileActivity : AppCompatActivity() {
         }
 
         profile_image_picker_btn.setOnClickListener {
-            Dexter.withContext(this)
-                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(object : PermissionListener {
-                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                        //open gallery
-                        val intent = Intent(Intent.ACTION_PICK)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, REQUEST_CODE)
-                    }
-
-                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                    }
-
-                    override fun onPermissionRationaleShouldBeShown(
-                        permission: PermissionRequest?,
-                        token: PermissionToken?
-                    ) {
-                        token?.continuePermissionRequest()
-                    }
-                }).check()
+            val perms =
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (EasyPermissions.hasPermissions(this, *perms)) {
+                //open gallery
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "image/*"
+                startActivityForResult(intent, REQUEST_CODE)
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    "Please accept our permissions",
+                    REQUEST_CODE,
+                    *perms
+                )
+            }
         }
 
         //update logic
@@ -212,30 +211,32 @@ class StudentProfileActivity : AppCompatActivity() {
 
                 //save the image
                 val storageRef = storage.reference
-                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
-                imageRef.putFile(uri)
-                    .addOnSuccessListener {
-                        FancyToast.makeText(
-                            this,
-                            "Image uploaded successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
+                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}.jpg")
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                val uploadTask = imageRef.putBytes(data)
+                uploadTask.addOnFailureListener {
+                    FancyToast.makeText(
+                        this,
+                        "Error: ${it.message}",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                    upload_dialog.dismiss()
+                }.addOnSuccessListener {
+                    FancyToast.makeText(
+                        this,
+                        "Image uploaded successfully",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false
+                    ).show()
+                    upload_dialog.dismiss()
+                }
 
-                        upload_dialog.dismiss()
-                    }
-                    .addOnFailureListener {
-                        FancyToast.makeText(
-                            this,
-                            "Error: ${it.message}",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.ERROR,
-                            false
-                        ).show()
 
-                        upload_dialog.dismiss()
-                    }
             }
         }
     }
@@ -338,33 +339,12 @@ class StudentProfileActivity : AppCompatActivity() {
         return user!!.email.toString()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            uri = data.data!!
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                student_profile_image_civ.setImageBitmap(bitmap)
-            } catch (e: IOException) {
-                FancyToast.makeText(
-                    this,
-                    "Error: ${e.message}",
-                    FancyToast.LENGTH_SHORT,
-                    FancyToast.ERROR,
-                    false
-                ).show()
-                e.printStackTrace()
-            }
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            uri = data?.data!!
+            student_profile_image_civ.setImageURI(uri)
         }
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun uploadImageToFirebaseStorage(uri: Uri?) {
-        FancyToast.makeText(
-            this,
-            "Uploading image...",
-            FancyToast.LENGTH_SHORT,
-            FancyToast.INFO,
-            false
-        ).show()
     }
 }
