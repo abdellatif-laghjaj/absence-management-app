@@ -1,5 +1,6 @@
 package com.example.absencemanagementapp.activities
 
+import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.ModulesAdapter
 import com.example.absencemanagementapp.models.Module
@@ -17,6 +19,12 @@ import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
@@ -69,6 +77,47 @@ class TeacherActivity : AppCompatActivity() {
                 user_name_tv.text = teacher!!.last_name
             }
         }
+
+        //get user image
+        database.getReference("teachers").child(user_id).child("avatar").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    //get the image
+                    val image = it.value.toString()
+
+                    //ask for permission
+                    Dexter.withContext(this)
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(object : PermissionListener {
+                            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                                //load the image
+                                Glide.with(this@TeacherActivity)
+                                    .load(image)
+                                    .into(teacher_image_civ)
+                            }
+
+                            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                                //show error
+                                MaterialDialog.Builder(this@TeacherActivity)
+                                    .setTitle("Permission Denied")
+                                    .setMessage("You must accept this permission to use this feature")
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK") { dialogInterface, _ ->
+                                        dialogInterface.dismiss()
+                                    }
+                                    .build()
+                                    .show()
+                            }
+
+                            override fun onPermissionRationaleShouldBeShown(
+                                permission: PermissionRequest?,
+                                token: PermissionToken?
+                            ) {
+                                token!!.continuePermissionRequest()
+                            }
+                        }).check()
+                }
+            }
 
         teacher_image_civ.setOnClickListener {
             Intent(this, TeacherProfileActivity::class.java).also {
