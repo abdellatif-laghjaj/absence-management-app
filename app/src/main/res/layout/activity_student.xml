@@ -32,6 +32,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima_nova_regular"
                         android:text="Welcome back,"
                         android:textColor="@color/white"
                         android:textSize="24sp"
@@ -41,6 +42,7 @@
                         android:id="@+id/user_name_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima_nova_bold"
                         android:text="Abdellatif"
                         android:textColor="?android:colorAccent"
                         android:textSize="28sp"
@@ -70,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/proxima_nova_semibold"
                     android:text="@string/my_classes"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -98,6 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="Total absence"
                             android:textColor="@color/white"
                             android:textSize="20sp"
@@ -107,6 +111,7 @@
                             android:id="@+id/user_total_absence_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="4"
                             android:textColor="@color/white"
                             android:textSize="28sp"
@@ -126,6 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/proxima_nova_semibold"
                     android:text="@string/dashboard"
                     android:textSize="24sp"
                     android:textStyle="bold" />

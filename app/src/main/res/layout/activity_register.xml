@@ -22,6 +22,7 @@
             android:layout_marginVertical="4dp"
             android:gravity="center"
             android:text="@string/register"
+            android:fontFamily="@font/proxima_nova_semibold"
             android:textAllCaps="true"
             android:textColor="?android:colorPrimary"
             android:textSize="36sp"
@@ -33,6 +34,7 @@
             android:layout_marginBottom="4dp"
             android:gravity="center"
             android:hint="@string/welcome_to_absenti_fy"
+            android:fontFamily="@font/proxima_nova_regular"
             android:textAllCaps="false"
             android:textColor="?android:colorPrimary"
             android:textSize="20sp" />
@@ -44,12 +46,14 @@
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
+                android:fontFamily="@font/proxima_nova_regular"
                 android:layout_height="wrap_content"
                 android:text="@string/student" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/proxima_nova_regular"
                 android:text="@string/teacher" />
         </com.google.android.material.tabs.TabLayout>
 

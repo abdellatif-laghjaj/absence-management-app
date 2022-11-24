@@ -32,6 +32,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima_nova_regular"
                         android:text="Welcome,"
                         android:textColor="@color/white"
                         android:textSize="24sp"
@@ -41,6 +42,7 @@
                         android:id="@+id/user_name_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima_nova_bold"
                         android:text="Prof"
                         android:textColor="?android:colorAccent"
                         android:textSize="28sp"
@@ -75,6 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="@string/my_classes"
+                        android:fontFamily="@font/proxima_nova_semibold"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 

@@ -34,6 +34,7 @@
                 android:id="@+id/module_intitule_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/proxima_nova_semibold"
                 android:text="Programmation et algorithmique 1"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -56,11 +57,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:background="@color/yellow"
+                    android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
                     <LinearLayout
@@ -73,6 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="Type of seance"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -82,6 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="Date"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -91,6 +95,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="Start time"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -100,6 +105,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="End time"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -109,6 +115,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="Salle"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -117,7 +124,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_semibold"
                             android:text="Total absences"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -136,6 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="Cours"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -146,6 +154,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="11 Nov 2022"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -156,6 +165,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="08:30"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -166,6 +176,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="10:15"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -176,6 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="SL2"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -185,7 +197,7 @@
                             android:id="@+id/total_absence_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="7"
                             android:textColor="@color/white"
                             android:textSize="24sp"
@@ -232,6 +244,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/proxima_nova_semibold"
                                 android:text="Absence list"
                                 android:textAlignment="center"
                                 android:textSize="20sp"
@@ -271,6 +284,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/proxima_nova_semibold"
                                 android:text="QR Code"
                                 android:textAlignment="center"
                                 android:textSize="20sp"
@@ -282,6 +296,7 @@
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/absence_list"
                     android:padding="16dp">
 
                 </ScrollView>

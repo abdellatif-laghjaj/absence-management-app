@@ -19,6 +19,7 @@
             android:id="@+id/app_name_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/proxima_nova_regular"
             android:text="absenti."
             android:textColor="@color/white"
             android:textSize="44sp" />
@@ -26,6 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/proxima_nova_regular"
             android:text="fy"
             android:textColor="?android:colorAccent"
             android:textSize="44sp" />
@@ -42,10 +44,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="be modern and save time"
+            android:fontFamily="@font/proxima_nova_regular"
+            android:text="@string/be_modern_and_save_time"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:indeterminate="true"
+        android:visibility="visible" />
 
     <ImageView
         android:layout_width="match_parent"

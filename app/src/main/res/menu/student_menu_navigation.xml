@@ -7,11 +7,6 @@
         android:title="@string/dashboard" />
 
     <item
-        android:id="@+id/scan_qr_code"
-        android:icon="@drawable/ic_scan_qr_code"
-        android:title="@string/scan" />
-
-    <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/profile" />

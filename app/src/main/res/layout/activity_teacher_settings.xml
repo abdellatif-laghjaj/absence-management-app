@@ -34,6 +34,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginVertical="20dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/proxima_nova_semibold"
                 android:text="Settings"
                 android:textColor="@color/white"
                 android:textSize="22sp"
@@ -56,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
+                    android:fontFamily="@font/proxima_nova_semibold"
                     android:text="System Settings"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -88,7 +90,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/change_language_iv"
-                            android:text="Change Language"
+                            android:fontFamily="@font/proxima_nova_regular"
+                            android:text="@string/change_language"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -109,7 +112,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="Session Settings"
+                    android:fontFamily="@font/proxima_nova_semibold"
+                    android:text="@string/session_settings"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -141,6 +145,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/reset_password_iv"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="@string/reset_password"
                             android:textColor="@color/white"
                             android:textSize="18sp"
@@ -176,6 +181,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/logout_iv"
+                            android:fontFamily="@font/proxima_nova_regular"
                             android:text="@string/logout"
                             android:textColor="@color/white"
                             android:textSize="18sp"
@@ -197,7 +203,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="About"
+                    android:fontFamily="@font/proxima_nova_semibold"
+                    android:text="@string/about"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -229,7 +236,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/app_version_iv"
-                            android:text="About App"
+                            android:fontFamily="@font/proxima_nova_regular"
+                            android:text="@string/about_app"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -264,7 +272,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/credits_iv"
-                            android:text="Credits"
+                            android:fontFamily="@font/proxima_nova_regular"
+                            android:text="@string/credits"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
