@@ -106,6 +106,11 @@ class StudentProfileActivity : AppCompatActivity() {
                     overridePendingTransition(0, 0)
                     true
                 }
+                R.id.scan_qr_code -> {
+                    startActivity(Intent(this, ScanQrCodeActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
                 R.id.profile -> {
                     true
                 }
