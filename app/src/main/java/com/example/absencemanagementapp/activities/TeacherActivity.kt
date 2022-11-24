@@ -1,5 +1,6 @@
 package com.example.absencemanagementapp.activities
 
+import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.ModulesAdapter
 import com.example.absencemanagementapp.models.Module
@@ -17,10 +19,18 @@ import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
+import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class TeacherActivity : AppCompatActivity() {
     private lateinit var user_name_tv: TextView
+    private lateinit var teacher_image_civ: CircleImageView
     private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var modules_swipe: SwipeRefreshLayout
 
@@ -67,6 +77,22 @@ class TeacherActivity : AppCompatActivity() {
                 user_name_tv.text = teacher!!.last_name
             }
         }
+
+        //get user image
+        database.getReference("teachers").child(user_id).child("avatar").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    //get the image
+                    val image = it.value
+                    Glide.with(this).load(image).into(teacher_image_civ)
+                }
+            }
+
+        teacher_image_civ.setOnClickListener {
+            Intent(this, TeacherProfileActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     private fun getModules(): List<Module> {
@@ -94,7 +120,7 @@ class TeacherActivity : AppCompatActivity() {
         initModules()
         bottom_navigation = findViewById(R.id.bottom_navigation)
         user_name_tv = findViewById(R.id.user_name_tv)
-
+        teacher_image_civ = findViewById(R.id.teacher_image_civ)
         modules_swipe = this.findViewById(R.id.modules_swipe)
         modules_swipe.setOnRefreshListener {
             initModules()
