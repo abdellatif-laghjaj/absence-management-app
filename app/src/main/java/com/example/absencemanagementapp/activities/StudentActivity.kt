@@ -1,24 +1,14 @@
 package com.example.absencemanagementapp.activities
 
 import android.Manifest
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.karumi.dexter.Dexter
@@ -28,7 +18,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import de.hdodenhof.circleimageview.CircleImageView
-import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
     private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -70,7 +59,7 @@ class StudentActivity : AppCompatActivity() {
                     true
                 }
                 R.id.settings -> {
-                    startActivity(Intent(this, SettingsActivity::class.java))
+                    startActivity(Intent(this, StudentSettingsActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }

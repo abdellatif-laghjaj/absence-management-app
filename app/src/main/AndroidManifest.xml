@@ -31,7 +31,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".activities.StudentSettingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
