@@ -235,8 +235,6 @@ class StudentProfileActivity : AppCompatActivity() {
                     ).show()
                     upload_dialog.dismiss()
                 }
-
-
             }
         }
     }
