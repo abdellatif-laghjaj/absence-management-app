@@ -1,6 +1,7 @@
 package com.example.absencemanagementapp.activities.auth
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -74,6 +75,9 @@ class LoginActivity : AppCompatActivity() {
     private fun login(email: String, password: String) {
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Please wait")
+        progressDialog.setMessage("Logging you to you space 🚀")
 
         //log in the user
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
@@ -83,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
                 //check if logged in user is a student or a teacher
                 database.getReference("students").child(user!!.uid).get().addOnSuccessListener {
                     if (it.exists()) {
+                        progressDialog.dismiss()
                         //user is a student
                         val student = it.getValue(Student::class.java)
                         Intent(this, StudentActivity::class.java).also {
@@ -90,6 +95,7 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         }
                     } else {
+                        progressDialog.dismiss()
                         //user is a teacher
                         Intent(this, TeacherActivity::class.java).also {
                             startActivity(it)
@@ -98,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             } else {
+                progressDialog.dismiss()
                 // If sign in fails, display a dialog to the user.
                 val dialog = MaterialDialog.Builder(this)
                     .setTitle("Login Failed")
@@ -161,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
                     checkInternetConnection(this, this)
                 }
                 .build()
-                dialog_not_internet.show()
+            dialog_not_internet.show()
 
             val animationView: LottieAnimationView = dialog_not_internet.getAnimationView()
 
