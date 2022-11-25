@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageTask
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
 import pub.devrel.easypermissions.EasyPermissions
@@ -47,7 +48,9 @@ class TeacherProfileActivity : AppCompatActivity() {
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     private final val REQUEST_CODE = 100
-    private lateinit var image_uri: Uri
+    private var image_uri: Uri = Uri.EMPTY
+    private var my_uri: String = ""
+    private lateinit var uploadTask: StorageTask<*>
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
