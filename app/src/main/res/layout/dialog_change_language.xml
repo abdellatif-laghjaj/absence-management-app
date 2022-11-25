@@ -25,7 +25,7 @@
         android:orientation="vertical">
 
         <RadioButton
-            android:id="@+id/rb_english"
+            android:id="@+id/rb_english_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -40,7 +40,7 @@
             android:textSize="16sp" />
 
         <RadioButton
-            android:id="@+id/rb_frensh"
+            android:id="@+id/rb_frensh_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -55,7 +55,7 @@
             android:textSize="16sp" />
 
         <RadioButton
-            android:id="@+id/rb_arabic"
+            android:id="@+id/rb_arabic_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
