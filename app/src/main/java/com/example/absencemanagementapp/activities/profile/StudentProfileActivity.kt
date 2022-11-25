@@ -3,6 +3,7 @@ package com.example.absencemanagementapp.activities.profile
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -24,12 +25,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageTask
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
 import pub.devrel.easypermissions.EasyPermissions
-import java.io.ByteArrayOutputStream
 
 
+@Suppress("INACCESSIBLE_TYPE")
 class StudentProfileActivity : AppCompatActivity() {
     private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var profile_image_picker_btn: ImageButton
@@ -44,13 +46,15 @@ class StudentProfileActivity : AppCompatActivity() {
     private lateinit var filiere_dropdown: AutoCompleteTextView
     private lateinit var semester_dropdown: AutoCompleteTextView
     private lateinit var update_btn: Button
-    private var bitmap: Bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+    private var bitmap: Bitmap? = null
 
     private val semesters = arrayOf("1", "2", "3", "4", "5", "6")
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     private final val REQUEST_CODE = 100
-    private lateinit var uri: Uri
+    private var image_uri: Uri = Uri.EMPTY
+    private var my_uri: String = ""
+    private lateinit var uploadTask: StorageTask<*>
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -71,6 +75,7 @@ class StudentProfileActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
+
 
         //get user id
         val user_id = auth.currentUser!!.uid
@@ -152,11 +157,9 @@ class StudentProfileActivity : AppCompatActivity() {
         }
 
         profile_image_picker_btn.setOnClickListener {
-            val perms =
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (EasyPermissions.hasPermissions(this, *perms)) {
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 //open gallery
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 startActivityForResult(intent, REQUEST_CODE)
             } else {
@@ -164,7 +167,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     this,
                     "Please accept our permissions",
                     REQUEST_CODE,
-                    *perms
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             }
         }
@@ -172,67 +175,7 @@ class StudentProfileActivity : AppCompatActivity() {
         //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
-                upload_dialog.show()
-
-                val email = getCurrentUserEmail()
-                var student = Student(
-                    first_name_et.text.toString(),
-                    last_name_et.text.toString(),
-                    cin_et.text.toString(),
-                    uri.toString(),
-                    cne_et.text.toString(),
-                    filiere_dropdown.text.toString(),
-                    semester_dropdown.text.toString(),
-                    email
-                )
-
-                database.reference.child("students").child(auth.currentUser!!.uid)
-                    .setValue(student)
-                    .addOnSuccessListener {
-                        FancyToast.makeText(
-                            this,
-                            "Profile updated successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-                    }
-                    .addOnFailureListener {
-                        FancyToast.makeText(
-                            this,
-                            "Error: ${it.message}",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.ERROR,
-                            false
-                        ).show()
-                    }
-
-                //save the image
-                val storageRef = storage.reference
-                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
-                val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                val data = baos.toByteArray()
-                val uploadTask = imageRef.putBytes(data)
-                uploadTask.addOnFailureListener {
-                    FancyToast.makeText(
-                        this,
-                        "Error: ${it.message}",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.ERROR,
-                        false
-                    ).show()
-                    upload_dialog.dismiss()
-                }.addOnSuccessListener {
-                    FancyToast.makeText(
-                        this,
-                        "Image uploaded successfully",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false
-                    ).show()
-                    upload_dialog.dismiss()
-                }
+                updateUserInfo()
             }
         }
     }
@@ -337,10 +280,101 @@ class StudentProfileActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            uri = data?.data!!
-            student_profile_image_civ.setImageURI(uri)
-        }
         super.onActivityResult(requestCode, resultCode, data)
+        //check if the request code is the same as the one we sent
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            //the user has successfully picked an image
+            //we need to save its reference to a Uri variable
+            image_uri = data.data!!
+            //set the image to image view from our URI
+            student_profile_image_civ.setImageURI(image_uri)
+
+            //upload image to firebase storage
+            uploadImageToFirebaseStorage()
+        } else {
+            FancyToast.makeText(
+                this,
+                "You haven't picked an image",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.ERROR,
+                false
+            ).show()
+        }
+    }
+
+    fun uploadImageToFirebaseStorage() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Uploading...")
+        progressDialog.setMessage("Please wait while we upload and process the image")
+        progressDialog.show()
+
+        val ref = storage.getReference("profile_images").child(auth.currentUser!!.uid)
+        ref.putFile(image_uri)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Image uploaded successfully",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false
+                ).show()
+            }
+            .addOnFailureListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Failed to upload image",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
+            .addOnProgressListener { taskSnapshot ->
+                val progress =
+                    100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+                progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+            }
+
+        //set student avatar
+        ref.downloadUrl.addOnSuccessListener {
+            val user = auth.currentUser
+            val userRef = database.getReference("students").child(user!!.uid)
+            userRef.child("avatar").setValue(it.toString())
+        }
+    }
+
+    fun updateUserInfo() {
+        val email = getCurrentUserEmail()
+        val student = Student()
+
+        student.first_name = first_name_et.text.toString()
+        student.last_name = last_name_et.text.toString()
+        student.cin = cin_et.text.toString()
+        student.cne = cne_et.text.toString()
+        student.filiere = filiere_dropdown.text.toString()
+        student.semester = semester_dropdown.text.toString()
+        student.email = email
+
+        database.reference.child("students").child(auth.currentUser!!.uid)
+            .setValue(student)
+            .addOnSuccessListener {
+                FancyToast.makeText(
+                    this,
+                    "Profile updated successfully",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false
+                ).show()
+            }
+            .addOnFailureListener {
+                FancyToast.makeText(
+                    this,
+                    "Error: ${it.message}",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
     }
 }
