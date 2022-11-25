@@ -146,7 +146,11 @@ class StudentSettingsActivity : AppCompatActivity() {
         val theme_rg = dialog.findViewById<RadioGroup>(R.id.theme_rg)
 
         //set default theme
-        theme_rg.check(R.id.rb_light_theme)
+        if (is_dark_mode) {
+            theme_rg.check(R.id.rb_light_theme)
+        } else {
+            theme_rg.check(R.id.rb_dark_theme)
+        }
 
         //change theme
         theme_rg.setOnCheckedChangeListener { group, checkedId ->
