@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.auth
 
 import android.content.Intent
 import android.os.Bundle

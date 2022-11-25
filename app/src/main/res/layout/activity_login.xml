@@ -7,7 +7,7 @@
     android:background="?android:colorPrimary"
     android:orientation="vertical"
     android:weightSum="3"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.auth.LoginActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"

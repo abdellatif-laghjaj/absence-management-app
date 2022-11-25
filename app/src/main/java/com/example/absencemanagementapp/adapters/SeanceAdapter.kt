@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.SeanceActivity
-import com.example.absencemanagementapp.activities.TeacherActivity
 import com.example.absencemanagementapp.models.Seance
 
 class SeanceAdapter(private val seances: List<Seance>, val context: Context, val intitule: String?) : RecyclerView.Adapter<SeanceAdapter.ViewHolder>()  {
