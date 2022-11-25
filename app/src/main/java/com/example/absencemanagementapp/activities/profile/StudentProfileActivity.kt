@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +25,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
@@ -54,8 +52,8 @@ class StudentProfileActivity : AppCompatActivity() {
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     private final val REQUEST_CODE = 100
-    private var imageUri: Uri = Uri.EMPTY
-    private var myUri: String = ""
+    private var image_uri: Uri = Uri.EMPTY
+    private var my_uri: String = ""
     private lateinit var uploadTask: StorageTask<*>
 
     private lateinit var database: FirebaseDatabase
@@ -159,9 +157,7 @@ class StudentProfileActivity : AppCompatActivity() {
         }
 
         profile_image_picker_btn.setOnClickListener {
-            val perms =
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (EasyPermissions.hasPermissions(this, *perms)) {
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 //open gallery
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
@@ -171,7 +167,7 @@ class StudentProfileActivity : AppCompatActivity() {
                     this,
                     "Please accept our permissions",
                     REQUEST_CODE,
-                    *perms
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             }
         }
@@ -285,18 +281,20 @@ class StudentProfileActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        //check if the request code is the same as the one we sent
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            val uri = data.data
-            imageUri = uri!!
+            //the user has successfully picked an image
+            //we need to save its reference to a Uri variable
+            image_uri = data.data!!
+            //set the image to image view from our URI
+            student_profile_image_civ.setImageURI(image_uri)
 
-//            student_profile_image_civ.setImageURI(imageUri)
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-            student_profile_image_civ.setImageBitmap(bitmap)
+            //upload image to firebase storage
             uploadImageToFirebaseStorage()
         } else {
             FancyToast.makeText(
                 this,
-                "Image not found",
+                "You haven't picked an image",
                 FancyToast.LENGTH_SHORT,
                 FancyToast.ERROR,
                 false
@@ -311,7 +309,7 @@ class StudentProfileActivity : AppCompatActivity() {
         progressDialog.show()
 
         val ref = storage.getReference("profile_images").child(auth.currentUser!!.uid)
-        ref.putFile(imageUri)
+        ref.putFile(image_uri)
             .addOnSuccessListener {
                 progressDialog.dismiss()
                 FancyToast.makeText(
@@ -337,24 +335,6 @@ class StudentProfileActivity : AppCompatActivity() {
                     100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
                 progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
             }
-
-//        val filename = UUID.randomUUID().toString()
-//        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-//        ref.putFile(imageUri)
-//            .addOnSuccessListener {
-//                ref.downloadUrl.addOnSuccessListener {
-//                    saveUserToFirebaseDatabase(it.toString())
-//                }
-//            }
-//            .addOnFailureListener {
-//                FancyToast.makeText(
-//                    this,
-//                    "Failed to upload image",
-//                    FancyToast.LENGTH_SHORT,
-//                    FancyToast.ERROR,
-//                    false
-//                ).show()
-//            }
     }
 
     fun updateUserInfo() {
