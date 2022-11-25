@@ -14,7 +14,7 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/proxima_nova_semibold"
         android:gravity="center"
-        android:text="@string/change_language"
+        android:text="@string/change_theme"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -22,51 +22,41 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <RadioButton
             android:id="@+id/rb_english"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="16dp"
+            android:layout_weight="1"
             android:background="@drawable/radio_button"
             android:button="@android:color/transparent"
-            android:drawableStart="@drawable/english_lang"
+            android:drawableStart="@drawable/moon"
             android:drawablePadding="16dp"
             android:fontFamily="@font/proxima_nova_regular"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="@string/english"
+            android:text="@string/dark_mode"
             android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rb_frensh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
             android:layout_marginBottom="16dp"
+            android:layout_weight="1"
             android:background="@drawable/radio_button"
             android:button="@android:color/transparent"
-            android:drawableStart="@drawable/frensh_lang"
+            android:drawableStart="@drawable/sun"
             android:drawablePadding="16dp"
             android:fontFamily="@font/proxima_nova_regular"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="@string/frensh"
-            android:textSize="16sp" />
-
-        <RadioButton
-            android:id="@+id/rb_arabic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/radio_button"
-            android:button="@android:color/transparent"
-            android:drawableStart="@drawable/arabic_lang"
-            android:drawablePadding="16dp"
-            android:fontFamily="@font/proxima_nova_regular"
-            android:gravity="center_vertical"
-            android:padding="16dp"
-            android:text="@string/arabic"
+            android:text="@string/light_mode"
             android:textSize="16sp" />
 
     </RadioGroup>

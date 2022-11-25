@@ -26,6 +26,7 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentSettingsActivity : AppCompatActivity() {
     private lateinit var change_language_layout: RelativeLayout
+    private lateinit var change_theme_layout: RelativeLayout
     private lateinit var reset_password_layout: RelativeLayout
     private lateinit var logout_layout: RelativeLayout
     private lateinit var about_layout: RelativeLayout
@@ -81,6 +82,10 @@ class StudentSettingsActivity : AppCompatActivity() {
             showChangeLanguageDialog()
         }
 
+        change_theme_layout.setOnClickListener {
+            showChangeThemeDialog()
+        }
+
         logout_layout.setOnClickListener {
             logout()
         }
@@ -104,6 +109,28 @@ class StudentSettingsActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_change_language)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
+
+        confirm_btn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    //show change theme dialog
+    private fun showChangeThemeDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_change_theme)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -249,6 +276,7 @@ class StudentSettingsActivity : AppCompatActivity() {
         back_iv = findViewById(R.id.back_iv)
         bottom_navigation = findViewById(R.id.bottom_navigation)
         change_language_layout = findViewById(R.id.change_language_layout)
+        change_theme_layout = findViewById(R.id.change_theme_layout)
         logout_layout = findViewById(R.id.logout_layout)
         reset_password_layout = findViewById(R.id.reset_password_layout)
         credits_layout = findViewById(R.id.credits_layout)

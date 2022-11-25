@@ -62,4 +62,6 @@
     <string name="about_app">About App</string>
     <string name="credits">Credits</string>
     <string name="change_theme">Change theme</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="light_mode">Light mode</string>
 </resources>
