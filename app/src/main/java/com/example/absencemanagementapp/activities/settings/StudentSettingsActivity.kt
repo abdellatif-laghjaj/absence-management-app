@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatDelegate
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.auth.LoginActivity
@@ -36,6 +38,8 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+
+    private var is_dark_mode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,8 +143,31 @@ class StudentSettingsActivity : AppCompatActivity() {
         dialog.window?.setGravity(Gravity.CENTER)
 
         val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
+        val theme_rg = dialog.findViewById<RadioGroup>(R.id.theme_rg)
+
+        //set default theme
+        theme_rg.check(R.id.rb_light_theme)
+
+        //change theme
+        theme_rg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.rb_light_theme -> {
+                    //set light theme
+                    is_dark_mode = false
+                }
+                R.id.rb_dark_theme -> {
+                    //set dark theme
+                    is_dark_mode = true
+                }
+            }
+        }
 
         confirm_btn.setOnClickListener {
+            if (is_dark_mode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
             dialog.dismiss()
         }
 
