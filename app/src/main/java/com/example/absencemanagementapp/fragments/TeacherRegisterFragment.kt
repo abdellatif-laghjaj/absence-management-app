@@ -71,7 +71,8 @@ class TeacherRegisterFragment : Fragment() {
         //register the teacher to firebase
         auth = FirebaseAuth.getInstance()
         val progressDialog = ProgressDialog(requireContext())
-        progressDialog.setTitle("Registering Teacher")
+        progressDialog.setTitle("Here we go")
+        progressDialog.setMessage("Please wait, while we are creating your space 🙂")
         progressDialog.show()
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
