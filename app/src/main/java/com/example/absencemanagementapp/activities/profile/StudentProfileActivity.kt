@@ -60,7 +60,7 @@ class StudentProfileActivity : AppCompatActivity() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
-    private lateinit var storage_profile_images_ref: StorageReference
+    private lateinit var storage: FirebaseStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +76,7 @@ class StudentProfileActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
-        storage_profile_images_ref =
-            FirebaseStorage.getInstance().getReference().child("profile_images")
+        storage = FirebaseStorage.getInstance()
 
 
         //get user id
@@ -290,9 +289,9 @@ class StudentProfileActivity : AppCompatActivity() {
             val uri = data.data
             imageUri = uri!!
 
-            student_profile_image_civ.setImageURI(imageUri)
-//            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-//            profile_image_picker_btn.setImageBitmap(bitmap)
+//            student_profile_image_civ.setImageURI(imageUri)
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            student_profile_image_civ.setImageBitmap(bitmap)
             uploadImageToFirebaseStorage()
         } else {
             FancyToast.makeText(
@@ -311,42 +310,33 @@ class StudentProfileActivity : AppCompatActivity() {
         progressDialog.setMessage("Please wait while we upload and process the image")
         progressDialog.show()
 
-        if (imageUri != null) {
-            val file_ref = storage_profile_images_ref.child(auth.currentUser!!.uid + ".jpg")
-            uploadTask = file_ref.putFile(imageUri)
-
-            uploadTask.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
-                    }
-                }
-                file_ref.downloadUrl
-            }.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    val url = downloadUri.toString()
-
-                    val ref = database.getReference("students").child(auth.currentUser!!.uid)
-                    val userMap = HashMap<String, Any>()
-                    userMap["image_url"] = url
-                    ref.updateChildren(userMap)
-
-                    progressDialog.dismiss()
-                } else {
-                    progressDialog.dismiss()
-                }
-            }.addOnFailureListener { e ->
+        val ref = storage.getReference("profile_images").child(auth.currentUser!!.uid)
+        ref.putFile(imageUri)
+            .addOnSuccessListener {
                 progressDialog.dismiss()
                 FancyToast.makeText(
                     this,
-                    e.message,
+                    "Image uploaded successfully",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false
+                ).show()
+            }
+            .addOnFailureListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Failed to upload image",
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
                 ).show()
             }
-        }
+            .addOnProgressListener { taskSnapshot ->
+                val progress =
+                    100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+                progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+            }
 
 //        val filename = UUID.randomUUID().toString()
 //        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
