@@ -105,6 +105,42 @@
                             android:src="@drawable/ic_right_arrow" />
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/change_theme_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+
+                        <ImageView
+                            android:id="@+id/change_theme_iv"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/round_back_language"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_palette" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/change_theme_iv"
+                            android:fontFamily="@font/proxima_nova_regular"
+                            android:text="@string/change_theme"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="6dp"
+                            android:src="@drawable/ic_right_arrow" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <TextView

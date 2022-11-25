@@ -82,4 +82,7 @@ dependencies {
 
     //Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    //Android Toggle
+    implementation 'com.github.angads25:toggle:1.1.0'
 }
