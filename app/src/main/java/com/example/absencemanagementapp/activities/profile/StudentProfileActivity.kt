@@ -156,7 +156,7 @@ class StudentProfileActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
             if (EasyPermissions.hasPermissions(this, *perms)) {
                 //open gallery
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 startActivityForResult(intent, REQUEST_CODE)
             } else {
@@ -172,67 +172,7 @@ class StudentProfileActivity : AppCompatActivity() {
         //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
-                upload_dialog.show()
-
-                val email = getCurrentUserEmail()
-                var student = Student(
-                    first_name_et.text.toString(),
-                    last_name_et.text.toString(),
-                    cin_et.text.toString(),
-                    uri.toString(),
-                    cne_et.text.toString(),
-                    filiere_dropdown.text.toString(),
-                    semester_dropdown.text.toString(),
-                    email
-                )
-
-                database.reference.child("students").child(auth.currentUser!!.uid)
-                    .setValue(student)
-                    .addOnSuccessListener {
-                        FancyToast.makeText(
-                            this,
-                            "Profile updated successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-                    }
-                    .addOnFailureListener {
-                        FancyToast.makeText(
-                            this,
-                            "Error: ${it.message}",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.ERROR,
-                            false
-                        ).show()
-                    }
-
-                //save the image
-                val storageRef = storage.reference
-                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
-                imageRef.putFile(uri)
-                    .addOnSuccessListener {
-                        FancyToast.makeText(
-                            this,
-                            "Image uploaded successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-
-                        upload_dialog.dismiss()
-                    }
-                    .addOnFailureListener {
-                        FancyToast.makeText(
-                            this,
-                            "Error: ${it.message}",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.ERROR,
-                            false
-                        ).show()
-
-                        upload_dialog.dismiss()
-                    }
+                //code here
             }
         }
     }
@@ -333,14 +273,5 @@ class StudentProfileActivity : AppCompatActivity() {
     public fun getCurrentUserEmail(): String {
         val user = auth.currentUser
         return user!!.email.toString()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            uri = data?.data!!
-            student_profile_image_civ.setImageURI(uri)
-        }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 }
