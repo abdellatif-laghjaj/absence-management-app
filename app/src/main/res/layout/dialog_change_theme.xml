@@ -63,12 +63,12 @@
     </RadioGroup>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/confirm_btn"
+        android:id="@+id/cancel_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_layout"
         android:fontFamily="@font/proxima_nova_semibold"
         android:padding="8dp"
-        android:text="Set it !"
+        android:text="Puff, can't do it"
         android:textColor="@color/white" />
 </LinearLayout>

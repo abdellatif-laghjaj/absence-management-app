@@ -142,39 +142,27 @@ class StudentSettingsActivity : AppCompatActivity() {
         )
         dialog.window?.setGravity(Gravity.CENTER)
 
-        val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
+        val cancel_btn = dialog.findViewById<Button>(R.id.cancel_btn)
         val theme_rg = dialog.findViewById<RadioGroup>(R.id.theme_rg)
-
-        //set default theme
-        if (is_dark_mode) {
-            theme_rg.check(R.id.rb_light_theme)
-        } else {
-            theme_rg.check(R.id.rb_dark_theme)
-        }
 
         //change theme
         theme_rg.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_light_theme -> {
                     //set light theme
-                    is_dark_mode = false
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 }
                 R.id.rb_dark_theme -> {
                     //set dark theme
-                    is_dark_mode = true
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 }
             }
         }
 
-        confirm_btn.setOnClickListener {
-            if (is_dark_mode) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }
+        cancel_btn.setOnClickListener {
             dialog.dismiss()
         }
-
+        
         dialog.show()
     }
 
