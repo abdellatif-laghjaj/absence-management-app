@@ -293,7 +293,7 @@ class StudentProfileActivity : AppCompatActivity() {
             student_profile_image_civ.setImageURI(imageUri)
 //            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
 //            profile_image_picker_btn.setImageBitmap(bitmap)
-//            uploadImageToFirebaseStorage()
+            uploadImageToFirebaseStorage()
         } else {
             FancyToast.makeText(
                 this,
