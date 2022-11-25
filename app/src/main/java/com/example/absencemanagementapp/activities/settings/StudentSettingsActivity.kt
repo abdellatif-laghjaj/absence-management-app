@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatDelegate
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.auth.LoginActivity
@@ -26,6 +28,7 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentSettingsActivity : AppCompatActivity() {
     private lateinit var change_language_layout: RelativeLayout
+    private lateinit var change_theme_layout: RelativeLayout
     private lateinit var reset_password_layout: RelativeLayout
     private lateinit var logout_layout: RelativeLayout
     private lateinit var about_layout: RelativeLayout
@@ -35,6 +38,8 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+
+    private var is_dark_mode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +86,10 @@ class StudentSettingsActivity : AppCompatActivity() {
             showChangeLanguageDialog()
         }
 
+        change_theme_layout.setOnClickListener {
+            showChangeThemeDialog()
+        }
+
         logout_layout.setOnClickListener {
             logout()
         }
@@ -114,6 +123,43 @@ class StudentSettingsActivity : AppCompatActivity() {
         val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
 
         confirm_btn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    //show change theme dialog
+    private fun showChangeThemeDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_change_theme)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        val cancel_btn = dialog.findViewById<Button>(R.id.cancel_btn)
+        val theme_rg = dialog.findViewById<RadioGroup>(R.id.theme_rg)
+
+        //change theme
+        theme_rg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.rb_light_theme -> {
+                    //set light theme
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                R.id.rb_dark_theme -> {
+                    //set dark theme
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+            }
+        }
+
+        cancel_btn.setOnClickListener {
             dialog.dismiss()
         }
 
@@ -249,6 +295,7 @@ class StudentSettingsActivity : AppCompatActivity() {
         back_iv = findViewById(R.id.back_iv)
         bottom_navigation = findViewById(R.id.bottom_navigation)
         change_language_layout = findViewById(R.id.change_language_layout)
+        change_theme_layout = findViewById(R.id.change_theme_layout)
         logout_layout = findViewById(R.id.logout_layout)
         reset_password_layout = findViewById(R.id.reset_password_layout)
         credits_layout = findViewById(R.id.credits_layout)
