@@ -175,7 +175,7 @@ class StudentProfileActivity : AppCompatActivity() {
                 upload_dialog.show()
 
                 val email = getCurrentUserEmail()
-                val student = Student(
+                var student = Student(
                     first_name_et.text.toString(),
                     last_name_et.text.toString(),
                     cin_et.text.toString(),
@@ -209,7 +209,7 @@ class StudentProfileActivity : AppCompatActivity() {
 
                 //save the image
                 val storageRef = storage.reference
-                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}.jpg")
+                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
                 val baos = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
@@ -300,19 +300,6 @@ class StudentProfileActivity : AppCompatActivity() {
         filiere_dropdown = findViewById(R.id.filiere_dropdown)
         semester_dropdown = findViewById(R.id.semester_dropdown)
         update_btn = findViewById(R.id.update_btn)
-
-        //get current user image
-        database.getReference("students").child(auth.currentUser!!.uid).child("avatar").get()
-            .addOnSuccessListener {
-                if (it.exists()) {
-                    //get the image
-                    val imageRef = storage.reference.child("profile_images/${auth.currentUser!!.uid}.jpg")
-                    imageRef.downloadUrl.addOnSuccessListener {
-                        uri = it
-                        //Glide.with(this).load(it).into(student_profile_image_civ)
-                    }
-                }
-            }
     }
 
     public fun fillData() {
