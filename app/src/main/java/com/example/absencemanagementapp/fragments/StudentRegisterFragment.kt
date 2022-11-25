@@ -1,5 +1,6 @@
 package com.example.absencemanagementapp.fragments
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -80,6 +81,9 @@ class StudentRegisterFragment : Fragment() {
     private fun registerStudent(email: String, password: String) {
         //register student in firebase
         auth = FirebaseAuth.getInstance()
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Registering Student...")
+        progressDialog.show()
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -108,6 +112,7 @@ class StudentRegisterFragment : Fragment() {
                                 false
                             ).show()
                         }
+                        progressDialog.dismiss()
                         redirectToLogin()
                     } else {
                         FancyToast.makeText(
@@ -117,6 +122,7 @@ class StudentRegisterFragment : Fragment() {
                             FancyToast.ERROR,
                             false
                         ).show()
+                        progressDialog.dismiss()
                     }
                 }
             } else {
@@ -127,6 +133,7 @@ class StudentRegisterFragment : Fragment() {
                     FancyToast.ERROR,
                     false
                 ).show()
+                progressDialog.dismiss()
             }
         }
 
