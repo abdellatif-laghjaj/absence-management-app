@@ -82,7 +82,7 @@ class StudentRegisterFragment : Fragment() {
         //register student in firebase
         auth = FirebaseAuth.getInstance()
         val progressDialog = ProgressDialog(requireContext())
-        progressDialog.setMessage("Registering Student...")
+        progressDialog.setTitle("Registering Student")
         progressDialog.show()
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
