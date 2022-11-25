@@ -3,6 +3,7 @@ package com.example.absencemanagementapp.activities.profile
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -26,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.shashank.sony.fancytoastlib.FancyToast
 import de.hdodenhof.circleimageview.CircleImageView
 import pub.devrel.easypermissions.EasyPermissions
-import java.io.ByteArrayOutputStream
 
 
 class TeacherProfileActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class TeacherProfileActivity : AppCompatActivity() {
     private val branches = arrayOf("GI", "SV", "LAE", "ECO")
 
     private final val REQUEST_CODE = 100
-    private lateinit var uri: Uri
+    private lateinit var image_uri: Uri
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -117,6 +117,7 @@ class TeacherProfileActivity : AppCompatActivity() {
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_user_image)
             val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
+
             //get current user image
             database.getReference("teachers").child(user_id).child("avatar").get()
                 .addOnSuccessListener {
@@ -136,11 +137,9 @@ class TeacherProfileActivity : AppCompatActivity() {
         }
 
         profile_image_picker_btn.setOnClickListener {
-            val perms =
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (EasyPermissions.hasPermissions(this, *perms)) {
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 //open gallery
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 startActivityForResult(intent, REQUEST_CODE)
             } else {
@@ -148,7 +147,7 @@ class TeacherProfileActivity : AppCompatActivity() {
                     this,
                     "Please accept our permissions",
                     REQUEST_CODE,
-                    *perms
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             }
         }
@@ -156,64 +155,7 @@ class TeacherProfileActivity : AppCompatActivity() {
         //update logic
         update_btn.setOnClickListener {
             if (validateInputs()) {
-                upload_dialog.show()
-
-                val email = getCurrentUserEmail()
-                val teacher = Teacher(
-                    first_name_et.text.toString(),
-                    last_name_et.text.toString(),
-                    cin_et.text.toString(),
-                    uri.toString(),
-                    email
-                )
-
-                database.reference.child("teachers").child(auth.currentUser!!.uid)
-                    .setValue(teacher)
-                    .addOnSuccessListener {
-                        FancyToast.makeText(
-                            this,
-                            "Profile updated successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-                    }
-                    .addOnFailureListener {
-                        FancyToast.makeText(
-                            this,
-                            "Error: ${it.message}",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.ERROR,
-                            false
-                        ).show()
-                    }
-
-                //save the image
-                val storageRef = storage.reference
-                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
-                imageRef.putFile(uri)
-                    .addOnSuccessListener {
-                        FancyToast.makeText(
-                            this,
-                            "Image uploaded successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-
-                        upload_dialog.dismiss()
-                    }
-                    .addOnFailureListener {
-                        FancyToast.makeText(
-                            this,
-                            "Error: ${it.message}",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.ERROR,
-                            false
-                        ).show()
-
-                        upload_dialog.dismiss()
-                    }
+                updateUserInfo()
             }
         }
     }
@@ -290,20 +232,98 @@ class TeacherProfileActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            uri = data!!.data!!
-            teacher_profile_image_civ.setImageURI(uri)
-        }
         super.onActivityResult(requestCode, resultCode, data)
+        //check if the request code is the same as the one we sent
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            //the user has successfully picked an image
+            //we need to save its reference to a Uri variable
+            image_uri = data.data!!
+            //set the image to image view from our URI
+            teacher_profile_image_civ.setImageURI(image_uri)
+
+            //upload image to firebase storage
+            uploadImageToFirebaseStorage()
+        } else {
+            FancyToast.makeText(
+                this,
+                "You haven't picked an image",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.ERROR,
+                false
+            ).show()
+        }
     }
 
-    private fun uploadImageToFirebaseStorage(uri: Uri?) {
-        FancyToast.makeText(
-            this,
-            "Uploading image...",
-            FancyToast.LENGTH_SHORT,
-            FancyToast.INFO,
-            false
-        ).show()
+    fun uploadImageToFirebaseStorage() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Uploading...")
+        progressDialog.setMessage("Please wait while we upload and process the image")
+        progressDialog.show()
+
+        val ref = storage.getReference("profile_images").child(auth.currentUser!!.uid)
+        ref.putFile(image_uri)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Image uploaded successfully",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false
+                ).show()
+            }
+            .addOnFailureListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Failed to upload image",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
+            .addOnProgressListener { taskSnapshot ->
+                val progress =
+                    100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+                progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+            }
+
+        //set student avatar
+        ref.downloadUrl.addOnSuccessListener {
+            val user = auth.currentUser
+            val userRef = database.getReference("teachers").child(user!!.uid)
+            userRef.child("avatar").setValue(it.toString())
+        }
+    }
+
+    fun updateUserInfo() {
+        val email = getCurrentUserEmail()
+        val teacher = Teacher()
+
+        teacher.first_name = first_name_et.text.toString()
+        teacher.last_name = last_name_et.text.toString()
+        teacher.cin = cin_et.text.toString()
+        teacher.email = email
+
+        database.reference.child("teachers").child(auth.currentUser!!.uid)
+            .setValue(teacher)
+            .addOnSuccessListener {
+                FancyToast.makeText(
+                    this,
+                    "Profile updated successfully",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false
+                ).show()
+            }
+            .addOnFailureListener {
+                FancyToast.makeText(
+                    this,
+                    "Error: ${it.message}",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
     }
 }
