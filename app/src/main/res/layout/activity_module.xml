@@ -141,7 +141,6 @@
             android:layout_height="match_parent"
             android:padding="16dp">
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/seances_rv"
                 android:layout_width="match_parent"
