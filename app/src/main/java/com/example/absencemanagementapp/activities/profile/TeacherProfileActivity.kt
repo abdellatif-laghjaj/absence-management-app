@@ -190,30 +190,30 @@ class TeacherProfileActivity : AppCompatActivity() {
 
                 //save the image
                 val storageRef = storage.reference
-                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}.jpg")
-                val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                val data = baos.toByteArray()
-                val uploadTask = imageRef.putBytes(data)
-                uploadTask.addOnFailureListener {
-                    FancyToast.makeText(
-                        this,
-                        "Error: ${it.message}",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.ERROR,
-                        false
-                    ).show()
-                    upload_dialog.dismiss()
-                }.addOnSuccessListener {
-                    FancyToast.makeText(
-                        this,
-                        "Image uploaded successfully",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false
-                    ).show()
-                    upload_dialog.dismiss()
-                }
+                val imageRef = storageRef.child("profile_images/${auth.currentUser!!.uid}")
+                imageRef.putFile(uri)
+                    .addOnSuccessListener {
+                        FancyToast.makeText(
+                            this,
+                            "Image uploaded successfully",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,
+                            false
+                        ).show()
+
+                        upload_dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        FancyToast.makeText(
+                            this,
+                            "Error: ${it.message}",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.ERROR,
+                            false
+                        ).show()
+
+                        upload_dialog.dismiss()
+                    }
             }
         }
     }
