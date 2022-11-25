@@ -335,6 +335,13 @@ class StudentProfileActivity : AppCompatActivity() {
                     100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
                 progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
             }
+
+        //set student avatar
+        ref.downloadUrl.addOnSuccessListener {
+            val user = auth.currentUser
+            val userRef = database.getReference("students").child(user!!.uid)
+            userRef.child("avatar").setValue(it.toString())
+        }
     }
 
     fun updateUserInfo() {
