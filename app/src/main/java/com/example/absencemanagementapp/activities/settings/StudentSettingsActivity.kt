@@ -189,7 +189,8 @@ class StudentSettingsActivity : AppCompatActivity() {
     private fun showCreditsDialog() {
         val dialog = MaterialDialog.Builder(this)
             .setTitle("Credits")
-            .setMessage("We will put credits here")
+            //add links to icons
+            .setMessage("⚡ Animations by LottieFiles.com\n\n🚀 Icons by icons8.com")
             .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
                 dialogInterface.dismiss()
             }
