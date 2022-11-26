@@ -10,8 +10,10 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.activities.home.TeacherActivity
-import com.example.absencemanagementapp.helpers.Helper
+import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
+import com.example.absencemanagementapp.helpers.Helper.Companion.checkInternetConnection
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
+import com.example.absencemanagementapp.helpers.Helper.Companion.lodaTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
@@ -25,6 +27,11 @@ class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+
+        //get theme from shared preferences
+        val theme = lodaTheme(this)
+        //change theme
+        changeTheme(theme, this)
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
@@ -51,7 +58,7 @@ class SplashScreen : AppCompatActivity() {
                             finish()
                         }
                         .setPositiveButton("Ok") { _, _ ->
-                            Helper.checkInternetConnection(this, this)
+                            checkInternetConnection(this, this)
                         }
                         .build()
                     dialog_not_internet.show()

@@ -70,7 +70,7 @@ class Helper {
         }
 
         //get theme from shared preferences
-        fun getTheme(activity: AppCompatActivity): String {
+        fun lodaTheme(activity: AppCompatActivity): String {
             val sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
             return sharedPreferences.getString("theme", "system").toString()
         }

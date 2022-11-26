@@ -21,6 +21,7 @@ import com.example.absencemanagementapp.activities.ScanQrCodeActivity
 import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
+import com.example.absencemanagementapp.helpers.Helper.Companion.lodaTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -40,14 +41,9 @@ class StudentSettingsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
 
-    private var is_dark_mode = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_settings)
-
-        //load theme
-        getTheme()
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
