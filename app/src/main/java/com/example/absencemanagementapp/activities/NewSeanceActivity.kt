@@ -50,21 +50,17 @@ class NewSeanceActivity : AppCompatActivity() {
         seance_date = this.findViewById(R.id.seance_date)
         seance_date.setOnClickListener {
             val c = Calendar.getInstance()
-
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerDialog = DatePickerDialog(
-                // on below line we are passing context.
-                this,
-                { view, year, monthOfYear, dayOfMonth ->
-                },
-                year,
-                month,
-                day
-            )
-            datePickerDialog.show()
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                // Display Selected date in textbox
+                seance_date.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+            }, year, month, day)
+            dpd.show()
+
+
         }
 
         start_dropdown = this.findViewById(R.id.start_dropdown)
