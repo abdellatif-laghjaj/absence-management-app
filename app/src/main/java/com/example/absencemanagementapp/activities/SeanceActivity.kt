@@ -32,6 +32,12 @@ class SeanceActivity : AppCompatActivity() {
 
         //get seance from intent
         setDatas()
+
+        back_iv.setOnClickListener({ back() })
+
+        absence_list_cv.setOnClickListener({ showAbsenceList() })
+
+        show_qr_code.setOnClickListener({ showQrCode() })
     }
 
     private fun initView() {
