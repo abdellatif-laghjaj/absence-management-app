@@ -19,6 +19,7 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.home.TeacherActivity
 import com.example.absencemanagementapp.activities.profile.TeacherProfileActivity
+import com.example.absencemanagementapp.helpers.Helper.Companion.changeLanguage
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -113,9 +114,32 @@ class TeacherSettingsActivity : AppCompatActivity() {
         dialog.window?.setGravity(Gravity.CENTER)
 
         val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
+        val language_rg = dialog.findViewById<RadioGroup>(R.id.language_rg)
 
+        //change language
         confirm_btn.setOnClickListener {
-            dialog.dismiss()
+            when (language_rg.checkedRadioButtonId) {
+                R.id.rb_english_language -> {
+                    //change language to english
+                    changeLanguage("en", this)
+                    dialog.dismiss()
+                }
+                R.id.rb_frensh_language -> {
+                    //change language to frensh
+                    changeLanguage("fr", this)
+                    dialog.dismiss()
+                }
+                R.id.rb_arabic_language -> {
+                    //change language to arabic
+                    changeLanguage("ar", this)
+                    dialog.dismiss()
+                }
+                else -> {
+                    //change language to english
+                    changeLanguage("en", this)
+                    dialog.dismiss()
+                }
+            }
         }
 
         dialog.show()
