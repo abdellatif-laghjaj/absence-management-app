@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
@@ -95,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
@@ -126,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
@@ -157,6 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
@@ -188,6 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
@@ -218,6 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
