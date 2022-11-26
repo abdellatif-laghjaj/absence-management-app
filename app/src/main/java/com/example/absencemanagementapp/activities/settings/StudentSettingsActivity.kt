@@ -20,6 +20,7 @@ import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.ScanQrCodeActivity
 import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
+import com.example.absencemanagementapp.helpers.Helper.Companion.changeLanguage
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
 import com.example.absencemanagementapp.helpers.Helper.Companion.lodaTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -115,16 +116,42 @@ class StudentSettingsActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.dialog_change_language)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window?.setGravity(Gravity.CENTER)
 
         val confirm_btn = dialog.findViewById<Button>(R.id.confirm_btn)
+        val language_rg = dialog.findViewById<RadioGroup>(R.id.language_rg)
 
+        //change language
         confirm_btn.setOnClickListener {
-            dialog.dismiss()
+            when (language_rg.checkedRadioButtonId) {
+                R.id.rb_english_language -> {
+                    //change language to english
+                    changeLanguage("en", this)
+                    dialog.dismiss()
+                }
+                R.id.rb_frensh_language -> {
+                    //change language to frensh
+                    changeLanguage("fr", this)
+                    dialog.dismiss()
+                }
+                R.id.rb_arabic_language -> {
+                    //change language to arabic
+                    changeLanguage("ar", this)
+                    dialog.dismiss()
+                }
+                else -> {
+                    //change language to english
+                    changeLanguage("en", this)
+                    dialog.dismiss()
+                }
+            }
         }
+
+//        confirm_btn.setOnClickListener {
+//            dialog.dismiss()
+//        }
 
         dialog.show()
     }
@@ -137,8 +164,7 @@ class StudentSettingsActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.dialog_change_theme)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window?.setGravity(Gravity.CENTER)
 
@@ -168,14 +194,11 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     //show About dialog
     private fun showAboutDialog() {
-        val dialog = MaterialDialog.Builder(this)
-            .setTitle("About")
+        val dialog = MaterialDialog.Builder(this).setTitle("About")
             .setMessage("Absence Management App is an app that allows students to scan QR codes to mark their attendance. It also allows teachers to view the attendance of their students.")
             .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
                 dialogInterface.dismiss()
-            }
-            .setAnimation(R.raw.about)
-            .build()
+            }.setAnimation(R.raw.about).build()
         dialog.show()
 
         val animationView: LottieAnimationView = dialog.animationView
@@ -187,15 +210,12 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     //show Credits dialog
     private fun showCreditsDialog() {
-        val dialog = MaterialDialog.Builder(this)
-            .setTitle("Credits")
+        val dialog = MaterialDialog.Builder(this).setTitle("Credits")
             //add links to icons
             .setMessage("⚡ Animations by LottieFiles.com\n\n🚀 Icons by icons8.com")
             .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
                 dialogInterface.dismiss()
-            }
-            .setAnimation(R.raw.credits)
-            .build()
+            }.setAnimation(R.raw.credits).build()
         dialog.show()
 
         val animationView: LottieAnimationView = dialog.animationView

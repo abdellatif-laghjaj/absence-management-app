@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
+import java.util.*
 
 class Helper {
     companion object {
@@ -73,6 +74,32 @@ class Helper {
         fun lodaTheme(activity: AppCompatActivity): String {
             val sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
             return sharedPreferences.getString("theme", "system").toString()
+        }
+
+        //change language
+        fun changeLanguage(language: String, activity: AppCompatActivity) {
+            when (language) {
+                "en" -> activity.resources.configuration.setLocale(Locale("en"))
+                "fr" -> activity.resources.configuration.setLocale(Locale("fr"))
+                "ar" -> activity.resources.configuration.setLocale(Locale("ar"))
+            }
+
+            //save language to shared preferences
+            saveLanguage(language, activity)
+        }
+
+        //save language to shared preferences
+        fun saveLanguage(language: String, activity: AppCompatActivity) {
+            val sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("language", language)
+            editor.apply()
+        }
+
+        //get language from shared preferences
+        fun loadLanguage(activity: AppCompatActivity): String {
+            val sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            return sharedPreferences.getString("language", "en").toString()
         }
     }
 }
