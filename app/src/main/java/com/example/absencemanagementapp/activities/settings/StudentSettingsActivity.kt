@@ -46,6 +46,9 @@ class StudentSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_settings)
 
+        //load theme
+        getTheme()
+
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
