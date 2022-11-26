@@ -73,4 +73,5 @@
     <string name="salle">Salle</string>
     <string name="add">ADD</string>
     <string name="back">back</string>
+    <string name="total_absences">Total absences</string>
 </resources>
