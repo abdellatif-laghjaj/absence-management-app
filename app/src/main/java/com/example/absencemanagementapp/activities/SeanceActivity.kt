@@ -31,42 +31,42 @@ class SeanceActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        var seance_id = intent.getIntExtra("id", 0)
-        var module_intitule = intent.getStringExtra("module_intitule")
+        val seance_id = intent.getIntExtra("id", 0)
+        val module_intitule = intent.getStringExtra("module_intitule")
 
         module_intitule_tv = this.findViewById(R.id.module_intitule_tv)
-        module_intitule_tv.setText(module_intitule)
+        module_intitule_tv.text = module_intitule
 
         back_iv = findViewById(R.id.back_arrow)
-        back_iv.setOnClickListener({ back() })
+        back_iv.setOnClickListener { back() }
 
         absence_list_cv = this.findViewById(R.id.absence_list_cv)
-        absence_list_cv.setOnClickListener({
+        absence_list_cv.setOnClickListener {
             showAbsenceList()
-        })
+        }
 
         show_qr_code = this.findViewById(R.id.show_qr_code)
-        show_qr_code.setOnClickListener({
+        show_qr_code.setOnClickListener {
             showQrCode()
-        })
+        }
 
         seance_type_tv = this.findViewById(R.id.seance_type_tv)
-        seance_type_tv.setText(getCurrentSeance(seance_id).type)
+        seance_type_tv.text = getCurrentSeance(seance_id).type
 
         seance_date_tv = this.findViewById(R.id.seance_date_tv)
-        seance_date_tv.setText(getCurrentSeance(seance_id).date)
+        seance_date_tv.text = getCurrentSeance(seance_id).date
 
         seance_start_time_tv = this.findViewById(R.id.seance_start_time_tv)
-        seance_start_time_tv.setText(getCurrentSeance(seance_id).start_time)
+        seance_start_time_tv.text = getCurrentSeance(seance_id).start_time
 
         seance_end_time_tv = this.findViewById(R.id.seance_end_time_tv)
-        seance_end_time_tv.setText(getCurrentSeance(seance_id).end_time)
+        seance_end_time_tv.text = getCurrentSeance(seance_id).end_time
 
         salle_nb_tv = this.findViewById(R.id.salle_nb_tv)
-        salle_nb_tv.setText(getCurrentSeance(seance_id).n_salle)
+        salle_nb_tv.text = getCurrentSeance(seance_id).n_salle
 
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
-        total_absence_tv.setText(getCurrentSeance(seance_id).total_absences.toString())
+        total_absence_tv.text = getCurrentSeance(seance_id).total_absences.toString()
     }
 
     private fun getCurrentSeance(id: Int): Seance {
