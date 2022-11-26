@@ -20,6 +20,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/back"
             android:src="@drawable/ic_back" />
 
 
@@ -30,7 +31,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/proxima_nova_semibold"
-            android:text="ADD NEW SEANCE"
+            android:text="@string/add_new_seance"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/proxima_nova_semibold"
-            android:text="Séance details"
+            android:text="@string/seance_details"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -78,14 +79,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/proxima_nova_regular"
-                        android:hint="Type of séance"
+                        android:hint="@string/type_of_seance"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="2dp"
@@ -99,9 +100,10 @@
                         android:id="@+id/seance_date"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:focusableInTouchMode="false"
                         android:fontFamily="@font/proxima_nova_regular"
-                        android:hint="Date of séance"
-                        android:inputType="text"
+                        android:hint="@string/date_of_seance"
+                        android:inputType="date"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -122,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/proxima_nova_regular"
-                        android:hint="Start time"
+                        android:hint="@string/start_time"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
@@ -144,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/proxima_nova_regular"
-                        android:hint="End time"
+                        android:hint="@string/end_time"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
@@ -166,21 +168,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/proxima_nova_regular"
-                        android:hint="Salle"
+                        android:hint="@string/salle"
                         android:inputType="text"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/update_btn"
+                    android:id="@+id/add_seance_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
                     android:background="@drawable/button_layout"
                     android:fontFamily="@font/proxima_nova_semibold"
                     android:paddingVertical="18dp"
-                    android:text="ADD"
+                    android:text="@string/add"
                     android:textColor="#FFF"
                     android:textSize="18sp" />
             </LinearLayout>

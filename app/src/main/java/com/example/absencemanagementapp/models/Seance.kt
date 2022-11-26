@@ -38,4 +38,8 @@ class Seance {
         this.type = type
         this.total_absences = total_absences
     }
+
+    override fun toString(): String {
+        return "Seance(id=$id, date=$date, start_time=$start_time, end_time=$end_time, type=$type, n_salle=$n_salle, n_module=$n_module, total_absences=$total_absences)"
+    }
 }
