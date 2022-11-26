@@ -14,11 +14,11 @@ import java.util.*
 class NewSeanceActivity : AppCompatActivity() {
     private lateinit var back_iv: ImageView
 
-    lateinit var type_dropdown: AutoCompleteTextView
-    lateinit var seance_date: AutoCompleteTextView
-    lateinit var start_dropdown: AutoCompleteTextView
-    lateinit var end_dropdown: AutoCompleteTextView
-    lateinit var salle_dropdown: AutoCompleteTextView
+    private lateinit var type_dropdown: AutoCompleteTextView
+    private lateinit var seance_date: AutoCompleteTextView
+    private lateinit var start_dropdown: AutoCompleteTextView
+    private lateinit var end_dropdown: AutoCompleteTextView
+    private lateinit var salle_dropdown: AutoCompleteTextView
 
     lateinit var update_btn: AppCompatButton
 
@@ -49,18 +49,20 @@ class NewSeanceActivity : AppCompatActivity() {
 
         seance_date = this.findViewById(R.id.seance_date)
         seance_date.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                // Display Selected date in textbox
-                seance_date.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
-            }, year, month, day)
-            dpd.show()
-
-
+            val date_picker_dialog = DatePickerDialog(
+                this, { view, selected_year, selected_month, selected_day ->
+                    seance_date.setText("$selected_day/${selected_month + 1}/$selected_year")
+                },
+                year,
+                month,
+                day
+            )
+            date_picker_dialog.show()
         }
 
         start_dropdown = this.findViewById(R.id.start_dropdown)
