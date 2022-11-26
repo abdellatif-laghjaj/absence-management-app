@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.models.Seance
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
@@ -20,7 +21,7 @@ class NewSeanceActivity : AppCompatActivity() {
     private lateinit var end_dropdown: AutoCompleteTextView
     private lateinit var salle_dropdown: AutoCompleteTextView
 
-    lateinit var update_btn: AppCompatButton
+    lateinit var add_seance_btn: AppCompatButton
 
     var id = 0
 
@@ -74,12 +75,26 @@ class NewSeanceActivity : AppCompatActivity() {
         salle_dropdown = this.findViewById(R.id.salle_dropdown)
         salle_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, getLocales()))
 
-        update_btn = this.findViewById(R.id.update_btn)
-        update_btn.setOnClickListener({ addNewSeance() })
+        add_seance_btn = this.findViewById(R.id.add_seance_btn)
+        add_seance_btn.setOnClickListener({
+            if (validateInputs()) {
+                addNewSeance()
+            }
+        })
     }
 
     private fun addNewSeance() {
-        println("ADD NEW SEANCE")
+        //create new seance
+        val seance = Seance()
+
+        seance.type = type_dropdown.text.toString()
+        seance.date = seance_date.text.toString()
+        seance.start_time = start_dropdown.text.toString()
+        seance.end_time = end_dropdown.text.toString()
+        seance.n_salle = salle_dropdown.text.toString()
+        seance.n_module = id
+
+        println(seance.toString())
     }
 
     private fun getLocales(): Array<String> {
@@ -107,5 +122,31 @@ class NewSeanceActivity : AppCompatActivity() {
         intent.putExtra("id", id)
         startActivity(intent)
         finish()
+    }
+
+    private fun validateInputs(): Boolean {
+        return when {
+            type_dropdown.text.toString().isEmpty() -> {
+                type_dropdown.error = "Type is required"
+                false
+            }
+            seance_date.text.toString().isEmpty() -> {
+                seance_date.error = "Date is required"
+                false
+            }
+            start_dropdown.text.toString().isEmpty() -> {
+                start_dropdown.error = "Start time is required"
+                false
+            }
+            end_dropdown.text.toString().isEmpty() -> {
+                end_dropdown.error = "End time is required"
+                false
+            }
+            salle_dropdown.text.toString().isEmpty() -> {
+                salle_dropdown.error = "Salle is required"
+                false
+            }
+            else -> true
+        }
     }
 }
