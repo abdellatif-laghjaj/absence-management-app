@@ -211,7 +211,11 @@ class StudentSettingsActivity : AppCompatActivity() {
             .setMessage("Are you sure you want to logout?").setCancelable(false)
             .setAnimation(R.raw.logout).setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
-                redirectToLogin()
+                //redirect to login activity
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
             }.setNegativeButton("No") { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }.build()

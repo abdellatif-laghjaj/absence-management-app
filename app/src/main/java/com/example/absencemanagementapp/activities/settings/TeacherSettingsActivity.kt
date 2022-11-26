@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatDelegate
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.auth.LoginActivity
@@ -25,6 +27,7 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class TeacherSettingsActivity : AppCompatActivity() {
     private lateinit var change_language_layout: RelativeLayout
+    private lateinit var change_theme_layout: RelativeLayout
     private lateinit var reset_password_layout: RelativeLayout
     private lateinit var logout_layout: RelativeLayout
     private lateinit var about_layout: RelativeLayout
@@ -75,6 +78,10 @@ class TeacherSettingsActivity : AppCompatActivity() {
             showChangeLanguageDialog()
         }
 
+        change_theme_layout.setOnClickListener {
+            showChangeThemeDialog()
+        }
+
         logout_layout.setOnClickListener {
             logout()
         }
@@ -114,6 +121,44 @@ class TeacherSettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    //show change theme dialog
+    private fun showChangeThemeDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_change_theme)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        val cancel_btn = dialog.findViewById<Button>(R.id.cancel_btn)
+        val theme_rg = dialog.findViewById<RadioGroup>(R.id.theme_rg)
+
+        //change theme
+        theme_rg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.rb_light_theme -> {
+                    //set light theme
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                R.id.rb_dark_theme -> {
+                    //set dark theme
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+            }
+        }
+
+        cancel_btn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
     //show About dialog
     private fun showAboutDialog() {
         val dialog = MaterialDialog.Builder(this)
@@ -137,7 +182,8 @@ class TeacherSettingsActivity : AppCompatActivity() {
     private fun showCreditsDialog() {
         val dialog = MaterialDialog.Builder(this)
             .setTitle("Credits")
-            .setMessage("We will put credits here")
+            //add links to icons
+            .setMessage("⚡ Animations by LottieFiles.com\n\n🚀 Icons by icons8.com")
             .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
                 dialogInterface.dismiss()
             }
@@ -158,7 +204,11 @@ class TeacherSettingsActivity : AppCompatActivity() {
             .setMessage("Are you sure you want to logout?").setCancelable(false)
             .setAnimation(R.raw.logout).setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
-                redirectToLogin()
+                //redirect to login activity
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
             }.setNegativeButton("No") { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }.build()
@@ -243,6 +293,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
         back_iv = findViewById(R.id.back_iv)
         bottom_navigation = findViewById(R.id.bottom_navigation)
         change_language_layout = findViewById(R.id.change_language_layout)
+        change_theme_layout = findViewById(R.id.change_theme_layout)
         logout_layout = findViewById(R.id.logout_layout)
         reset_password_layout = findViewById(R.id.reset_password_layout)
         credits_layout = findViewById(R.id.credits_layout)
