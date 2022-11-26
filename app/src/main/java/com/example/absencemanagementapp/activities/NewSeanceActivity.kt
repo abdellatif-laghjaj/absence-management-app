@@ -76,11 +76,11 @@ class NewSeanceActivity : AppCompatActivity() {
         salle_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, getLocales()))
 
         add_seance_btn = this.findViewById(R.id.add_seance_btn)
-        add_seance_btn.setOnClickListener({
+        add_seance_btn.setOnClickListener {
             if (validateInputs()) {
                 addNewSeance()
             }
-        })
+        }
     }
 
     private fun addNewSeance() {
