@@ -64,4 +64,13 @@
     <string name="change_theme">Change theme</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
+    <string name="date_of_seance">Date of seance</string>
+    <string name="add_new_seance">Add new seance</string>
+    <string name="seance_details">Seance details</string>
+    <string name="type_of_seance">Type of seance</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="salle">Salle</string>
+    <string name="add">ADD</string>
+    <string name="back">back</string>
 </resources>
