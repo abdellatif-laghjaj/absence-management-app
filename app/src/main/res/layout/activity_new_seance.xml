@@ -101,7 +101,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:hint="Date of seance"
-                        android:inputType="text"
+                        android:inputType="date"
                         android:paddingVertical="20dp"
                         android:textColor="#B81F262E" />
                 </com.google.android.material.textfield.TextInputLayout>
