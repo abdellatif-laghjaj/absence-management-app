@@ -59,11 +59,6 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/modules_swipe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/modules_swipe"
-            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
