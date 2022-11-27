@@ -99,6 +99,9 @@ class NewSeanceActivity : AppCompatActivity() {
 
         println(seance.toString())
 
+        //save seance to database
+        saveSeance(seance)
+
         //generate qr code
         val writer = QRCodeWriter()
         val bitMatrix =
@@ -184,5 +187,9 @@ class NewSeanceActivity : AppCompatActivity() {
             }
             else -> true
         }
+    }
+
+    private fun saveSeance(seance: Seance) {
+        //TODO: save seance to database
     }
 }
