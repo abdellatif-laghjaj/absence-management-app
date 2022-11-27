@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.models.Seance
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import java.util.*
 
@@ -100,6 +101,15 @@ class Helper {
         fun loadLanguage(activity: AppCompatActivity): String {
             val sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
             return sharedPreferences.getString("language", "en").toString()
+        }
+
+        //format seance id
+        fun formatSeanceId(seance: Seance): String {
+            val module = seance.n_module
+            val date = seance.date.toString().replace("/", "-")
+            val start_time = seance.start_time.toString().replace(":", "-")
+
+            return "$module-$date-$start_time"
         }
     }
 }
