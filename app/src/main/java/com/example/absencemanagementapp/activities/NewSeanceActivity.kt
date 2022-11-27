@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Seance
+import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import java.util.*
 
@@ -100,10 +102,10 @@ class NewSeanceActivity : AppCompatActivity() {
         //generate qr code
         val writer = QRCodeWriter()
         val bitMatrix =
-            writer.encode(seance.toString(), com.google.zxing.BarcodeFormat.QR_CODE, 512, 512)
+            writer.encode(seance.toString(), BarcodeFormat.QR_CODE, 512, 512)
         val width = bitMatrix.width
         val height = bitMatrix.height
-        val bitmap = Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.RGB_565)
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
         for (x in 0 until width) {
             for (y in 0 until height) {
                 bitmap.setPixel(
@@ -113,7 +115,7 @@ class NewSeanceActivity : AppCompatActivity() {
                             x,
                             y
                         )
-                    ) android.graphics.Color.BLUE else android.graphics.Color.WHITE
+                    ) Color.BLUE else Color.WHITE
                 )
             }
         }
