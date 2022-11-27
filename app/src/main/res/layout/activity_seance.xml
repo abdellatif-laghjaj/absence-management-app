@@ -69,10 +69,22 @@
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/type_seance_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/round_back_theme"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_palette" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/type_seance_iv"
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/type_of_seance"
                         android:textColor="@color/white"
@@ -84,6 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="Cours"
                         android:textColor="@color/white"
@@ -101,10 +114,22 @@
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/date_seance_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/round_back_theme"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_palette" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/date_seance_iv"
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/date_of_seance"
                         android:textColor="@color/white"
@@ -116,6 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="11 Nov 2022"
                         android:textColor="@color/white"
@@ -133,10 +159,22 @@
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/start_time_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/round_back_theme"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_palette" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/start_time_iv"
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/start_time"
                         android:textColor="@color/white"
@@ -148,6 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="08:30"
                         android:textColor="@color/white"
@@ -165,10 +204,22 @@
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/end_time_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/round_back_theme"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_palette" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/end_time_iv"
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/end_time"
                         android:textColor="@color/white"
@@ -180,6 +231,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="10:15"
                         android:textColor="@color/white"
@@ -197,10 +249,22 @@
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/salle_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/round_back_theme"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_palette" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/salle_iv"
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/salle"
                         android:textColor="@color/white"
@@ -228,10 +292,22 @@
                     android:background="@drawable/settings_item_bg"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/total_absence_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/round_back_theme"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_palette" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/total_absence_iv"
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/total_absences"
                         android:textColor="@color/white"
