@@ -1,4 +1,8 @@
 package com.example.absencemanagementapp.models
 
-class Absence {
+data class Absence(
+    val id : String,
+    val cne : String,
+    val seance_id : String
+) {
 }
