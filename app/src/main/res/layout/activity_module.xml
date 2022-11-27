@@ -46,8 +46,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="8dp"
+        android:orientation="horizontal"
         android:weightSum="2">
 
         <com.google.android.material.card.MaterialCardView
@@ -82,8 +82,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Absence list"
                     android:fontFamily="@font/proxima_nova_semibold"
+                    android:text="Absence list"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -122,8 +122,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New seance"
                     android:fontFamily="@font/proxima_nova_semibold"
+                    android:text="New seance"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -132,23 +132,17 @@
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/seances_swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/seances_swipe">
+        android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/seances_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            tools:listitem="@layout/seance_view_design">
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/seances_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/seance_view_design">
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </ScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
