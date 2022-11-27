@@ -78,7 +78,8 @@
                         android:layout_marginEnd="12dp"
                         android:background="@drawable/round_back_theme"
                         android:padding="6dp"
-                        android:src="@drawable/ic_palette" />
+                        android:src="@drawable/ic_class"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,7 +124,8 @@
                         android:layout_marginEnd="12dp"
                         android:background="@drawable/round_back_theme"
                         android:padding="6dp"
-                        android:src="@drawable/ic_palette" />
+                        android:src="@drawable/ic_date"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -168,7 +170,8 @@
                         android:layout_marginEnd="12dp"
                         android:background="@drawable/round_back_theme"
                         android:padding="6dp"
-                        android:src="@drawable/ic_palette" />
+                        android:src="@drawable/ic_clock"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -213,7 +216,8 @@
                         android:layout_marginEnd="12dp"
                         android:background="@drawable/round_back_theme"
                         android:padding="6dp"
-                        android:src="@drawable/ic_palette" />
+                        android:src="@drawable/ic_clock"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -258,7 +262,8 @@
                         android:layout_marginEnd="12dp"
                         android:background="@drawable/round_back_theme"
                         android:padding="6dp"
-                        android:src="@drawable/ic_palette" />
+                        android:src="@drawable/ic_filiere"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -301,7 +306,7 @@
                         android:layout_marginEnd="12dp"
                         android:background="@drawable/round_back_theme"
                         android:padding="6dp"
-                        android:src="@drawable/ic_palette" />
+                        android:src="@drawable/ic_hand" />
 
                     <TextView
                         android:layout_width="wrap_content"

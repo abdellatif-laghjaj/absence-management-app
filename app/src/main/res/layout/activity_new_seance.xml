@@ -72,7 +72,7 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_baseline_class_24">
+                    app:startIconDrawable="@drawable/ic_class">
 
                     <AutoCompleteTextView
                         android:id="@+id/type_dropdown"
@@ -94,7 +94,7 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_baseline_date_range_24">
+                    app:startIconDrawable="@drawable/ic_date">
 
                     <AutoCompleteTextView
                         android:id="@+id/seance_date"
@@ -117,7 +117,7 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+                    app:startIconDrawable="@drawable/ic_clock">
 
                     <AutoCompleteTextView
                         android:id="@+id/start_dropdown"
@@ -139,7 +139,7 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+                    app:startIconDrawable="@drawable/ic_clock">
 
                     <AutoCompleteTextView
                         android:id="@+id/end_dropdown"
