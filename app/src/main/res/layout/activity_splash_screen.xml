@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:indeterminate="true"
         android:visibility="visible" />
 
@@ -64,5 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
-        android:src="@drawable/card_image_ui" />
+        android:contentDescription="@string/scan_qr_code"
+        android:src="@drawable/splash_screen_image" />
 </RelativeLayout>

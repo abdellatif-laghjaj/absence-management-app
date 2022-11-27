@@ -1,26 +1,41 @@
 package com.example.absencemanagementapp.activities
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.helpers.Helper.Companion.formatSeanceId
+import com.example.absencemanagementapp.models.Seance
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.qrcode.QRCodeWriter
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
     private lateinit var back_iv: ImageView
 
-    lateinit var type_dropdown: AutoCompleteTextView
-    lateinit var seance_date: AutoCompleteTextView
-    lateinit var start_dropdown: AutoCompleteTextView
-    lateinit var end_dropdown: AutoCompleteTextView
-    lateinit var salle_dropdown: AutoCompleteTextView
+    private lateinit var type_dropdown: AutoCompleteTextView
+    private lateinit var seance_date: AutoCompleteTextView
+    private lateinit var start_dropdown: AutoCompleteTextView
+    private lateinit var end_dropdown: AutoCompleteTextView
+    private lateinit var salle_dropdown: AutoCompleteTextView
 
-    lateinit var update_btn: AppCompatButton
+    private lateinit var add_seance_btn: AppCompatButton
+    private lateinit var seance: Seance
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
 
     var id = 0
 
@@ -31,57 +46,104 @@ class NewSeanceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_seance)
-
-        initView()
-    }
-
-    private fun initView() {
-        back_iv = this.findViewById(R.id.back_iv)
-        back_iv.setOnClickListener({ back() })
-
         id = intent.getIntExtra("id", 0)
-        initFields()
-    }
 
-    private fun initFields() {
-        type_dropdown = this.findViewById(R.id.type_dropdown)
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+
+        //initiate views
+        initViews()
+
+
+        salle_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, getLocales()))
         type_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, types))
 
-        seance_date = this.findViewById(R.id.seance_date)
         seance_date.setOnClickListener {
-            val c = Calendar.getInstance()
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(
-                // on below line we are passing context.
-                this,
-                { view, year, monthOfYear, dayOfMonth ->
+            val date_picker_dialog = DatePickerDialog(
+                this, { view, selected_year, selected_month, selected_day ->
+                    seance_date.setText("$selected_day/${selected_month + 1}/$selected_year")
                 },
                 year,
                 month,
                 day
             )
-            datePickerDialog.show()
+            date_picker_dialog.show()
         }
-
-        start_dropdown = this.findViewById(R.id.start_dropdown)
         start_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, startHours))
-
-        end_dropdown = this.findViewById(R.id.end_dropdown)
         end_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, endHours))
 
-        salle_dropdown = this.findViewById(R.id.salle_dropdown)
-        salle_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, getLocales()))
+        add_seance_btn.setOnClickListener {
+            if (validateInputs()) {
+                addNewSeance()
+            }
+        }
+    }
 
-        update_btn = this.findViewById(R.id.update_btn)
-        update_btn.setOnClickListener({ addNewSeance() })
+    private fun initViews() {
+        back_iv = this.findViewById(R.id.back_iv)
+        back_iv.setOnClickListener({ back() })
+        type_dropdown = this.findViewById(R.id.type_dropdown)
+        seance_date = this.findViewById(R.id.seance_date)
+        start_dropdown = this.findViewById(R.id.start_dropdown)
+        end_dropdown = this.findViewById(R.id.end_dropdown)
+        salle_dropdown = this.findViewById(R.id.salle_dropdown)
+        add_seance_btn = this.findViewById(R.id.add_seance_btn)
     }
 
     private fun addNewSeance() {
-        println("ADD NEW SEANCE")
+        //create new seance
+        seance = Seance()
+
+        seance.type = type_dropdown.text.toString()
+        seance.date = seance_date.text.toString()
+        seance.start_time = start_dropdown.text.toString()
+        seance.end_time = end_dropdown.text.toString()
+        seance.n_salle = salle_dropdown.text.toString()
+        seance.n_module = id
+
+        println(seance.toString())
+
+        //save seance to database
+        saveSeance(seance)
+
+        //generate qr code
+        val writer = QRCodeWriter()
+        val bitMatrix =
+            writer.encode(seance.toString(), BarcodeFormat.QR_CODE, 512, 512)
+        val width = bitMatrix.width
+        val height = bitMatrix.height
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                bitmap.setPixel(
+                    x,
+                    y,
+                    if (bitMatrix.get(
+                            x,
+                            y
+                        )
+                    ) Color.BLUE else Color.WHITE
+                )
+            }
+        }
+
+        //display qr code in dialog
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_user_image)
+        val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
+        image.setImageBitmap(bitmap)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+        dialog.show()
     }
 
     private fun getLocales(): Array<String> {
@@ -109,5 +171,39 @@ class NewSeanceActivity : AppCompatActivity() {
         intent.putExtra("id", id)
         startActivity(intent)
         finish()
+    }
+
+    private fun validateInputs(): Boolean {
+        return when {
+            type_dropdown.text.toString().isEmpty() -> {
+                type_dropdown.error = "Type is required"
+                false
+            }
+            seance_date.text.toString().isEmpty() -> {
+                seance_date.error = "Date is required"
+                false
+            }
+            start_dropdown.text.toString().isEmpty() -> {
+                start_dropdown.error = "Start time is required"
+                false
+            }
+            end_dropdown.text.toString().isEmpty() -> {
+                end_dropdown.error = "End time is required"
+                false
+            }
+            salle_dropdown.text.toString().isEmpty() -> {
+                salle_dropdown.error = "Salle is required"
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun saveSeance(seance: Seance) {
+        //TODO: save seance to database
+        val ref = database.getReference("seances")
+        val id = formatSeanceId(seance)
+        seance.id = id
+        ref.child(id).setValue(seance)
     }
 }
