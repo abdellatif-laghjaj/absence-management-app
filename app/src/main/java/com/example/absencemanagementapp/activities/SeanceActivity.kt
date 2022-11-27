@@ -36,7 +36,7 @@ class SeanceActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
 
         //initiate views
-        initView()
+        initViews()
 
         //get seance from intent
         setDatas()
@@ -48,7 +48,7 @@ class SeanceActivity : AppCompatActivity() {
         show_qr_code.setOnClickListener({ showQrCode() })
     }
 
-    private fun initView() {
+    private fun initViews() {
         module_intitule_tv = this.findViewById(R.id.module_intitule_tv)
         back_iv = findViewById(R.id.back_arrow)
         absence_list_cv = this.findViewById(R.id.absence_list_cv)
