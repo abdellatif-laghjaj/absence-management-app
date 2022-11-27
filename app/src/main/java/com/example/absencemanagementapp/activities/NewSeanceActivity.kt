@@ -202,8 +202,8 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun saveSeance(seance: Seance) {
         //TODO: save seance to database
         val ref = database.getReference("seances")
-        val id = formatSeanceId(seance)
-        seance.id = id
+        val id = ref.push().key
+        seance.id = id!!
         ref.child(id).setValue(seance)
     }
 }
