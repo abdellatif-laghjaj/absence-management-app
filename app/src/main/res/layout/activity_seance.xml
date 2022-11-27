@@ -39,7 +39,7 @@
                 android:text="Programmation et algorithmique 1"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
