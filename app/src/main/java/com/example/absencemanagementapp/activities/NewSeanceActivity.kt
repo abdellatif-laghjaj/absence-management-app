@@ -21,7 +21,8 @@ class NewSeanceActivity : AppCompatActivity() {
     private lateinit var end_dropdown: AutoCompleteTextView
     private lateinit var salle_dropdown: AutoCompleteTextView
 
-    lateinit var add_seance_btn: AppCompatButton
+    private lateinit var add_seance_btn: AppCompatButton
+    private lateinit var seance: Seance
 
     var id = 0
 
@@ -32,23 +33,15 @@ class NewSeanceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_seance)
-
-        initView()
-    }
-
-    private fun initView() {
-        back_iv = this.findViewById(R.id.back_iv)
-        back_iv.setOnClickListener({ back() })
-
         id = intent.getIntExtra("id", 0)
-        initFields()
-    }
 
-    private fun initFields() {
-        type_dropdown = this.findViewById(R.id.type_dropdown)
+
+        initViews()
+
+
+        salle_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, getLocales()))
         type_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, types))
 
-        seance_date = this.findViewById(R.id.seance_date)
         seance_date.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
@@ -65,17 +58,9 @@ class NewSeanceActivity : AppCompatActivity() {
             )
             date_picker_dialog.show()
         }
-
-        start_dropdown = this.findViewById(R.id.start_dropdown)
         start_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, startHours))
-
-        end_dropdown = this.findViewById(R.id.end_dropdown)
         end_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, endHours))
 
-        salle_dropdown = this.findViewById(R.id.salle_dropdown)
-        salle_dropdown.setAdapter(ArrayAdapter(this, R.layout.dropdown_item, getLocales()))
-
-        add_seance_btn = this.findViewById(R.id.add_seance_btn)
         add_seance_btn.setOnClickListener {
             if (validateInputs()) {
                 addNewSeance()
@@ -83,9 +68,20 @@ class NewSeanceActivity : AppCompatActivity() {
         }
     }
 
+    private fun initViews() {
+        back_iv = this.findViewById(R.id.back_iv)
+        back_iv.setOnClickListener({ back() })
+        type_dropdown = this.findViewById(R.id.type_dropdown)
+        seance_date = this.findViewById(R.id.seance_date)
+        start_dropdown = this.findViewById(R.id.start_dropdown)
+        end_dropdown = this.findViewById(R.id.end_dropdown)
+        salle_dropdown = this.findViewById(R.id.salle_dropdown)
+        add_seance_btn = this.findViewById(R.id.add_seance_btn)
+    }
+
     private fun addNewSeance() {
         //create new seance
-        val seance = Seance()
+        seance = Seance()
 
         seance.type = type_dropdown.text.toString()
         seance.date = seance_date.text.toString()
