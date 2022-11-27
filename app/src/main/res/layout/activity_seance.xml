@@ -39,7 +39,7 @@
                 android:text="Programmation et algorithmique 1"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -76,7 +76,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/round_back_theme"
+                        android:background="@drawable/round_back_logout"
                         android:padding="6dp"
                         android:src="@drawable/ic_class"
                         android:tint="@color/white" />
@@ -89,7 +89,7 @@
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/type_of_seance"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -101,7 +101,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="Cours"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -122,7 +122,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/round_back_theme"
+                        android:background="@drawable/round_back_logout"
                         android:padding="6dp"
                         android:src="@drawable/ic_date"
                         android:tint="@color/white" />
@@ -135,7 +135,7 @@
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/date_of_seance"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -147,7 +147,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="11 Nov 2022"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -168,7 +168,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/round_back_theme"
+                        android:background="@drawable/round_back_logout"
                         android:padding="6dp"
                         android:src="@drawable/ic_clock"
                         android:tint="@color/white" />
@@ -181,7 +181,7 @@
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/start_time"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -193,7 +193,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="08:30"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -214,7 +214,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/round_back_theme"
+                        android:background="@drawable/round_back_logout"
                         android:padding="6dp"
                         android:src="@drawable/ic_clock"
                         android:tint="@color/white" />
@@ -227,7 +227,7 @@
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/end_time"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -239,7 +239,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="10:15"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -260,7 +260,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/round_back_theme"
+                        android:background="@drawable/round_back_logout"
                         android:padding="6dp"
                         android:src="@drawable/ic_filiere"
                         android:tint="@color/white" />
@@ -273,7 +273,7 @@
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/salle"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -284,7 +284,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="SL2"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
 
@@ -304,7 +304,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/round_back_theme"
+                        android:background="@drawable/round_back_logout"
                         android:padding="6dp"
                         android:src="@drawable/ic_hand" />
 
@@ -316,7 +316,7 @@
                         android:fontFamily="@font/proxima_nova_semibold"
                         android:text="@string/total_absences"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -327,7 +327,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
                         android:text="7"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
 
@@ -373,7 +373,7 @@
                                 android:fontFamily="@font/proxima_nova_semibold"
                                 android:text="Absence list"
                                 android:textAlignment="center"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -413,7 +413,7 @@
                                 android:fontFamily="@font/proxima_nova_semibold"
                                 android:text="QR Code"
                                 android:textAlignment="center"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
