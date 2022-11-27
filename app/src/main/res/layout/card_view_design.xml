@@ -25,20 +25,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="Total absence"
             android:fontFamily="@font/proxima_nova_semibold"
+            android:text="@string/total_absences"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/module_semestre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S4"
             android:fontFamily="@font/proxima_nova_regular"
+            android:text="S4"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>
