@@ -14,7 +14,10 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.helpers.Helper.Companion.formatSeanceId
 import com.example.absencemanagementapp.models.Seance
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import java.util.*
@@ -31,6 +34,9 @@ class NewSeanceActivity : AppCompatActivity() {
     private lateinit var add_seance_btn: AppCompatButton
     private lateinit var seance: Seance
 
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+
     var id = 0
 
     var types = arrayOf("Cours", "TP", "Exam")
@@ -42,7 +48,11 @@ class NewSeanceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_seance)
         id = intent.getIntExtra("id", 0)
 
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
+
+        //initiate views
         initViews()
 
 
@@ -191,5 +201,9 @@ class NewSeanceActivity : AppCompatActivity() {
 
     private fun saveSeance(seance: Seance) {
         //TODO: save seance to database
+        val ref = database.getReference("seances")
+        val id = formatSeanceId(seance)
+        seance.id = id
+        ref.child(id).setValue(seance)
     }
 }
