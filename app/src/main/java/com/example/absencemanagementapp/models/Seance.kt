@@ -33,6 +33,22 @@ class Seance {
         this.n_module = n_module
     }
 
+    constructor(
+        date: String?,
+        start_time: String?,
+        end_time: String?,
+        type: String?,
+        n_salle: String?,
+        n_module: Int?
+    ) {
+        this.date = date
+        this.start_time = start_time
+        this.end_time = end_time
+        this.type = type
+        this.n_salle = n_salle
+        this.n_module = n_module
+    }
+
     constructor(date: String?, type: String?, total_absences: Int) {
         this.date = date
         this.type = type
