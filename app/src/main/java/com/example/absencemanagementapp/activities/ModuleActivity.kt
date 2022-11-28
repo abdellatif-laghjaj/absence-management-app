@@ -18,7 +18,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import java.lang.Integer.parseInt
 import kotlin.properties.Delegates
 
@@ -32,7 +31,7 @@ class ModuleActivity : AppCompatActivity() {
 
     private lateinit var dbRef : FirebaseDatabase
 
-    var currentModuleId by Delegates.notNull<Int>()
+    var currentModuleId :String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,16 +45,34 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun initSeances(seances : ArrayList<Seance>) {
+        val module_intitule = getCurrentModule(intent.getIntExtra("id", 0).toString())?.intitule
+        println("==========================================")
+        println("==========================================")
+        println("==========================================")
+        println("==========================================")
+        println()
+        println()
+        println()
+        println("intitule ==> " + module_intitule)
+        println("id ==> " + intent.getIntExtra("id", -1))
+        println()
+        println()
+        println()
+        println("==========================================")
+        println("==========================================")
+        println("==========================================")
+        println("==========================================")
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val seanceAdapter =
-            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0))?.intitule)
+            SeanceAdapter(seances, this, module_intitule)
         rv.adapter = seanceAdapter
     }
 
     private fun initView() {
-        currentModuleId = intent.getIntExtra("id", 0)
-        var modules = getCurrentModule(currentModuleId)
+        currentModuleId = intent.getIntExtra("id", 0).toString()
+        println(currentModuleId)
+        var modules = getCurrentModule(currentModuleId!!)
 
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
         if (modules != null) {
@@ -78,9 +95,9 @@ class ModuleActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentModule(id: Int): Module? {
+    private fun getCurrentModule(id: String): Module? {
         var module : Module? = null
-        dbRef.getReference("modules").child(id.toString()).get().addOnSuccessListener {
+        dbRef.getReference("modules").child(id).get().addOnSuccessListener {
             if (it.exists()) {
                 module = it.getValue(Module::class.java)
             }
