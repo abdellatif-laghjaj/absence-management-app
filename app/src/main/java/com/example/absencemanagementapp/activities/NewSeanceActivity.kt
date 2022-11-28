@@ -210,60 +210,57 @@ class NewSeanceActivity : AppCompatActivity() {
     }
 
     private fun storeQrCode(seance: Seance) {
-        val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Uploading...")
-        progressDialog.setMessage("Please wait while we upload and process the image")
-        progressDialog.show()
-
-        val ref = storage.getReference("qr_codes")
+        val ref = seance.id?.let { storage.getReference("qr_codes").child(id.toString()).child(it) }
 
 //      convert to bytecode
         var baos = ByteArrayOutputStream()
         generateQrCode(seance).compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
-        ref.putBytes(baos.toByteArray())
-            .addOnSuccessListener {
-                progressDialog.dismiss()
-                FancyToast.makeText(
-                    this,
-                    "Image uploaded successfully",
-                    FancyToast.LENGTH_SHORT,
-                    FancyToast.SUCCESS,
-                    false
-                ).show()
-                val qrUrl = ref.downloadUrl.toString()
-                seance.qrCodeUrl = qrUrl
-            }
-            .addOnFailureListener {
-                progressDialog.dismiss()
-                FancyToast.makeText(
-                    this,
-                    "Failed to upload image",
-                    FancyToast.LENGTH_SHORT,
-                    FancyToast.ERROR,
-                    false
-                ).show()
-            }
-            .addOnProgressListener { taskSnapshot ->
-                val progress =
-                    100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-                progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
-            }
-    }
-
-    private fun saveSeance(seance: Seance) {
-        //TODO: save seance to database
-        val ref = database.getReference("seances")
-        val id = ref.push().key
-        seance.id = id
-        storeQrCode(seance)
-        if (id != null) {
-            ref.child(id).setValue(seance)
-            moveToQrCodeView()
+        if (ref != null) {
+            ref.putBytes(baos.toByteArray())
+                .addOnSuccessListener {
+                    FancyToast.makeText(
+                        this,
+                        "Image uploaded successfully",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false
+                    ).show()
+                    val qrUrl = ref.downloadUrl
+                    seance.qrCodeUrl = qrUrl.toString()
+                }
+                .addOnFailureListener {
+                    FancyToast.makeText(
+                        this,
+                        "Failed to upload image",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                }
+                .addOnProgressListener { taskSnapshot ->
+//                    val progress =
+//                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+//                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+                }
         }
     }
 
-    private fun moveToQrCodeView() {
-//        TODO: not implemented yet
+    private fun saveSeance(seance: Seance) {
+        val ref = database.getReference("seances")
+        val id = ref.push().key
+        seance.id = id
+        if (id != null) {
+            storeQrCode(seance)
+            ref.child(id).setValue(seance)
+            moveToQrCodeView(id)
+        }
+    }
+
+    private fun moveToQrCodeView(id : String) {
+        intent = Intent(this, QrCodeActivity::class.java)
+        intent.putExtra("seance_id", id)
+        startActivity(intent)
+        finish()
     }
 }

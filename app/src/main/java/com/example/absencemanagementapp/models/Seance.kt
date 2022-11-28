@@ -9,7 +9,7 @@ data class Seance(
     var n_salle: String? = "A4",
     var n_module: Int? = 0,
     var total_absences: Int = 0,
-    var qrCodeUrl: String? = null,
+    var qrCodeUrl: String? = "",
 ) {
     override fun toString(): String {
         return "Seance(id=$id, date=$date, start_time=$start_time, end_time=$end_time, type=$type, n_salle=$n_salle, n_module=$n_module, total_absences=$total_absences, qrCodeUrl=$qrCodeUrl)"
