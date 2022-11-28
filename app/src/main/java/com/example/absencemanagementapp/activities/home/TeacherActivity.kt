@@ -93,7 +93,6 @@ class TeacherActivity : AppCompatActivity() {
     }
 
     private fun getModules() {
-
         database.getReference("modules").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val modules = ArrayList<Module>();
