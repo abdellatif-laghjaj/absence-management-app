@@ -14,6 +14,12 @@ import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
+import java.lang.Integer.parseInt
 import kotlin.properties.Delegates
 
 class ModuleActivity : AppCompatActivity() {
@@ -24,23 +30,26 @@ class ModuleActivity : AppCompatActivity() {
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
 
+    private lateinit var dbRef : FirebaseDatabase
+
     var currentModuleId by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_module)
 
+        dbRef = FirebaseDatabase.getInstance()
+
         initView()
 
-        initSeances()
+        getSeances()
     }
 
-    private fun initSeances() {
+    private fun initSeances(seances : ArrayList<Seance>) {
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
-        val seances = getSeances()
         val seanceAdapter =
-            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).intitule)
+            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0))?.intitule)
         rv.adapter = seanceAdapter
     }
 
@@ -49,7 +58,9 @@ class ModuleActivity : AppCompatActivity() {
         var modules = getCurrentModule(currentModuleId)
 
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
-        module_name_tv.setText(modules.intitule)
+        if (modules != null) {
+            module_name_tv.setText(modules.intitule)
+        }
 
         back_iv = this.findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
@@ -62,34 +73,62 @@ class ModuleActivity : AppCompatActivity() {
 
         seances_swipe = this.findViewById(R.id.seances_swipe)
         seances_swipe.setOnRefreshListener {
-            initSeances()
+            getSeances()
             seances_swipe.isRefreshing = false
         }
     }
 
-    private fun getCurrentModule(id: Int): Module {
-        val modules = ArrayList<Module>();
+    private fun getCurrentModule(id: Int): Module? {
+        var module : Module? = null
+        dbRef.getReference("modules").child(id.toString()).get().addOnSuccessListener {
+            if (it.exists()) {
+                module = it.getValue(Module::class.java)
+            }
+        }
+//        val modules = ArrayList<Module>();
+//        modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI", "1"))
+//        modules.add(Module(2, "Analyse 1", "ALG1", 1, "EE", "1"))
+//        modules.add(Module(3, "Physique 1", "ALG1", 1, "LEA", "1"))
+//        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, "GI", "1"))
+//        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, "SV", "1"))
+//        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, "EG", "1"))
+//        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, "SGARNE", "1"))
 
-        modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI", "1"))
-        modules.add(Module(2, "Analyse 1", "ALG1", 1, "EE", "1"))
-        modules.add(Module(3, "Physique 1", "ALG1", 1, "LEA", "1"))
-        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, "GI", "1"))
-        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, "SV", "1"))
-        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, "EG", "1"))
-        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, "SGARNE", "1"))
-
-        return modules[id]
+        return module
     }
 
-    private fun getSeances(): List<Seance> {
-        val seances = ArrayList<Seance>()
-        seances.add(Seance("16/11/2022", "TP", 4))
-        seances.add(Seance("15/11/2022", "Cour", 12))
-        seances.add(Seance("08/11/2022", "Cour", 9))
-        seances.add(Seance("01/11/2022", "Cour", 4))
-        seances.add(Seance("24/10/2022", "TP", 4))
-        seances.add(Seance("17/10/2022", "Cour", 4))
-        return seances
+    private fun getSeances() {
+        dbRef.getReference("seances").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val seances = ArrayList<Seance>()
+                for (ds in snapshot.children) {
+                    val id = ds.key.toString()
+                    val date = ds.child("date").value.toString()
+                    val start_time = ds.child("start_time").value.toString()
+                    val end_time = ds.child("end_time").value.toString()
+                    val type = ds.child("type").value.toString()
+                    val n_salle = ds.child("n_salle").value.toString()
+                    val n_module = parseInt(ds.child("n_module").value.toString())
+                    val total_absences = parseInt(ds.child("total_absences").value.toString())
+                    var seance = Seance(id, date, start_time, end_time, type, n_salle, n_module, total_absences)
+                    seances.add(seance)
+                }
+                initSeances(seances)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+//        val seances = ArrayList<Seance>()
+//        seances.add(Seance("16/11/2022", "TP", 4))
+//        seances.add(Seance("15/11/2022", "Cour", 12))
+//        seances.add(Seance("08/11/2022", "Cour", 9))
+//        seances.add(Seance("01/11/2022", "Cour", 4))
+//        seances.add(Seance("24/10/2022", "TP", 4))
+//        seances.add(Seance("17/10/2022", "Cour", 4))
+//        return seances
     }
 
     private fun back() {
