@@ -12,6 +12,6 @@ data class Seance(
     var qrCodeUrl: String? = null,
 ) {
     override fun toString(): String {
-        return "Seance(id=$id, date=$date, start_time=$start_time, end_time=$end_time, type=$type, n_salle=$n_salle, n_module=$n_module, total_absences=$total_absences)"
+        return "Seance(id=$id, date=$date, start_time=$start_time, end_time=$end_time, type=$type, n_salle=$n_salle, n_module=$n_module, total_absences=$total_absences, qrCodeUrl=$qrCodeUrl)"
     }
 }
