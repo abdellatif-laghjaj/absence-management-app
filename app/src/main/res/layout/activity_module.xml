@@ -14,7 +14,7 @@
         android:baselineAligned="false">
 
         <ImageView
-            android:id="@+id/back_arrow"
+            android:id="@+id/back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

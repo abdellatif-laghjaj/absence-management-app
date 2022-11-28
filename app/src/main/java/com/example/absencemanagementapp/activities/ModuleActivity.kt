@@ -64,6 +64,7 @@ class ModuleActivity : AppCompatActivity() {
     private fun initView() {
         currentModuleIntitule = intent.getStringExtra("module_intitule")
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
+        back_iv = this.findViewById(R.id.back_iv)
         module_name_tv.text = currentModuleIntitule
 
         back_iv.setOnClickListener { back() }
