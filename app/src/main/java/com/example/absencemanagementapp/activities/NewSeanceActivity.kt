@@ -2,6 +2,7 @@ package com.example.absencemanagementapp.activities
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -18,8 +19,11 @@ import com.example.absencemanagementapp.helpers.Helper.Companion.formatSeanceId
 import com.example.absencemanagementapp.models.Seance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
+import com.shashank.sony.fancytoastlib.FancyToast
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
@@ -36,6 +40,7 @@ class NewSeanceActivity : AppCompatActivity() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
     var id = 0
 
@@ -50,6 +55,7 @@ class NewSeanceActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
+        storage = FirebaseStorage.getInstance()
 
 
         //initiate views
@@ -107,12 +113,26 @@ class NewSeanceActivity : AppCompatActivity() {
         seance.n_salle = salle_dropdown.text.toString()
         seance.n_module = id
 
-        println(seance.toString())
-
         //save seance to database
         saveSeance(seance)
 
         //generate qr code
+
+
+//        //display qr code in dialog
+//        val dialog = Dialog(this)
+//        dialog.setContentView(R.layout.dialog_user_image)
+//        val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
+//        image.setImageBitmap(bitmap)
+//        dialog.window!!.setLayout(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        )
+//        dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
+//        dialog.show()
+    }
+
+    private fun generateQrCode(seance: Seance): Bitmap {
         val writer = QRCodeWriter()
         val bitMatrix =
             writer.encode(seance.toString(), BarcodeFormat.QR_CODE, 512, 512)
@@ -128,22 +148,12 @@ class NewSeanceActivity : AppCompatActivity() {
                             x,
                             y
                         )
-                    ) Color.BLUE else Color.WHITE
+                    ) Color.BLACK else Color.WHITE
                 )
             }
         }
 
-        //display qr code in dialog
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.dialog_user_image)
-        val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
-        image.setImageBitmap(bitmap)
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
-        dialog.show()
+        return bitmap
     }
 
     private fun getLocales(): Array<String> {
@@ -199,11 +209,56 @@ class NewSeanceActivity : AppCompatActivity() {
         }
     }
 
+    private fun storeQrCode(seance: Seance) {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Uploading...")
+        progressDialog.setMessage("Please wait while we upload and process the image")
+        progressDialog.show()
+
+        val ref = storage.getReference("qr_codes")
+
+//      convert to bytecode
+        var baos = ByteArrayOutputStream()
+        generateQrCode(seance).compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
+        ref.putBytes(baos.toByteArray())
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Image uploaded successfully",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false
+                ).show()
+                val qrUrl = ref.downloadUrl.toString()
+                seance.qrCodeUrl = qrUrl
+            }
+            .addOnFailureListener {
+                progressDialog.dismiss()
+                FancyToast.makeText(
+                    this,
+                    "Failed to upload image",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
+            .addOnProgressListener { taskSnapshot ->
+                val progress =
+                    100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+                progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+            }
+    }
+
     private fun saveSeance(seance: Seance) {
         //TODO: save seance to database
         val ref = database.getReference("seances")
-        val id = formatSeanceId(seance)
+        val id = ref.push().key
         seance.id = id
-        ref.child(id).setValue(seance)
+        storeQrCode(seance)
+        if (id != null) {
+            ref.child(id).setValue(seance)
+        }
     }
 }
