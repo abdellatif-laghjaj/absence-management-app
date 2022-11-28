@@ -10,6 +10,7 @@ import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.getValue
 
 class SeanceActivity : AppCompatActivity() {
     lateinit var module_intitule_tv: TextView
@@ -61,14 +62,14 @@ class SeanceActivity : AppCompatActivity() {
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
     }
 
-    private fun getCurrentSeance(id: Int): Seance {
-        val seances = ArrayList<Seance>()
-        seances.add(Seance("16/11/2022", "08:30", "10:15", "TP", "Salle 1", 0))
-        seances.add(Seance("16/11/2022", "10:30", "12:15", "Cours", "Salle 2", 0))
-        seances.add(Seance("16/11/2022", "12:30", "14:15", "Exam", "Salle 3", 0))
-        seances.add(Seance("16/11/2022", "14:30", "16:15", "Cours", "Salle 4", 0))
-        seances.add(Seance("16/11/2022", "16:30", "18:15", "TP", "Salle 5", 0))
-        return seances[id]
+    private fun getCurrentSeance(id: String): Seance? {
+        var seance : Seance? = null
+        database.getReference("seances").child(id).get().addOnSuccessListener {
+            if (it.exists()) {
+                seance = it.getValue(Seance::class.java)
+            }
+        }
+        return seance
     }
 
     private fun back() {
@@ -90,15 +91,15 @@ class SeanceActivity : AppCompatActivity() {
     }
 
     private fun setDatas() {
-        val seance_id = intent.getIntExtra("id", 0)
+        val seance_id = intent.getStringExtra("id")
         val module_intitule = intent.getStringExtra("module_intitule")
 
         module_intitule_tv.text = module_intitule
-        seance_type_tv.text = getCurrentSeance(seance_id).type
-        seance_date_tv.text = getCurrentSeance(seance_id).date
-        seance_start_time_tv.text = getCurrentSeance(seance_id).start_time
-        seance_end_time_tv.text = getCurrentSeance(seance_id).end_time
-        salle_nb_tv.text = getCurrentSeance(seance_id).n_salle
-        total_absence_tv.text = getCurrentSeance(seance_id).total_absences.toString()
+        seance_type_tv.text = seance_id?.let { getCurrentSeance(it)?.type }
+        seance_date_tv.text = seance_id?.let { getCurrentSeance(it)?.date }
+        seance_start_time_tv.text = seance_id?.let { getCurrentSeance(it)?.start_time }
+        seance_end_time_tv.text = seance_id?.let { getCurrentSeance(it)?.end_time }
+        salle_nb_tv.text = seance_id?.let { getCurrentSeance(it)?.n_salle }
+        total_absence_tv.text = seance_id?.let { getCurrentSeance(it)?.total_absences.toString() }
     }
 }
