@@ -57,9 +57,9 @@ class ModuleActivity : AppCompatActivity() {
         println("Before intent ===> " + currentModuleIntitule)
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
-        val seanceAdapter =
-            SeanceAdapter(seances, this, currentModuleIntitule)
+        val seanceAdapter = SeanceAdapter(seances, this, currentModuleIntitule)
         rv.adapter = seanceAdapter
+    }
 
     private fun initView() {
         currentModuleIntitule = intent.getStringExtra("module_intitule")
@@ -78,14 +78,14 @@ class ModuleActivity : AppCompatActivity() {
         }
     }
 
-    @JvmName("setCurrentModuleIntitule1")
     private fun setCurrentModuleIntitule(id: Int) {
 
-        dbRef.getReference("modules").child(id.toString()).child("intitule").get().addOnSuccessListener {
-            if (it.exists()) {
-                module_name_tv.text = it.value.toString()
+        dbRef.getReference("modules").child(id.toString()).child("intitule").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    module_name_tv.text = it.value.toString()
+                }
             }
-        }
     }
 
     private fun getSeances() {
@@ -102,14 +102,7 @@ class ModuleActivity : AppCompatActivity() {
                     val n_module = parseInt(ds.child("n_module").value.toString())
                     val total_absences = parseInt(ds.child("total_absences").value.toString())
                     var seance = Seance(
-                        id,
-                        date,
-                        start_time,
-                        end_time,
-                        type,
-                        n_salle,
-                        n_module,
-                        total_absences
+                        id, date, start_time, end_time, type, n_salle, n_module, total_absences
                     )
                     seances.add(seance)
                 }
