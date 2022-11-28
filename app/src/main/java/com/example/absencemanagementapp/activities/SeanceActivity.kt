@@ -29,12 +29,17 @@ class SeanceActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
 
+    var seance_id: String? = null
+    var module_intitule: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seance)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
+
+        seance_id = intent.getStringExtra("id")
 
         //initiate views
         initView()
@@ -74,6 +79,7 @@ class SeanceActivity : AppCompatActivity() {
 
     private fun back() {
         val intent = Intent(this, ModuleActivity::class.java)
+        intent.putExtra("module_intitule", module_intitule)
         startActivity(intent)
         finish()
     }
@@ -91,9 +97,8 @@ class SeanceActivity : AppCompatActivity() {
     }
 
     private fun setDatas() {
-        val seance_id = intent.getStringExtra("id")
-        val module_intitule = intent.getStringExtra("module_intitule")
-
+        module_intitule = intent.getStringExtra("module_intitule")
+        println("intitule after intent =====> " + module_intitule)
         module_intitule_tv.text = module_intitule
         seance_type_tv.text = seance_id?.let { getCurrentSeance(it)?.type }
         seance_date_tv.text = seance_id?.let { getCurrentSeance(it)?.date }

@@ -31,7 +31,7 @@ class ModuleActivity : AppCompatActivity() {
     private lateinit var dbRef: FirebaseDatabase
 
     var currentModuleId: Int = -1
-    var currentModuleIntitule: String = ""
+    var currentModuleIntitule: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,12 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun initSeances(seances: ArrayList<Seance>) {
+        currentModuleIntitule = intent.getStringExtra("module_intitule")
+        currentModuleIntitule = module_name_tv.text as String?
+        currentModuleId = intent.getIntExtra("id", -1)
+        println("id before intent ===> " + currentModuleId)
+        setCurrentModuleIntitule(currentModuleId)
+        println("Before intent ===> " + currentModuleIntitule)
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val seanceAdapter =
@@ -57,7 +63,9 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        currentModuleIntitule = intent.getStringExtra("module_intitule")
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
+        module_name_tv.text = currentModuleIntitule
 
         back_iv = this.findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
@@ -77,6 +85,7 @@ class ModuleActivity : AppCompatActivity() {
 
     @JvmName("setCurrentModuleIntitule1")
     private fun setCurrentModuleIntitule(id: Int) {
+
         dbRef.getReference("modules").child(id.toString()).child("intitule").get().addOnSuccessListener {
             if (it.exists()) {
                 module_name_tv.text = it.value.toString()
