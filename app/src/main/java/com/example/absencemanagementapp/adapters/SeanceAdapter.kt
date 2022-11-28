@@ -42,7 +42,7 @@ class SeanceAdapter(
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SeanceActivity::class.java)
-            intent.putExtra("id", position)
+            intent.putExtra("id", seance.id)
             intent.putExtra("module_intitule", intitule)
             startActivity(context, intent, null)
         }

@@ -14,7 +14,11 @@ import com.example.absencemanagementapp.adapters.SeanceAdapter
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
-import kotlin.properties.Delegates
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.lang.Integer.parseInt
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
@@ -24,28 +28,43 @@ class ModuleActivity : AppCompatActivity() {
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
 
-    var currentModuleId by Delegates.notNull<Int>()
+    private lateinit var dbRef: FirebaseDatabase
+
+    var currentModuleId: Int = -1
+    var currentModuleIntitule: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_module)
 
-        initViews()
+        dbRef = FirebaseDatabase.getInstance()
 
-        initSeances()
+        initView()
+
+        getSeances()
+
+        currentModuleId = intent.getIntExtra("id", -1)
+        setCurrentModuleIntitule(currentModuleId)
+
     }
 
-    private fun initSeances() {
+    private fun initSeances(seances: ArrayList<Seance>) {
+        currentModuleIntitule = intent.getStringExtra("module_intitule")
+        currentModuleIntitule = module_name_tv.text as String?
+        currentModuleId = intent.getIntExtra("id", -1)
+        println("id before intent ===> " + currentModuleId)
+        setCurrentModuleIntitule(currentModuleId)
+        println("Before intent ===> " + currentModuleIntitule)
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
-        val seances = getSeances()
         val seanceAdapter =
-            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).inititule)
+            SeanceAdapter(seances, this, currentModuleIntitule)
         rv.adapter = seanceAdapter
 
-        val modules = getCurrentModule(currentModuleId)
-
-        module_name_tv.text = modules.inititule
+    private fun initView() {
+        currentModuleIntitule = intent.getStringExtra("module_intitule")
+        module_name_tv = this.findViewById(R.id.module_intitule_tv)
+        module_name_tv.text = currentModuleIntitule
 
         back_iv.setOnClickListener { back() }
 
@@ -54,43 +73,62 @@ class ModuleActivity : AppCompatActivity() {
         new_seance_cv.setOnClickListener { toNewSeanceView() }
 
         seances_swipe.setOnRefreshListener {
-            initSeances()
+            getSeances()
             seances_swipe.isRefreshing = false
         }
     }
 
-    private fun initViews() {
-        currentModuleId = intent.getIntExtra("id", 0)
-        module_name_tv = this.findViewById(R.id.module_intitule_tv)
-        back_iv = this.findViewById(R.id.back_arrow)
-        absence_list_cv = this.findViewById(R.id.absence_list_cv)
-        new_seance_cv = this.findViewById(R.id.new_seance_cv)
-        seances_swipe = this.findViewById(R.id.seances_swipe)
+    @JvmName("setCurrentModuleIntitule1")
+    private fun setCurrentModuleIntitule(id: Int) {
+
+        dbRef.getReference("modules").child(id.toString()).child("intitule").get().addOnSuccessListener {
+            if (it.exists()) {
+                module_name_tv.text = it.value.toString()
+            }
+        }
     }
 
-    private fun getCurrentModule(id: Int): Module {
-        val modules = ArrayList<Module>();
+    private fun getSeances() {
+        dbRef.getReference("seances").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val seances = ArrayList<Seance>()
+                for (ds in snapshot.children) {
+                    val id = ds.key.toString()
+                    val date = ds.child("date").value.toString()
+                    val start_time = ds.child("start_time").value.toString()
+                    val end_time = ds.child("end_time").value.toString()
+                    val type = ds.child("type").value.toString()
+                    val n_salle = ds.child("n_salle").value.toString()
+                    val n_module = parseInt(ds.child("n_module").value.toString())
+                    val total_absences = parseInt(ds.child("total_absences").value.toString())
+                    var seance = Seance(
+                        id,
+                        date,
+                        start_time,
+                        end_time,
+                        type,
+                        n_salle,
+                        n_module,
+                        total_absences
+                    )
+                    seances.add(seance)
+                }
+                initSeances(seances)
+            }
 
-        modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI"))
-        modules.add(Module(2, "Analyse 1", "ALG1", 1, "EE"))
-        modules.add(Module(3, "Physique 1", "ALG1", 1, "LEA"))
-        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, "GI"))
-        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, "SV"))
-        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, "EG"))
-        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, "SGARNE"))
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
-        return modules[id]
-    }
-
-    private fun getSeances(): List<Seance> {
-        val seances = ArrayList<Seance>()
-        seances.add(Seance("16/11/2022", "TP", 4))
-        seances.add(Seance("15/11/2022", "Cour", 12))
-        seances.add(Seance("08/11/2022", "Cour", 9))
-        seances.add(Seance("01/11/2022", "Cour", 4))
-        seances.add(Seance("24/10/2022", "TP", 4))
-        seances.add(Seance("17/10/2022", "Cour", 4))
-        return seances
+        })
+//        val seances = ArrayList<Seance>()
+//        seances.add(Seance("16/11/2022", "TP", 4))
+//        seances.add(Seance("15/11/2022", "Cour", 12))
+//        seances.add(Seance("08/11/2022", "Cour", 9))
+//        seances.add(Seance("01/11/2022", "Cour", 4))
+//        seances.add(Seance("24/10/2022", "TP", 4))
+//        seances.add(Seance("17/10/2022", "Cour", 4))
+//        return seances
     }
 
     private fun back() {

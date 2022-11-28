@@ -28,12 +28,12 @@ class ModulesAdapter(private val modules: List<Module>, val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val module = modules[position];
-        holder.module_intitule.text = module.inititule;
+        holder.module_intitule.text = module.intitule;
         holder.module_semestre.text = module.formation + " " + module.semestre.toString();
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ModuleActivity::class.java)
-            intent.putExtra("id", position)
+            intent.putExtra("id", module.id)
             startActivity(context, intent, null)
         }
     }
