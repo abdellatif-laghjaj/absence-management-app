@@ -259,6 +259,11 @@ class NewSeanceActivity : AppCompatActivity() {
         storeQrCode(seance)
         if (id != null) {
             ref.child(id).setValue(seance)
+            moveToQrCodeView()
         }
+    }
+
+    private fun moveToQrCodeView() {
+//        TODO: not implemented yet
     }
 }
