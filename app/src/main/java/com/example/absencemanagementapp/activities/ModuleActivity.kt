@@ -40,7 +40,7 @@ class ModuleActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         val seances = getSeances()
         val seanceAdapter =
-            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).inititule)
+            SeanceAdapter(seances, this, getCurrentModule(intent.getIntExtra("id", 0)).intitule)
         rv.adapter = seanceAdapter
     }
 
@@ -49,7 +49,7 @@ class ModuleActivity : AppCompatActivity() {
         var modules = getCurrentModule(currentModuleId)
 
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
-        module_name_tv.setText(modules.inititule)
+        module_name_tv.setText(modules.intitule)
 
         back_iv = this.findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
@@ -70,13 +70,13 @@ class ModuleActivity : AppCompatActivity() {
     private fun getCurrentModule(id: Int): Module {
         val modules = ArrayList<Module>();
 
-        modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI"))
-        modules.add(Module(2, "Analyse 1", "ALG1", 1, "EE"))
-        modules.add(Module(3, "Physique 1", "ALG1", 1, "LEA"))
-        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, "GI"))
-        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, "SV"))
-        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, "EG"))
-        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, "SGARNE"))
+        modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI", "1"))
+        modules.add(Module(2, "Analyse 1", "ALG1", 1, "EE", "1"))
+        modules.add(Module(3, "Physique 1", "ALG1", 1, "LEA", "1"))
+        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, "GI", "1"))
+        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, "SV", "1"))
+        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, "EG", "1"))
+        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, "SGARNE", "1"))
 
         return modules[id]
     }
