@@ -100,7 +100,7 @@ class TeacherActivity : AppCompatActivity() {
                     val id = parseInt(ds.key.toString())
                     val inititule = ds.child("intitule").value.toString()
                     val abrv = ds.child("abrv").value.toString()
-                    val semestre = ds.child("semestre").value.toString()
+                    val semestre = parseInt(ds.child("semestre").value.toString())
                     val formation = ds.child("formation").value.toString()
                     val respo_id = ds.child("respo_id").value.toString()
                     var module = Module(id, inititule, abrv, semestre, formation, respo_id)
