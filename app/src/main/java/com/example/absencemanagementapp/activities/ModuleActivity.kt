@@ -60,23 +60,18 @@ class ModuleActivity : AppCompatActivity() {
         val seanceAdapter =
             SeanceAdapter(seances, this, currentModuleIntitule)
         rv.adapter = seanceAdapter
-    }
 
     private fun initView() {
         currentModuleIntitule = intent.getStringExtra("module_intitule")
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
         module_name_tv.text = currentModuleIntitule
 
-        back_iv = this.findViewById(R.id.back_arrow)
-        back_iv.setOnClickListener({ back() })
+        back_iv.setOnClickListener { back() }
 
-        absence_list_cv = this.findViewById(R.id.absence_list_cv)
-        absence_list_cv.setOnClickListener({ toAbsenceListView() })
+        absence_list_cv.setOnClickListener { toAbsenceListView() }
 
-        new_seance_cv = this.findViewById(R.id.new_seance_cv)
-        new_seance_cv.setOnClickListener({ toNewSeanceView() })
+        new_seance_cv.setOnClickListener { toNewSeanceView() }
 
-        seances_swipe = this.findViewById(R.id.seances_swipe)
         seances_swipe.setOnRefreshListener {
             getSeances()
             seances_swipe.isRefreshing = false
