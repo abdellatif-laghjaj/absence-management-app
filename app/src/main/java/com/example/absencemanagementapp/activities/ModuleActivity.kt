@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.lang.Integer.parseInt
-import kotlin.properties.Delegates
 
 class ModuleActivity : AppCompatActivity() {
     private lateinit var module_name_tv: TextView
@@ -29,9 +28,10 @@ class ModuleActivity : AppCompatActivity() {
     private lateinit var absence_list_cv: MaterialCardView
     private lateinit var new_seance_cv: MaterialCardView
 
-    private lateinit var dbRef : FirebaseDatabase
+    private lateinit var dbRef: FirebaseDatabase
 
-    var currentModuleId :String? = null
+    var currentModuleId: Int = -1
+    var currentModuleIntitule: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,42 +42,22 @@ class ModuleActivity : AppCompatActivity() {
         initView()
 
         getSeances()
+
+        currentModuleId = intent.getIntExtra("id", -1)
+        setCurrentModuleIntitule(currentModuleId)
+
     }
 
-    private fun initSeances(seances : ArrayList<Seance>) {
-        val module_intitule = getCurrentModule(intent.getIntExtra("id", 0).toString())?.intitule
-        println("==========================================")
-        println("==========================================")
-        println("==========================================")
-        println("==========================================")
-        println()
-        println()
-        println()
-        println("intitule ==> " + module_intitule)
-        println("id ==> " + intent.getIntExtra("id", -1))
-        println()
-        println()
-        println()
-        println("==========================================")
-        println("==========================================")
-        println("==========================================")
-        println("==========================================")
+    private fun initSeances(seances: ArrayList<Seance>) {
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val seanceAdapter =
-            SeanceAdapter(seances, this, module_intitule)
+            SeanceAdapter(seances, this, currentModuleIntitule)
         rv.adapter = seanceAdapter
     }
 
     private fun initView() {
-        currentModuleId = intent.getIntExtra("id", 0).toString()
-        println(currentModuleId)
-        var modules = getCurrentModule(currentModuleId!!)
-
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
-        if (modules != null) {
-            module_name_tv.setText(modules.intitule)
-        }
 
         back_iv = this.findViewById(R.id.back_arrow)
         back_iv.setOnClickListener({ back() })
@@ -95,23 +75,13 @@ class ModuleActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentModule(id: String): Module? {
-        var module : Module? = null
-        dbRef.getReference("modules").child(id).get().addOnSuccessListener {
+    @JvmName("setCurrentModuleIntitule1")
+    private fun setCurrentModuleIntitule(id: Int) {
+        dbRef.getReference("modules").child(id.toString()).child("intitule").get().addOnSuccessListener {
             if (it.exists()) {
-                module = it.getValue(Module::class.java)
+                module_name_tv.text = it.value.toString()
             }
         }
-//        val modules = ArrayList<Module>();
-//        modules.add(Module(1, "Algebre 1", "ALG1", 1, "GI", "1"))
-//        modules.add(Module(2, "Analyse 1", "ALG1", 1, "EE", "1"))
-//        modules.add(Module(3, "Physique 1", "ALG1", 1, "LEA", "1"))
-//        modules.add(Module(4, "Probabilité statistique", "ALG1", 1, "GI", "1"))
-//        modules.add(Module(5, "Algorithmique et programmation 1", "ALG1", 1, "SV", "1"))
-//        modules.add(Module(6, "Langues et terminologie 1", "ALG1", 1, "EG", "1"))
-//        modules.add(Module(7, "Environnement d'entreprise", "ALG1", 1, "SGARNE", "1"))
-
-        return module
     }
 
     private fun getSeances() {
@@ -127,7 +97,16 @@ class ModuleActivity : AppCompatActivity() {
                     val n_salle = ds.child("n_salle").value.toString()
                     val n_module = parseInt(ds.child("n_module").value.toString())
                     val total_absences = parseInt(ds.child("total_absences").value.toString())
-                    var seance = Seance(id, date, start_time, end_time, type, n_salle, n_module, total_absences)
+                    var seance = Seance(
+                        id,
+                        date,
+                        start_time,
+                        end_time,
+                        type,
+                        n_salle,
+                        n_module,
+                        total_absences
+                    )
                     seances.add(seance)
                 }
                 initSeances(seances)
