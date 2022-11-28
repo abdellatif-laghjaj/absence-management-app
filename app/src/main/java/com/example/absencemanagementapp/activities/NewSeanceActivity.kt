@@ -1,25 +1,21 @@
 package com.example.absencemanagementapp.activities
 
 import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
-import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.helpers.Helper.Companion.formatSeanceId
 import com.example.absencemanagementapp.models.Seance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.shashank.sony.fancytoastlib.FancyToast
@@ -218,16 +214,22 @@ class NewSeanceActivity : AppCompatActivity() {
 
         if (ref != null) {
             ref.putBytes(baos.toByteArray())
-                .addOnSuccessListener {
-                    FancyToast.makeText(
-                        this,
-                        "Image uploaded successfully",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false
-                    ).show()
-                    val qrUrl = ref.downloadUrl
-                    seance.qrCodeUrl = qrUrl.toString()
+                .addOnSuccessListener { task: UploadTask.TaskSnapshot ->
+                        if (task.task.isSuccessful) {
+                            FancyToast.makeText(
+                                this,
+                                "Image uploaded successfully",
+                                FancyToast.LENGTH_SHORT,
+                                FancyToast.SUCCESS,
+                                false
+                            ).show()
+
+                            val url = task.storage.downloadUrl
+                            println("Download URL is ===> " + url.toString())
+                            val seanceRef = database.getReference("seances").child(seance.id!!)
+                            seance.qrCodeUrl = url.toString()
+                            seanceRef.child("qrCodeUrl").setValue(url.toString())
+                        }
                 }
                 .addOnFailureListener {
                     FancyToast.makeText(
@@ -243,6 +245,14 @@ class NewSeanceActivity : AppCompatActivity() {
 //                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
 //                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
                 }
+
+            // TODO: set qr code url
+            ref.downloadUrl.addOnSuccessListener {
+                val seanceRef = database.getReference("seances").child(seance.id!!)
+                println("url  =====>  " + it.toString())
+                seance.qrCodeUrl = it.toString()
+                seanceRef.child("qrCodeUrl").setValue(it.toString())
+            }
         }
     }
 
