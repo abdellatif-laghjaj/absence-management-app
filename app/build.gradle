@@ -86,4 +86,7 @@ dependencies {
 
     //Android Toggle
     implementation 'com.github.angads25:toggle:1.1.0'
+
+    //to get uri from string
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
