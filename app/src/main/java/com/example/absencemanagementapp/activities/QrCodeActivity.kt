@@ -163,9 +163,9 @@ class QrCodeActivity : AppCompatActivity() {
         }
         fos?.use {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-            val save_dialog = MaterialDialog.Builder(this).setTitle("QR Code saved")
+            val save_dialog = MaterialDialog.Builder(this).setTitle("Hurraaay !")
                 .setAnimation(R.raw.saved)
-                .setMessage("QR Code saved in your gallery, you can share it now 🙂")
+                .setMessage("QR Code saved in your gallery, you can share it now 🚀")
                 .setPositiveButton("Ok") { dialogInterface, _ ->
                     dialogInterface.dismiss()
                 }.build()
