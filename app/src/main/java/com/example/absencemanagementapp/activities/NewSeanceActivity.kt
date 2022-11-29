@@ -270,6 +270,7 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun moveToQrCodeView(id : String) {
         intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", id)
+        println("seance id =====> " + id)
         startActivity(intent)
         finish()
     }

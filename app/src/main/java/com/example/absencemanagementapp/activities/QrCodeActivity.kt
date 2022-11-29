@@ -18,7 +18,7 @@ class QrCodeActivity : AppCompatActivity() {
     private lateinit var storage: FirebaseStorage
 
     //get seance id from intent
-    var id = intent.getIntExtra("seance_id", 0)
+    var id = intent.getStringExtra("seance_id")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
