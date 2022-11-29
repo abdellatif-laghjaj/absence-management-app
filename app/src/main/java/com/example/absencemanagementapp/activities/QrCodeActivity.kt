@@ -11,7 +11,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.shashank.sony.fancytoastlib.FancyToast
 import com.squareup.picasso.Picasso
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -162,13 +163,18 @@ class QrCodeActivity : AppCompatActivity() {
         }
         fos?.use {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-            FancyToast.makeText(
-                this,
-                "QR Code saved to gallery",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.SUCCESS,
-                false
-            ).show()
+            val save_dialog = MaterialDialog.Builder(this).setTitle("QR Code saved")
+                .setAnimation(R.raw.saved)
+                .setMessage("QR Code saved in your gallery, you can share it now 🙂")
+                .setPositiveButton("Ok") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                }.build()
+            save_dialog.show()
+
+            //scale animation
+            val animationView: LottieAnimationView = save_dialog.animationView
+            animationView.scaleX = 0.5f
+            animationView.scaleY = 0.5f
         }
     }
 }
