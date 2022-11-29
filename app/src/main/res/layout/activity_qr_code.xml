@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_margin="16dp"
             android:contentDescription="@string/scan_qr_code"
             android:src="@drawable/generate_qr_code" />
 
