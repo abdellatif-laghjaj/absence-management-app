@@ -273,7 +273,9 @@ class StudentSettingsActivity : AppCompatActivity() {
                             dialogInterface.dismiss()
                             //logout
                             auth.signOut()
-                            redirectToLogin()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }.build()
                     email_sent_dialog.show()
 
