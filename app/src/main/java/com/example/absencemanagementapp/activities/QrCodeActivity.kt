@@ -42,9 +42,11 @@ class QrCodeActivity : AppCompatActivity() {
     //get qr code image from firebase storage
     private fun getQrCodeImage() {
         val storageRef = storage.reference
-        val qrCodeRef = storageRef.child("qr_codes").child(module_id).child(seance_id)
+        val qrCodeRef = storageRef.child("qr_codes/$module_id/$seance_id.png")
+
         qrCodeRef.downloadUrl.addOnSuccessListener {
             Glide.with(this).load(it).into(qr_code_iv)
+            println("qr code url ===> $it")
         }.addOnFailureListener {
             FancyToast.makeText(
                 this,

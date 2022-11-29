@@ -208,7 +208,7 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun storeQrCode(seance: Seance) {
         val ref = seance.id?.let { storage.getReference("qr_codes").child(id.toString()).child(it) }
 
-//      convert to bytecode
+        // convert to bytecode
         var baos = ByteArrayOutputStream()
         generateQrCode(seance).compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
@@ -218,7 +218,7 @@ class NewSeanceActivity : AppCompatActivity() {
                     if (task.task.isSuccessful) {
                         FancyToast.makeText(
                             this,
-                            "Image uploaded successfully",
+                            "Qr code saved successfully",
                             FancyToast.LENGTH_SHORT,
                             FancyToast.SUCCESS,
                             false
@@ -263,7 +263,18 @@ class NewSeanceActivity : AppCompatActivity() {
         if (id != null) {
             storeQrCode(seance)
             ref.child(id).setValue(seance)
-            moveToQrCodeView(id)
+                .addOnSuccessListener {
+                    moveToQrCodeView(id)
+                }
+                .addOnFailureListener {
+                    FancyToast.makeText(
+                        this,
+                        "Failed to add seance",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                }
         }
     }
 
