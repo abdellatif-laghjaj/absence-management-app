@@ -1,6 +1,7 @@
 package com.example.absencemanagementapp.activities
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -134,6 +135,10 @@ class NewSeanceActivity : AppCompatActivity() {
     }
 
     private fun storeQrCode(seance: Seance) {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Generating QR Code")
+        progressDialog.setMessage("Please wait while we are generating QR Code for this seance 🙂")
+        progressDialog.show()
         val ref = seance.id?.let {
             storage.getReference("qr_codes").child(module_id.toString()).child(it)
         }
@@ -153,6 +158,8 @@ class NewSeanceActivity : AppCompatActivity() {
                             false
                         ).show()
 
+                        progressDialog.dismiss()
+
                         updateQrCodeURL(module_id.toString(), seance.id!!)
                     }
                 }.addOnFailureListener {
@@ -163,6 +170,8 @@ class NewSeanceActivity : AppCompatActivity() {
                         FancyToast.ERROR,
                         false
                     ).show()
+
+                    progressDialog.dismiss()
                 }.addOnProgressListener { taskSnapshot ->
 //                    val progress =
 //                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount

@@ -105,7 +105,7 @@ class QrCodeActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadImage(string: String?) : Bitmap? {
+    private fun loadImage(string: String?): Bitmap? {
         var url: URL?
         val connection: HttpURLConnection?
         try {
@@ -119,11 +119,23 @@ class QrCodeActivity : AppCompatActivity() {
                 return BitmapFactory.decodeStream(bufferedInputStream)
             } catch (e: IOException) {
                 e.message?.let { Log.e("connection error", it) }
-                Toast.makeText(this, "problem in connection!!", Toast.LENGTH_SHORT).show()
+                FancyToast.makeText(
+                    this,
+                    "connection error",
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.ERROR,
+                    false
+                ).show()
             }
         } catch (e: MalformedURLException) {
             url = null
-            Toast.makeText(this, "image uri mal formed!", Toast.LENGTH_SHORT).show()
+            FancyToast.makeText(
+                this,
+                "problem in url!!",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.ERROR,
+                false
+            ).show()
         }
         return null
     }
@@ -136,19 +148,27 @@ class QrCodeActivity : AppCompatActivity() {
                 val contentValues = ContentValues().apply {
                     put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
                     put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
-                val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                val imageUri: Uri? =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
                 fos = imageUri?.let { resolver.openOutputStream(it) }
             }
         } else {
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             val image = File(imagesDir, filename)
             fos = FileOutputStream(image)
         }
         fos?.use {
-            bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, it)
-            FancyToast.makeText(this, "Saved to gallery", Toast.LENGTH_SHORT).show()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+            FancyToast.makeText(
+                this,
+                "QR Code saved to gallery",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                false
+            ).show()
         }
     }
 }
