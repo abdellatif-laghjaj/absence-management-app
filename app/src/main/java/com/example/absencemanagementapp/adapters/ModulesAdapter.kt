@@ -33,7 +33,7 @@ class ModulesAdapter(private val modules: List<Module>, val context: Context) :
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ModuleActivity::class.java)
-            intent.putExtra("id", module.id)
+            intent.putExtra("module_id", module.id)
             startActivity(context, intent, null)
         }
     }

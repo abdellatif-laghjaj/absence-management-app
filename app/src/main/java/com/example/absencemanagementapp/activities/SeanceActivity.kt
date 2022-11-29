@@ -2,6 +2,7 @@ package com.example.absencemanagementapp.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,6 @@ import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.getValue
 
 class SeanceActivity : AppCompatActivity() {
     lateinit var module_intitule_tv: TextView
@@ -41,7 +41,7 @@ class SeanceActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
-        seance_id = intent.getStringExtra("id")
+        seance_id = intent.getStringExtra("seance_id")
         module_id = intent.getIntExtra("module_id", -1)
         url = intent.getStringExtra("url").toString()
         module_intitule = intent.getStringExtra("module_intitule")
@@ -49,6 +49,7 @@ class SeanceActivity : AppCompatActivity() {
         //initiate views
         initViews()
 
+        Log.w("on create", seance_id.toString())
         seance_id?.let { getCurrentSeance(it) }
 
         back_iv.setOnClickListener({ back() })
@@ -69,6 +70,9 @@ class SeanceActivity : AppCompatActivity() {
         seance_end_time_tv = this.findViewById(R.id.seance_end_time_tv)
         salle_nb_tv = this.findViewById(R.id.salle_nb_tv)
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
+
+        module_intitule = intent.getStringExtra("module_intitule")
+        module_intitule_tv.text = module_intitule
     }
 
     private fun getCurrentSeance(id: String) {
@@ -76,7 +80,7 @@ class SeanceActivity : AppCompatActivity() {
             if (it.exists()) {
                 val seance = it.getValue(Seance::class.java)
                 if (seance != null) {
-                    setDatas(seance)
+                    setDbVariables(seance)
                 }
             }
         }
@@ -103,9 +107,7 @@ class SeanceActivity : AppCompatActivity() {
         //TODO: show absence list
     }
 
-    private fun setDatas(seance: Seance) {
-        module_intitule = intent.getStringExtra("module_intitule")
-        module_intitule_tv.text = module_intitule
+    private fun setDbVariables(seance: Seance) {
         seance_type_tv.text = seance.type
         seance_date_tv.text = seance.date
         seance_start_time_tv.text = seance.start_time

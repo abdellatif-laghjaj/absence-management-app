@@ -43,9 +43,8 @@ class ModuleActivity : AppCompatActivity() {
 
         getSeances()
 
-        currentModuleId = intent.getIntExtra("id", -1)
+        currentModuleId = intent.getIntExtra("module_id", -1)
         setCurrentModuleIntitule(currentModuleId)
-
     }
 
     private fun initSeances(seances: ArrayList<Seance>) {
@@ -85,7 +84,6 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun setCurrentModuleIntitule(id: Int) {
-
         dbRef.getReference("modules").child(id.toString()).child("intitule").get()
             .addOnSuccessListener {
                 if (it.exists()) {
@@ -99,7 +97,7 @@ class ModuleActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val seances = ArrayList<Seance>()
                 for (ds in snapshot.children) {
-                    val id = ds.key.toString()
+                    val id = ds.child("id").value.toString()
                     val date = ds.child("date").value.toString()
                     val start_time = ds.child("start_time").value.toString()
                     val end_time = ds.child("end_time").value.toString()
@@ -109,7 +107,15 @@ class ModuleActivity : AppCompatActivity() {
                     val total_absences = parseInt(ds.child("total_absences").value.toString())
                     val qrCodeUrl = ds.child("qrCodeUrl").value.toString()
                     var seance = Seance(
-                        id, date, start_time, end_time, type, n_salle, n_module, total_absences, qrCodeUrl
+                        id,
+                        date,
+                        start_time,
+                        end_time,
+                        type,
+                        n_salle,
+                        n_module,
+                        total_absences,
+                        qrCodeUrl
                     )
                     seances.add(seance)
                 }
