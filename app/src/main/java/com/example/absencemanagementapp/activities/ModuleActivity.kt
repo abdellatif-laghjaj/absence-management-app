@@ -52,12 +52,12 @@ class ModuleActivity : AppCompatActivity() {
         currentModuleIntitule = intent.getStringExtra("module_intitule")
         currentModuleIntitule = module_name_tv.text as String?
         currentModuleId = intent.getIntExtra("id", -1)
-        println("id before intent ===> " + currentModuleId)
-        setCurrentModuleIntitule(currentModuleId)
-        println("Before intent ===> " + currentModuleIntitule)
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
-        val seanceAdapter = SeanceAdapter(seances, this, currentModuleIntitule)
+        val module = Module()
+        module.intitule = currentModuleIntitule.toString()
+        module.id = currentModuleId
+        val seanceAdapter = SeanceAdapter(seances, this, module)
         rv.adapter = seanceAdapter
     }
 

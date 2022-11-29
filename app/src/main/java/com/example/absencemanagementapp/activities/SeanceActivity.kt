@@ -31,6 +31,7 @@ class SeanceActivity : AppCompatActivity() {
 
     var seance_id: String? = null
     var module_intitule: String? = null
+    var module_id: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class SeanceActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
 
         seance_id = intent.getStringExtra("id")
+        module_id = intent.getIntExtra("module_id", -1)
 
         //initiate views
         initViews()
@@ -85,11 +87,11 @@ class SeanceActivity : AppCompatActivity() {
     }
 
     private fun showQrCode() {
-        //get seance from database
-        database.getReference("seances").child(auth.currentUser!!.uid).get().addOnSuccessListener {
-            val seance = it.getValue(Seance::class.java)
-            //TODO: show qr code
-        }
+        intent = Intent(this, QrCodeActivity::class.java)
+        intent.putExtra("seance_id", seance_id)
+        intent.putExtra("module_id", module_id)
+        intent.putExtra("module_intitule", module_intitule)
+        startActivity(intent)
     }
 
     private fun showAbsenceList() {
@@ -98,7 +100,6 @@ class SeanceActivity : AppCompatActivity() {
 
     private fun setDatas() {
         module_intitule = intent.getStringExtra("module_intitule")
-        println("intitule after intent =====> " + module_intitule)
         module_intitule_tv.text = module_intitule
         seance_type_tv.text = seance_id?.let { getCurrentSeance(it)?.type }
         seance_date_tv.text = seance_id?.let { getCurrentSeance(it)?.date }

@@ -24,6 +24,7 @@ class QrCodeActivity : AppCompatActivity() {
 
     private var seance_id = ""
     private var module_id = ""
+    private var module_intitule = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,10 @@ class QrCodeActivity : AppCompatActivity() {
 
         //get seance id and module id from intent
         seance_id = intent.getStringExtra("seance_id").toString()
+        module_intitule = intent.getStringExtra("module_intitule").toString()
         module_id = intent.getIntExtra("module_id", -1).toString()
+
+        module_intitule_iv.text = module_intitule
 
         //get qr code
         setQrCodeImage()
