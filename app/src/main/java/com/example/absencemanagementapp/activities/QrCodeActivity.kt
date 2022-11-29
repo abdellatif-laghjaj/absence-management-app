@@ -17,7 +17,8 @@ class QrCodeActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var storage: FirebaseStorage
 
-    private var id = ""
+    private var seance_id = ""
+    private var module_id = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +31,9 @@ class QrCodeActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
 
-        //get seance id from intent
-        id = intent.getStringExtra("seance_id").toString()
+        //get seance id and module id from intent
+        seance_id = intent.getStringExtra("seance_id").toString()
+        module_id = intent.getStringExtra("module_id").toString()
 
         //get qr code
         getQrCodeImage()
@@ -40,7 +42,7 @@ class QrCodeActivity : AppCompatActivity() {
     //get qr code image from firebase storage
     private fun getQrCodeImage() {
         val storageRef = storage.reference
-        val qrCodeRef = storageRef.child("qr_codes").child(id)
+        val qrCodeRef = storageRef.child("qr_codes").child(module_id).child(seance_id)
         qrCodeRef.downloadUrl.addOnSuccessListener {
             Glide.with(this).load(it).into(qr_code_iv)
         }.addOnFailureListener {

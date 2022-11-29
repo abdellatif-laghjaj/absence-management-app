@@ -215,21 +215,21 @@ class NewSeanceActivity : AppCompatActivity() {
         if (ref != null) {
             ref.putBytes(baos.toByteArray())
                 .addOnSuccessListener { task: UploadTask.TaskSnapshot ->
-                        if (task.task.isSuccessful) {
-                            FancyToast.makeText(
-                                this,
-                                "Image uploaded successfully",
-                                FancyToast.LENGTH_SHORT,
-                                FancyToast.SUCCESS,
-                                false
-                            ).show()
+                    if (task.task.isSuccessful) {
+                        FancyToast.makeText(
+                            this,
+                            "Image uploaded successfully",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,
+                            false
+                        ).show()
 
-                            val url = task.storage.downloadUrl
-                            println("Download URL is ===> " + url.toString())
-                            val seanceRef = database.getReference("seances").child(seance.id!!)
-                            seance.qrCodeUrl = url.toString()
-                            seanceRef.child("qrCodeUrl").setValue(url.toString())
-                        }
+                        val url = task.storage.downloadUrl
+                        println("Download URL is ===> " + url.toString())
+                        val seanceRef = database.getReference("seances").child(seance.id!!)
+                        seance.qrCodeUrl = url.toString()
+                        seanceRef.child("qrCodeUrl").setValue(url.toString())
+                    }
                 }
                 .addOnFailureListener {
                     FancyToast.makeText(
@@ -267,9 +267,10 @@ class NewSeanceActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveToQrCodeView(id : String) {
+    private fun moveToQrCodeView(id: String) {
         intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", id)
+        intent.putExtra("module_id", this.id)
         startActivity(intent)
         finish()
     }
