@@ -1,9 +1,13 @@
 package com.example.absencemanagementapp.activities
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -11,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.shashank.sony.fancytoastlib.FancyToast
+import com.squareup.picasso.Picasso
+import java.net.URI
 
 class QrCodeActivity : AppCompatActivity() {
     private lateinit var qr_code_iv: ImageView
@@ -25,6 +31,7 @@ class QrCodeActivity : AppCompatActivity() {
     private var seance_id = ""
     private var module_id = ""
     private var module_intitule = ""
+    private var url = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +48,7 @@ class QrCodeActivity : AppCompatActivity() {
         seance_id = intent.getStringExtra("seance_id").toString()
         module_intitule = intent.getStringExtra("module_intitule").toString()
         module_id = intent.getIntExtra("module_id", -1).toString()
+        url = intent.getStringExtra("url").toString()
 
         module_intitule_iv.text = module_intitule
 
@@ -60,26 +68,16 @@ class QrCodeActivity : AppCompatActivity() {
 
     //get qr code image from firebase storage
     private fun setQrCodeImage() {
-        val storageRef = storage.reference
-        val qrCodeRef = storageRef.child("qr_codes").child(module_id).child(seance_id)
-
-        qrCodeRef.downloadUrl.addOnSuccessListener {
-            Glide.with(this).load(it).into(qr_code_iv)
-            println("qr code url ===> $it")
-            qr_code_iv.setImageURI(it)
-        }.addOnFailureListener {
-            FancyToast.makeText(
-                this,
-                "Error: ${it.message}",
-                FancyToast.LENGTH_LONG,
-                FancyToast.ERROR,
-                false
-            ).show()
-        }
+        Picasso.with(this).load(url).into(qr_code_iv)
     }
 
     private fun back() {
-//        TODO("not implemented yet!!")
+        val intent = Intent(this, SeanceActivity::class.java)
+        intent.putExtra("seance_id", seance_id)
+        intent.putExtra("url", url)
+        intent.putExtra("module_id", module_id)
+        intent.putExtra("module_intitule", module_intitule)
+        startActivity(intent)
     }
 
     private fun shareAction() {

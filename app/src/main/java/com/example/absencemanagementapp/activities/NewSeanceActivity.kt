@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
-import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Seance
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +21,6 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.shashank.sony.fancytoastlib.FancyToast
 import java.io.ByteArrayOutputStream
-import java.net.URI
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
@@ -41,7 +39,8 @@ class NewSeanceActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
 
-    var id = 0
+    var module_id = -1
+    var module_intitule = ""
 
     var types = arrayOf("Cours", "TP", "Exam")
     var startHours = arrayOf("08:30", "10:30", "12:30", "14:30", "16:30")
@@ -50,7 +49,9 @@ class NewSeanceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_seance)
-        id = intent.getIntExtra("id", 0)
+
+        module_id = intent.getIntExtra("module_id", -1)
+        module_intitule = intent.getStringExtra("module_intitule").toString()
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -110,13 +111,10 @@ class NewSeanceActivity : AppCompatActivity() {
         seance.start_time = start_dropdown.text.toString()
         seance.end_time = end_dropdown.text.toString()
         seance.n_salle = salle_dropdown.text.toString()
-        seance.n_module = id
+        seance.n_module = module_id
 
         //save seance to database
         saveSeance(seance)
-
-        //generate qr code
-
 
 //        //display qr code in dialog
 //        val dialog = Dialog(this)
@@ -177,7 +175,7 @@ class NewSeanceActivity : AppCompatActivity() {
 
     private fun back() {
         intent = Intent(this, ModuleActivity::class.java)
-        intent.putExtra("id", id)
+        intent.putExtra("id", module_id)
         startActivity(intent)
         finish()
     }
@@ -209,7 +207,7 @@ class NewSeanceActivity : AppCompatActivity() {
     }
 
     private fun storeQrCode(seance: Seance) {
-        val ref = seance.id?.let { storage.getReference("qr_codes").child(id.toString()).child(it) }
+        val ref = seance.id?.let { storage.getReference("qr_codes").child(module_id.toString()).child(it) }
 
         // convert to bytecode
         var baos = ByteArrayOutputStream()
@@ -227,7 +225,7 @@ class NewSeanceActivity : AppCompatActivity() {
                             false
                         ).show()
 
-                        updateQrCodeURL(id.toString(), seance.id!!)
+                        updateQrCodeURL(module_id.toString(), seance.id!!)
                     }
                 }
                 .addOnFailureListener {
@@ -262,7 +260,7 @@ class NewSeanceActivity : AppCompatActivity() {
             seance.qrCodeUrl = it.toString()
             seanceRef.child("qrCodeUrl").setValue(it.toString())
             Log.i("url", it.toString())
-            moveToQrCodeView(seance_id)
+            moveToQrCodeView(seance_id, it.toString())
         }.addOnFailureListener {
             FancyToast.makeText(
                 this,
@@ -296,10 +294,12 @@ class NewSeanceActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveToQrCodeView(id: String) {
+    private fun moveToQrCodeView(id: String, url: String) {
         intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", id)
-        intent.putExtra("module_id", this.id)
+        intent.putExtra("module_id", this.module_id)
+        intent.putExtra("module_intitule", this.module_intitule)
+        intent.putExtra("url", url)
         startActivity(intent)
         finish()
     }
