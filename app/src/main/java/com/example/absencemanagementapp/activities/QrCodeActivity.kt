@@ -42,7 +42,7 @@ class QrCodeActivity : AppCompatActivity() {
     //get qr code image from firebase storage
     private fun getQrCodeImage() {
         val storageRef = storage.reference
-        val qrCodeRef = storageRef.child("qr_codes/$module_id/$seance_id.png")
+        val qrCodeRef = storageRef.child("qr_codes").child(module_id).child(seance_id)
 
         qrCodeRef.downloadUrl.addOnSuccessListener {
             Glide.with(this).load(it).into(qr_code_iv)
