@@ -75,10 +75,10 @@ class QrCodeActivity : AppCompatActivity() {
     }
 
     private fun back() {
-        TODO("not implemented yet!!")
+//        TODO("not implemented yet!!")
     }
 
     private fun shareAction() {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
     }
 }
