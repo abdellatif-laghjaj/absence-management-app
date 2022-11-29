@@ -271,14 +271,12 @@ class TeacherSettingsActivity : AppCompatActivity() {
                             dialogInterface.dismiss()
                             //logout
                             auth.signOut()
-                            val intent = Intent(this, LoginActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            redirectToLogin()
                         }.build()
                     email_sent_dialog.show()
 
                     //scale animation
-                    val animationView: LottieAnimationView = email_sent_dialog.getAnimationView()
+                    val animationView: LottieAnimationView = email_sent_dialog.animationView
                     animationView.scaleX = 0.5f
                     animationView.scaleY = 0.5f
                 } else {
@@ -293,7 +291,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
 
                     //scale animation
                     val animationView: LottieAnimationView =
-                        email_not_sent_dialog.getAnimationView()
+                        email_not_sent_dialog.animationView
                     animationView.scaleX = 0.5f
                     animationView.scaleY = 0.5f
                 }
@@ -312,6 +310,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
     //redirect to login activity
     private fun redirectToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }
