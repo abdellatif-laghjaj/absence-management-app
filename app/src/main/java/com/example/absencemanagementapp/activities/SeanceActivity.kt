@@ -49,8 +49,7 @@ class SeanceActivity : AppCompatActivity() {
         //initiate views
         initViews()
 
-        //get seance from intent
-        setDatas()
+        seance_id?.let { getCurrentSeance(it) }
 
         back_iv.setOnClickListener({ back() })
 
@@ -72,14 +71,15 @@ class SeanceActivity : AppCompatActivity() {
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
     }
 
-    private fun getCurrentSeance(id: String): Seance? {
-        var seance : Seance? = null
+    private fun getCurrentSeance(id: String) {
         database.getReference("seances").child(id).get().addOnSuccessListener {
             if (it.exists()) {
-                seance = it.getValue(Seance::class.java)
+                val seance = it.getValue(Seance::class.java)
+                if (seance != null) {
+                    setDatas(seance)
+                }
             }
         }
-        return seance
     }
 
     private fun back() {
@@ -103,14 +103,14 @@ class SeanceActivity : AppCompatActivity() {
         //TODO: show absence list
     }
 
-    private fun setDatas() {
+    private fun setDatas(seance: Seance) {
         module_intitule = intent.getStringExtra("module_intitule")
         module_intitule_tv.text = module_intitule
-        seance_type_tv.text = seance_id?.let { getCurrentSeance(it)?.type }
-        seance_date_tv.text = seance_id?.let { getCurrentSeance(it)?.date }
-        seance_start_time_tv.text = seance_id?.let { getCurrentSeance(it)?.start_time }
-        seance_end_time_tv.text = seance_id?.let { getCurrentSeance(it)?.end_time }
-        salle_nb_tv.text = seance_id?.let { getCurrentSeance(it)?.n_salle }
-        total_absence_tv.text = seance_id?.let { getCurrentSeance(it)?.total_absences.toString() }
+        seance_type_tv.text = seance.type
+        seance_date_tv.text = seance.date
+        seance_start_time_tv.text = seance.start_time
+        seance_end_time_tv.text = seance.end_time
+        salle_nb_tv.text = seance.n_salle
+        total_absence_tv.text = seance.total_absences.toString()
     }
 }
