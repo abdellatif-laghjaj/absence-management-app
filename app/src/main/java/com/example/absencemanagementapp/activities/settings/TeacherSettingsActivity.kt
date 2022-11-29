@@ -20,6 +20,7 @@ import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.home.TeacherActivity
 import com.example.absencemanagementapp.activities.profile.TeacherProfileActivity
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeLanguage
+import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -166,11 +167,11 @@ class TeacherSettingsActivity : AppCompatActivity() {
             when (checkedId) {
                 R.id.rb_light_theme -> {
                     //set light theme
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    changeTheme("light", this)
                 }
                 R.id.rb_dark_theme -> {
                     //set dark theme
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    changeTheme("dark", this)
                 }
             }
         }
