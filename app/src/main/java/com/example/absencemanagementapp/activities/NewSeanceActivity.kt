@@ -74,10 +74,7 @@ class NewSeanceActivity : AppCompatActivity() {
             val date_picker_dialog = DatePickerDialog(
                 this, { view, selected_year, selected_month, selected_day ->
                     seance_date.setText("$selected_day/${selected_month + 1}/$selected_year")
-                },
-                year,
-                month,
-                day
+                }, year, month, day
             )
             date_picker_dialog.show()
         }
@@ -115,35 +112,76 @@ class NewSeanceActivity : AppCompatActivity() {
 
         //save seance to database
         saveSeance(seance)
+    }
 
-//        //display qr code in dialog
-//        val dialog = Dialog(this)
-//        dialog.setContentView(R.layout.dialog_user_image)
-//        val image = dialog.findViewById<ImageView>(R.id.user_image_iv)
-//        image.setImageBitmap(bitmap)
-//        dialog.window!!.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//        dialog.window!!.attributes.windowAnimations = android.R.style.Animation_Dialog
-//        dialog.show()
+    private fun saveSeance(seance: Seance) {
+        val ref = database.getReference("seances")
+        val id = ref.push().key
+        if (id != null) {
+            seance.id = id.toString()
+            ref.child(id).setValue(seance).addOnSuccessListener {
+                    storeQrCode(seance)
+                }.addOnFailureListener {
+                    FancyToast.makeText(
+                        this,
+                        "Failed to add seance",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                }
+        }
+    }
+
+    private fun storeQrCode(seance: Seance) {
+        val ref = seance.id?.let {
+            storage.getReference("qr_codes").child(module_id.toString()).child(it)
+        }
+
+        // convert to bytecode
+        var baos = ByteArrayOutputStream()
+        generateQrCode(seance).compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
+        if (ref != null) {
+            ref.putBytes(baos.toByteArray()).addOnSuccessListener { task: UploadTask.TaskSnapshot ->
+                    if (task.task.isSuccessful) {
+                        FancyToast.makeText(
+                            this,
+                            "Qr code saved successfully",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,
+                            false
+                        ).show()
+
+                        updateQrCodeURL(module_id.toString(), seance.id!!)
+                    }
+                }.addOnFailureListener {
+                    FancyToast.makeText(
+                        this,
+                        "Failed to upload image",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                }.addOnProgressListener { taskSnapshot ->
+//                    val progress =
+//                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+//                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+                }
+        }
     }
 
     private fun generateQrCode(seance: Seance): Bitmap {
         val writer = QRCodeWriter()
-        val bitMatrix =
-            writer.encode(seance.toString(), BarcodeFormat.QR_CODE, 512, 512)
+        val bitMatrix = writer.encode(seance.id.toString(), BarcodeFormat.QR_CODE, 512, 512)
         val width = bitMatrix.width
         val height = bitMatrix.height
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
         for (x in 0 until width) {
             for (y in 0 until height) {
                 bitmap.setPixel(
-                    x,
-                    y,
-                    if (bitMatrix.get(
-                            x,
-                            y
+                    x, y, if (bitMatrix.get(
+                            x, y
                         )
                     ) Color.BLACK else Color.WHITE
                 )
@@ -151,6 +189,31 @@ class NewSeanceActivity : AppCompatActivity() {
         }
 
         return bitmap
+    }
+
+    private fun updateQrCodeURL(module_id: String, seance_id: String) {
+        val qrCodeRef = storage.getReference("qr_codes").child(module_id).child(seance_id)
+
+        qrCodeRef.downloadUrl.addOnSuccessListener {
+            val seanceRef = database.getReference("seances").child(seance_id)
+            seance.qrCodeUrl = it.toString()
+            seanceRef.child("qrCodeUrl").setValue(it.toString())
+            moveToQrCodeView(seance_id, it.toString())
+        }.addOnFailureListener {
+            FancyToast.makeText(
+                this, "Error: ${it.message}", FancyToast.LENGTH_LONG, FancyToast.ERROR, false
+            ).show()
+        }
+    }
+
+    private fun moveToQrCodeView(id: String, url: String) {
+        intent = Intent(this, QrCodeActivity::class.java)
+        intent.putExtra("seance_id", id)
+        intent.putExtra("module_id", this.module_id)
+        intent.putExtra("module_intitule", this.module_intitule)
+        intent.putExtra("url", url)
+        startActivity(intent)
+        finish()
     }
 
     private fun getLocales(): Array<String> {
@@ -174,8 +237,9 @@ class NewSeanceActivity : AppCompatActivity() {
     }
 
     private fun back() {
-        intent = Intent(this, ModuleActivity::class.java)
-        intent.putExtra("id", module_id)
+        val intent = Intent(this, ModuleActivity::class.java)
+        intent.putExtra("module_id", module_id)
+        intent.putExtra("module_intitule", module_intitule)
         startActivity(intent)
         finish()
     }
@@ -204,103 +268,5 @@ class NewSeanceActivity : AppCompatActivity() {
             }
             else -> true
         }
-    }
-
-    private fun storeQrCode(seance: Seance) {
-        val ref = seance.id?.let { storage.getReference("qr_codes").child(module_id.toString()).child(it) }
-
-        // convert to bytecode
-        var baos = ByteArrayOutputStream()
-        generateQrCode(seance).compress(Bitmap.CompressFormat.JPEG, 100, baos)
-
-        if (ref != null) {
-            ref.putBytes(baos.toByteArray())
-                .addOnSuccessListener { task: UploadTask.TaskSnapshot ->
-                    if (task.task.isSuccessful) {
-                        FancyToast.makeText(
-                            this,
-                            "Qr code saved successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-
-                        updateQrCodeURL(module_id.toString(), seance.id!!)
-                    }
-                }
-                .addOnFailureListener {
-                    FancyToast.makeText(
-                        this,
-                        "Failed to upload image",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.ERROR,
-                        false
-                    ).show()
-                }
-                .addOnProgressListener { taskSnapshot ->
-//                    val progress =
-//                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-//                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
-                }
-
-            // TODO: set qr code url
-            ref.downloadUrl.addOnSuccessListener {
-                val seanceRef = database.getReference("seances").child(seance.id!!)
-                seance.qrCodeUrl = it.toString()
-                seanceRef.child("qrCodeUrl").setValue(it.toString())
-            }
-        }
-    }
-
-    private fun updateQrCodeURL(module_id: String, seance_id: String) {
-        val qrCodeRef = storage.getReference("qr_codes").child(module_id).child(seance_id)
-
-        qrCodeRef.downloadUrl.addOnSuccessListener {
-            val seanceRef = database.getReference("seances").child(seance_id)
-            seance.qrCodeUrl = it.toString()
-            seanceRef.child("qrCodeUrl").setValue(it.toString())
-            Log.i("url", it.toString())
-            moveToQrCodeView(seance_id, it.toString())
-        }.addOnFailureListener {
-            FancyToast.makeText(
-                this,
-                "Error: ${it.message}",
-                FancyToast.LENGTH_LONG,
-                FancyToast.ERROR,
-                false
-            ).show()
-        }
-    }
-
-    private fun saveSeance(seance: Seance) {
-        val ref = database.getReference("seances")
-        val id = ref.push().key
-        seance.id = id
-        if (id != null) {
-
-            ref.child(id).setValue(seance)
-                .addOnSuccessListener {
-                    storeQrCode(seance)
-                }
-                .addOnFailureListener {
-                    FancyToast.makeText(
-                        this,
-                        "Failed to add seance",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.ERROR,
-                        false
-                    ).show()
-                }
-        }
-    }
-
-    private fun moveToQrCodeView(id: String, url: String) {
-        intent = Intent(this, QrCodeActivity::class.java)
-        intent.putExtra("seance_id", id)
-        intent.putExtra("module_id", this.module_id)
-        intent.putExtra("module_intitule", this.module_intitule)
-        intent.putExtra("url", url)
-        startActivity(intent)
-        finish()
     }
 }
