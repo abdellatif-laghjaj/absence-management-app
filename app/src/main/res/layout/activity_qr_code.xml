@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
+                android:contentDescription="@string/back"
                 android:src="@drawable/ic_back" />
 
             <LinearLayout
@@ -52,19 +53,22 @@
             android:id="@+id/qr_code_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:contentDescription="@string/scan_qr_code"
             android:src="@drawable/generate_qr_code" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/share_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="20dp"
-            android:clickable="true"
-            android:contentDescription="@string/submit"
-            android:src="@drawable/ic_baseline_save_alt_24"
-            app:backgroundTint="@color/blue" />
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/share_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/submit"
+        android:src="@drawable/ic_save"
+        app:backgroundTint="@color/blue" />
 </RelativeLayout>
