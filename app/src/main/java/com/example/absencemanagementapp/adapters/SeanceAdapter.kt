@@ -10,12 +10,13 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.SeanceActivity
+import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 
 class SeanceAdapter(
     private val seances: List<Seance>,
     val context: Context,
-    val intitule: String?
+    val module: Module
 ) : RecyclerView.Adapter<SeanceAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var seance_date_tv: TextView = itemView.findViewById(R.id.seance_date);
@@ -43,7 +44,8 @@ class SeanceAdapter(
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SeanceActivity::class.java)
             intent.putExtra("id", seance.id)
-            intent.putExtra("module_intitule", intitule)
+            intent.putExtra("module_id", module.id)
+            intent.putExtra("module_intitule", module.intitule)
             startActivity(context, intent, null)
         }
     }

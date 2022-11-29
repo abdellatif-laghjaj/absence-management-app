@@ -229,6 +229,7 @@ class NewSeanceActivity : AppCompatActivity() {
                         val seanceRef = database.getReference("seances").child(seance.id!!)
                         seance.qrCodeUrl = url.toString()
                         seanceRef.child("qrCodeUrl").setValue(url.toString())
+                        moveToQrCodeView(seance.id!!)
                     }
                 }
                 .addOnFailureListener {
@@ -261,10 +262,10 @@ class NewSeanceActivity : AppCompatActivity() {
         val id = ref.push().key
         seance.id = id
         if (id != null) {
-            storeQrCode(seance)
+
             ref.child(id).setValue(seance)
                 .addOnSuccessListener {
-                    moveToQrCodeView(id)
+                    storeQrCode(seance)
                 }
                 .addOnFailureListener {
                     FancyToast.makeText(
