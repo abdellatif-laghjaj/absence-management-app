@@ -32,6 +32,7 @@ class SeanceActivity : AppCompatActivity() {
     var seance_id: String? = null
     var module_intitule: String? = null
     var module_id: Int? = null
+    var url: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,8 @@ class SeanceActivity : AppCompatActivity() {
 
         seance_id = intent.getStringExtra("id")
         module_id = intent.getIntExtra("module_id", -1)
+        url = intent.getStringExtra("url").toString()
+        module_intitule = intent.getStringExtra("module_intitule")
 
         //initiate views
         initViews()
@@ -82,15 +85,17 @@ class SeanceActivity : AppCompatActivity() {
     private fun back() {
         val intent = Intent(this, ModuleActivity::class.java)
         intent.putExtra("module_intitule", module_intitule)
+        intent.putExtra("module_id", module_id)
         startActivity(intent)
         finish()
     }
 
     private fun showQrCode() {
-        intent = Intent(this, QrCodeActivity::class.java)
+        val intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", seance_id)
         intent.putExtra("module_id", module_id)
         intent.putExtra("module_intitule", module_intitule)
+        intent.putExtra("url", url)
         startActivity(intent)
     }
 

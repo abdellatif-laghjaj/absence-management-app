@@ -107,8 +107,9 @@ class ModuleActivity : AppCompatActivity() {
                     val n_salle = ds.child("n_salle").value.toString()
                     val n_module = parseInt(ds.child("n_module").value.toString())
                     val total_absences = parseInt(ds.child("total_absences").value.toString())
+                    val qrCodeUrl = ds.child("qrCodeUrl").value.toString()
                     var seance = Seance(
-                        id, date, start_time, end_time, type, n_salle, n_module, total_absences
+                        id, date, start_time, end_time, type, n_salle, n_module, total_absences, qrCodeUrl
                     )
                     seances.add(seance)
                 }
@@ -138,7 +139,8 @@ class ModuleActivity : AppCompatActivity() {
 
     private fun toNewSeanceView() {
         val intent = Intent(this, NewSeanceActivity::class.java)
-        intent.putExtra("id", currentModuleId)
+        intent.putExtra("module_id", currentModuleId)
+        intent.putExtra("module_intitule", currentModuleIntitule)
         startActivity(intent)
         finish()
     }
