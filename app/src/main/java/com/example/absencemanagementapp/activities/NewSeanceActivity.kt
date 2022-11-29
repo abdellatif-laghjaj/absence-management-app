@@ -6,10 +6,12 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
+import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Seance
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +22,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.shashank.sony.fancytoastlib.FancyToast
 import java.io.ByteArrayOutputStream
+import java.net.URI
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
@@ -224,12 +227,7 @@ class NewSeanceActivity : AppCompatActivity() {
                             false
                         ).show()
 
-                        val url = task.storage.downloadUrl
-                        println("Download URL is ===> " + url.toString())
-                        val seanceRef = database.getReference("seances").child(seance.id!!)
-                        seance.qrCodeUrl = url.toString()
-                        seanceRef.child("qrCodeUrl").setValue(url.toString())
-                        moveToQrCodeView(seance.id!!)
+                        updateQrCodeURL(id.toString(), seance.id!!)
                     }
                 }
                 .addOnFailureListener {
@@ -250,10 +248,29 @@ class NewSeanceActivity : AppCompatActivity() {
             // TODO: set qr code url
             ref.downloadUrl.addOnSuccessListener {
                 val seanceRef = database.getReference("seances").child(seance.id!!)
-                println("url  =====>  " + it.toString())
                 seance.qrCodeUrl = it.toString()
                 seanceRef.child("qrCodeUrl").setValue(it.toString())
             }
+        }
+    }
+
+    private fun updateQrCodeURL(module_id: String, seance_id: String) {
+        val qrCodeRef = storage.getReference("qr_codes").child(module_id).child(seance_id)
+
+        qrCodeRef.downloadUrl.addOnSuccessListener {
+            val seanceRef = database.getReference("seances").child(seance_id)
+            seance.qrCodeUrl = it.toString()
+            seanceRef.child("qrCodeUrl").setValue(it.toString())
+            Log.i("url", it.toString())
+            moveToQrCodeView(seance_id)
+        }.addOnFailureListener {
+            FancyToast.makeText(
+                this,
+                "Error: ${it.message}",
+                FancyToast.LENGTH_LONG,
+                FancyToast.ERROR,
+                false
+            ).show()
         }
     }
 
