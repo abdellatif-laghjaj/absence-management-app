@@ -52,7 +52,7 @@
         <ImageView
             android:id="@+id/qr_code_iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:contentDescription="@string/scan_qr_code"
             android:src="@drawable/generate_qr_code" />
