@@ -207,7 +207,7 @@ class NewSeanceActivity : AppCompatActivity() {
     }
 
     private fun moveToQrCodeView(id: String, url: String) {
-        intent = Intent(this, QrCodeActivity::class.java)
+        val intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", id)
         intent.putExtra("module_id", this.module_id)
         intent.putExtra("module_intitule", this.module_intitule)

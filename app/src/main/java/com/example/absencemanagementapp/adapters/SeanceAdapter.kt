@@ -2,6 +2,7 @@ package com.example.absencemanagementapp.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,8 +46,9 @@ class SeanceAdapter(
             val intent = Intent(context, SeanceActivity::class.java)
             intent.putExtra("seance_id", seance.id)
             intent.putExtra("url", seance.qrCodeUrl)
-            intent.putExtra("module_id", module.id)
+            intent.putExtra("module_id", seance.n_module)
             intent.putExtra("module_intitule", module.intitule)
+            Log.i("intitule", module.intitule)
             startActivity(context, intent, null)
         }
     }
