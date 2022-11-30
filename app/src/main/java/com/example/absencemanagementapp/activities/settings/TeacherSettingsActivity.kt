@@ -20,6 +20,7 @@ import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.home.TeacherActivity
 import com.example.absencemanagementapp.activities.profile.TeacherProfileActivity
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeLanguage
+import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -166,11 +167,11 @@ class TeacherSettingsActivity : AppCompatActivity() {
             when (checkedId) {
                 R.id.rb_light_theme -> {
                     //set light theme
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    changeTheme("light", this)
                 }
                 R.id.rb_dark_theme -> {
                     //set dark theme
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    changeTheme("dark", this)
                 }
             }
         }
@@ -275,7 +276,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
                     email_sent_dialog.show()
 
                     //scale animation
-                    val animationView: LottieAnimationView = email_sent_dialog.getAnimationView()
+                    val animationView: LottieAnimationView = email_sent_dialog.animationView
                     animationView.scaleX = 0.5f
                     animationView.scaleY = 0.5f
                 } else {
@@ -290,7 +291,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
 
                     //scale animation
                     val animationView: LottieAnimationView =
-                        email_not_sent_dialog.getAnimationView()
+                        email_not_sent_dialog.animationView
                     animationView.scaleX = 0.5f
                     animationView.scaleY = 0.5f
                 }
@@ -309,6 +310,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
     //redirect to login activity
     private fun redirectToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }
