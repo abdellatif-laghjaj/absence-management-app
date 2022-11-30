@@ -70,6 +70,7 @@
         android:layout_margin="20dp"
         android:clickable="true"
         android:contentDescription="@string/submit"
+        android:tint="@android:color/white"
         android:src="@drawable/ic_save"
         app:backgroundTint="@color/blue" />
 </RelativeLayout>
