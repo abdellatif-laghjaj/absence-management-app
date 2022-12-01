@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,9 @@ class SeanceAdapter(
         holder.seance_date_tv.text = seance.date
         holder.seance_absences_tv.text = seance.total_absences.toString()
         holder.seance_type_tv.text = seance.type
+
+        //add animation to list
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.recycler_view_anim))
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SeanceActivity::class.java)
