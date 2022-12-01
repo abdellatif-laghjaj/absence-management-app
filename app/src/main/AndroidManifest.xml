@@ -39,7 +39,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.NewSeanceActivity"
+            android:name=".activities.seance.NewSeanceActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -95,7 +95,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.SeanceActivity"
+            android:name=".activities.seance.SeanceActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.activities.SeanceActivity
+import com.example.absencemanagementapp.activities.seance.SeanceActivity
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 

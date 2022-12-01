@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.seance
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.ModuleActivity
 import com.example.absencemanagementapp.activities.qrcode.QrCodeActivity
 import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
