@@ -82,6 +82,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
                         .setMessage("You have successfully marked as present 🙂")
                         .setPositiveButton("Ok") { dialogInterface, _ ->
                             dialogInterface.dismiss()
+                            finish()
                         }.build()
                 save_dialog.show()
 
