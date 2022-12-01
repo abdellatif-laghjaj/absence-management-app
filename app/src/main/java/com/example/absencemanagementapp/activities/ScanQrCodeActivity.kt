@@ -78,8 +78,8 @@ class ScanQrCodeActivity : AppCompatActivity() {
                 //show success dialog
                 val save_dialog =
                     MaterialDialog.Builder(this).setTitle("Hurrayy !")
-                        .setAnimation(R.raw.scanned)
-                        .setMessage("You have successfully marked as present 🙂")
+                        .setAnimation(R.raw.success)
+                        .setMessage("You have been successfully marked as present 🫡")
                         .setPositiveButton("Ok") { dialogInterface, _ ->
                             dialogInterface.dismiss()
                             finish()
