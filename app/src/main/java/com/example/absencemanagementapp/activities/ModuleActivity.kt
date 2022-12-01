@@ -128,14 +128,6 @@ class ModuleActivity : AppCompatActivity() {
             }
 
         })
-//        val seances = ArrayList<Seance>()
-//        seances.add(Seance("16/11/2022", "TP", 4))
-//        seances.add(Seance("15/11/2022", "Cour", 12))
-//        seances.add(Seance("08/11/2022", "Cour", 9))
-//        seances.add(Seance("01/11/2022", "Cour", 4))
-//        seances.add(Seance("24/10/2022", "TP", 4))
-//        seances.add(Seance("17/10/2022", "Cour", 4))
-//        return seances
     }
 
     private fun back() {

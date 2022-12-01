@@ -174,9 +174,7 @@ class NewSeanceActivity : AppCompatActivity() {
 
                     progressDialog.dismiss()
                 }.addOnProgressListener { taskSnapshot ->
-//                    val progress =
-//                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-//                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%...")
+                 //TODO: show progress
                 }
         }
     }

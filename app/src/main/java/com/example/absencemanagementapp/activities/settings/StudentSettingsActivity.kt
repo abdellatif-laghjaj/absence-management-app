@@ -147,10 +147,6 @@ class StudentSettingsActivity : AppCompatActivity() {
             }
         }
 
-//        confirm_btn.setOnClickListener {
-//            dialog.dismiss()
-//        }
-
         dialog.show()
     }
 
