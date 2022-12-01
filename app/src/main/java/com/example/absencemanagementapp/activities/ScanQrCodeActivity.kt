@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -20,6 +21,7 @@ import com.google.android.material.slider.Slider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.shashank.sony.fancytoastlib.FancyToast
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class ScanQrCodeActivity : AppCompatActivity() {
     private lateinit var code_scanner: CodeScanner
@@ -73,13 +75,20 @@ class ScanQrCodeActivity : AppCompatActivity() {
                 //mark current student as present
                 markStudentAsPresent(it.text)
 
-                FancyToast.makeText(
-                    this,
-                    "Scanned Result: ${it.text}",
-                    FancyToast.LENGTH_LONG,
-                    FancyToast.SUCCESS,
-                    false
-                ).show()
+                //show success dialog
+                val save_dialog =
+                    MaterialDialog.Builder(this).setTitle("Hurrayy !")
+                        .setAnimation(R.raw.scanned)
+                        .setMessage("You have successfully marked as present 🙂")
+                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                        }.build()
+                save_dialog.show()
+
+                //scale animation
+                val animationView: LottieAnimationView = save_dialog.animationView
+                animationView.scaleX = 0.5f
+                animationView.scaleY = 0.5f
             }
         }
 
