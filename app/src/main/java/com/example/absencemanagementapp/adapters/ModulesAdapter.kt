@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,9 @@ class ModulesAdapter(private val modules: List<Module>, val context: Context) :
         val module = modules[position];
         holder.module_intitule.text = module.intitule;
         holder.module_semestre.text = module.formation + " " + module.semestre.toString();
+
+        //add animation to list
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.recycler_view_anim))
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ModuleActivity::class.java)

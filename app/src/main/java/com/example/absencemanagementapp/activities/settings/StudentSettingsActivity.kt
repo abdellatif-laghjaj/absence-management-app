@@ -13,16 +13,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.RelativeLayout
-import androidx.appcompat.app.AppCompatDelegate
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.auth.LoginActivity
-import com.example.absencemanagementapp.activities.ScanQrCodeActivity
+import com.example.absencemanagementapp.activities.qrcode.ScanQrCodeActivity
 import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeLanguage
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
-import com.example.absencemanagementapp.helpers.Helper.Companion.lodaTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
