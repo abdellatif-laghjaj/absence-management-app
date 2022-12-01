@@ -1,8 +1,9 @@
 package com.example.absencemanagementapp.models
 
 data class Absence(
-    val id : String,
-    val cne : String,
-    val seance_id : String
+    var cne: String,
+    var seance_id: String,
+    var is_present: Boolean
 ) {
+    constructor() : this("", "", false)
 }
