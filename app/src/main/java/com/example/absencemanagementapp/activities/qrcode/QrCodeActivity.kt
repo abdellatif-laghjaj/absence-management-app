@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.qrcode
 
 import android.content.ContentValues
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.SeanceActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase

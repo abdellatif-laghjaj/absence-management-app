@@ -7,12 +7,12 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.qrcode.QrCodeActivity
 import com.example.absencemanagementapp.models.Seance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase

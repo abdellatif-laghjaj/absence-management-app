@@ -46,7 +46,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.QrCodeActivity"
+            android:name=".activities.qrcode.QrCodeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -60,7 +60,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.ScanQrCodeActivity"
+            android:name=".activities.qrcode.ScanQrCodeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

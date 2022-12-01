@@ -1,10 +1,9 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.qrcode
 
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
@@ -16,7 +15,6 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Absence
-import com.example.absencemanagementapp.models.Student
 import com.google.android.material.slider.Slider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase

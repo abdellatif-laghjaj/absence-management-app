@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
-import com.example.absencemanagementapp.activities.ScanQrCodeActivity
+import com.example.absencemanagementapp.activities.qrcode.ScanQrCodeActivity
 import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
 import com.example.absencemanagementapp.activities.settings.StudentSettingsActivity
