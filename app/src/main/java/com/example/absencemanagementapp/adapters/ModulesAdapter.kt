@@ -21,8 +21,7 @@ class ModulesAdapter(private val modules: List<Module>, val context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.card_view_design, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.card_view_design, parent, false)
 
         return ViewHolder(view)
     }
@@ -33,7 +32,11 @@ class ModulesAdapter(private val modules: List<Module>, val context: Context) :
         holder.module_semestre.text = module.formation + " " + module.semestre.toString();
 
         //add animation to list
-        holder.itemView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.recycler_view_anim))
+        holder.itemView.startAnimation(
+            AnimationUtils.loadAnimation(
+                context, R.anim.recycler_view_anim
+            )
+        )
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ModuleActivity::class.java)

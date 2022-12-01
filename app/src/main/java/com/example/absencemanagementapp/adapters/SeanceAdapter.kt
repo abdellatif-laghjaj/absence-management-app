@@ -15,9 +15,7 @@ import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 
 class SeanceAdapter(
-    private val seances: List<Seance>,
-    val context: Context,
-    val module: Module
+    private val seances: List<Seance>, val context: Context, val module: Module
 ) : RecyclerView.Adapter<SeanceAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var seance_date_tv: TextView = itemView.findViewById(R.id.seance_date);
@@ -26,8 +24,7 @@ class SeanceAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.seance_view_design, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.seance_view_design, parent, false)
 
         return ViewHolder(view)
     }
@@ -43,7 +40,11 @@ class SeanceAdapter(
         holder.seance_type_tv.text = seance.type
 
         //add animation to list
-        holder.itemView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.recycler_view_anim))
+        holder.itemView.startAnimation(
+            AnimationUtils.loadAnimation(
+                context, R.anim.recycler_view_anim
+            )
+        )
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SeanceActivity::class.java)
