@@ -14,6 +14,7 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Absence
+import com.example.absencemanagementapp.models.Student
 import com.google.android.material.slider.Slider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +28,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
+    private val user_id = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,8 +112,20 @@ class ScanQrCodeActivity : AppCompatActivity() {
     }
 
     private fun getStudentCne(): String {
-        val ref = database.getReference("students")
-        val cne = ref.child(auth.currentUser!!.uid).child("cne").get().toString()
+        var cne = ""
+        database.getReference("students").child(user_id!!).child("cne").get()
+            .addOnSuccessListener {
+                cne = it.value.toString()
+            }
+            .addOnFailureListener {
+                FancyToast.makeText(
+                    this,
+                    "Error: ${it.message}",
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
         return cne
     }
 
