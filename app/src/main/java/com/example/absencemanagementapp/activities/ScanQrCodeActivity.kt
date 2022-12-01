@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.AutoFocusMode
@@ -104,11 +105,13 @@ class ScanQrCodeActivity : AppCompatActivity() {
         val ref = database.getReference("absences")
         val absence = Absence()
         val id = ref.push().key
-        absence.cne = getStudentCne()
-        absence.seance_id = seance_id
-        absence.is_present = true
-
-        ref.child(id!!).setValue(absence)
+        database.getReference("students").child(user_id!!).child("cne").get()
+            .addOnSuccessListener {
+                absence.cne = it.value.toString()
+                absence.seance_id = seance_id
+                absence.is_present = true
+                ref.child(id!!).setValue(absence)
+            }
     }
 
     private fun getStudentCne(): String {
