@@ -25,7 +25,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
     private lateinit var code_scanner: CodeScanner
     private lateinit var scanner_view: CodeScannerView
     private lateinit var zoom_slider: Slider
-    private final val CAMERA_REQUEST_CODE = 101
+    private val CAMERA_REQUEST_CODE = 101
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
