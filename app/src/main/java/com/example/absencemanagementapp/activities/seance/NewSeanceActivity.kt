@@ -138,6 +138,7 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun storeQrCode(seance: Seance) {
         val progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Generating QR Code")
+        progressDialog.setMessage("Please wait...🚀")
         progressDialog.show()
         val ref = seance.id?.let {
             storage.getReference("qr_codes").child(module_id.toString()).child(it)
@@ -172,10 +173,6 @@ class NewSeanceActivity : AppCompatActivity() {
                 ).show()
 
                 progressDialog.dismiss()
-            }.addOnProgressListener { taskSnapshot ->
-                val progress =
-                    100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-                progressDialog.setMessage("Generated $progress %...🚀")
             }
         }
     }
