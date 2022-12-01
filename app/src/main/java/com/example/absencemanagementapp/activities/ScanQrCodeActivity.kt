@@ -13,7 +13,10 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.slider.Slider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class ScanQrCodeActivity : AppCompatActivity() {
@@ -22,9 +25,15 @@ class ScanQrCodeActivity : AppCompatActivity() {
     private lateinit var zoom_slider: Slider
     private final val CAMERA_REQUEST_CODE = 101
 
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_qr_code_acticty)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
         scanner_view = findViewById(R.id.scanner_view)
         zoom_slider = findViewById(R.id.zoom_slider)
@@ -58,6 +67,9 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
         code_scanner.decodeCallback = DecodeCallback {
             runOnUiThread {
+                //mark current student as present
+                markStudentAsPresent(it.text)
+
                 FancyToast.makeText(
                     this,
                     "Scanned Result: ${it.text}",
@@ -84,6 +96,23 @@ class ScanQrCodeActivity : AppCompatActivity() {
         scanner_view.setOnClickListener {
             code_scanner.startPreview()
         }
+    }
+
+    private fun markStudentAsPresent(seance_id: String) {
+        val ref = database.getReference("absences")
+        val absence = Absence()
+        val id = ref.push().key
+        absence.cne = getStudentCne()
+        absence.seance_id = seance_id
+        absence.is_present = true
+
+        ref.child(id!!).setValue(absence)
+    }
+
+    private fun getStudentCne(): String {
+        val ref = database.getReference("students")
+        val cne = ref.child(auth.currentUser!!.uid).child("cne").get().toString()
+        return cne
     }
 
     override fun onRequestPermissionsResult(
