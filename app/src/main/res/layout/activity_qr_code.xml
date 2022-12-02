@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.QrCodeActivity">
+    tools:context=".activities.qrcode.QrCodeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +70,6 @@
         android:layout_margin="20dp"
         android:clickable="true"
         android:contentDescription="@string/submit"
-        android:tint="@android:color/white"
-        android:src="@drawable/ic_save"
-        app:backgroundTint="@color/blue" />
+        app:tint="@android:color/white"
+        android:src="@drawable/ic_save" />
 </RelativeLayout>

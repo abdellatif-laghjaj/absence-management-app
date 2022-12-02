@@ -1,4 +1,4 @@
-package com.example.absencemanagementapp.activities
+package com.example.absencemanagementapp.activities.qrcode
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -13,18 +14,29 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.slider.Slider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.shashank.sony.fancytoastlib.FancyToast
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class ScanQrCodeActivity : AppCompatActivity() {
     private lateinit var code_scanner: CodeScanner
     private lateinit var scanner_view: CodeScannerView
     private lateinit var zoom_slider: Slider
-    private final val CAMERA_REQUEST_CODE = 101
+    private val CAMERA_REQUEST_CODE = 101
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+    private val user_id = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_qr_code_acticty)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
         scanner_view = findViewById(R.id.scanner_view)
         zoom_slider = findViewById(R.id.zoom_slider)
@@ -58,13 +70,24 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
         code_scanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                FancyToast.makeText(
-                    this,
-                    "Scanned Result: ${it.text}",
-                    FancyToast.LENGTH_LONG,
-                    FancyToast.SUCCESS,
-                    false
-                ).show()
+                //mark current student as present
+                markStudentAsPresent(it.text)
+
+                //show success dialog
+                val save_dialog =
+                    MaterialDialog.Builder(this).setTitle("Hurrayy !")
+                        .setAnimation(R.raw.success)
+                        .setMessage("You have been successfully marked as present 🫡")
+                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                            finish()
+                        }.build()
+                save_dialog.show()
+
+                //scale animation
+                val animationView: LottieAnimationView = save_dialog.animationView
+                animationView.scaleX = 0.5f
+                animationView.scaleY = 0.5f
             }
         }
 
@@ -84,6 +107,37 @@ class ScanQrCodeActivity : AppCompatActivity() {
         scanner_view.setOnClickListener {
             code_scanner.startPreview()
         }
+    }
+
+    private fun markStudentAsPresent(seance_id: String) {
+        val ref = database.getReference("absences")
+        val absence = Absence()
+        val id = ref.push().key
+        database.getReference("students").child(user_id!!).child("cne").get()
+            .addOnSuccessListener {
+                absence.cne = it.value.toString()
+                absence.seance_id = seance_id
+                absence.is_present = true
+                ref.child(id!!).setValue(absence)
+            }
+    }
+
+    private fun getStudentCne(): String {
+        var cne = ""
+        database.getReference("students").child(user_id!!).child("cne").get()
+            .addOnSuccessListener {
+                cne = it.value.toString()
+            }
+            .addOnFailureListener {
+                FancyToast.makeText(
+                    this,
+                    "Error: ${it.message}",
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
+        return cne
     }
 
     override fun onRequestPermissionsResult(
