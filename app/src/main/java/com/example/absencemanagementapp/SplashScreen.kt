@@ -24,7 +24,7 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog
 class SplashScreen : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private val SPLASH_TIME_OUT: Long = 3000 // 3 sec
+    private val SPLASH_TIME_OUT: Long = 2500
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
