@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.AbsenceListActivity
 import com.example.absencemanagementapp.activities.ModuleActivity
 import com.example.absencemanagementapp.activities.qrcode.QrCodeActivity
 import com.example.absencemanagementapp.models.Seance
@@ -107,6 +108,12 @@ class SeanceActivity : AppCompatActivity() {
 
     private fun showAbsenceList() {
         //TODO: show absence list
+        val intent = Intent(this, AbsenceListActivity::class.java)
+        intent.putExtra("seance_id", seance_id)
+        intent.putExtra("module_id", module_id)
+        intent.putExtra("module_intitule", module_intitule)
+        intent.putExtra("url", url)
+        startActivity(intent)
     }
 
     private fun setDbVariables(seance: Seance) {
