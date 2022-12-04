@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.absencemanagementapp.R;
+
 public class AbsenceListActivity extends AppCompatActivity {
 
     @Override
