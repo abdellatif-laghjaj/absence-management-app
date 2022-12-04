@@ -122,23 +122,23 @@ class NewSeanceActivity : AppCompatActivity() {
         if (id != null) {
             seance.id = id.toString()
             ref.child(id).setValue(seance).addOnSuccessListener {
-                    storeQrCode(seance)
-                }.addOnFailureListener {
-                    FancyToast.makeText(
-                        this,
-                        "Failed to add seance",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.ERROR,
-                        false
-                    ).show()
-                }
+                storeQrCode(seance)
+            }.addOnFailureListener {
+                FancyToast.makeText(
+                    this,
+                    "Failed to add seance",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+            }
         }
     }
 
     private fun storeQrCode(seance: Seance) {
         val progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Generating QR Code")
-        progressDialog.setMessage("Please wait while we are generating QR Code for this seance 🙂")
+        progressDialog.setMessage("Please wait...🚀")
         progressDialog.show()
         val ref = seance.id?.let {
             storage.getReference("qr_codes").child(module_id.toString()).child(it)
@@ -150,32 +150,30 @@ class NewSeanceActivity : AppCompatActivity() {
 
         if (ref != null) {
             ref.putBytes(baos.toByteArray()).addOnSuccessListener { task: UploadTask.TaskSnapshot ->
-                    if (task.task.isSuccessful) {
-                        FancyToast.makeText(
-                            this,
-                            "Qr code saved successfully",
-                            FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS,
-                            false
-                        ).show()
-
-                        progressDialog.dismiss()
-
-                        updateQrCodeURL(module_id.toString(), seance.id!!)
-                    }
-                }.addOnFailureListener {
+                if (task.task.isSuccessful) {
                     FancyToast.makeText(
                         this,
-                        "Failed to upload image",
+                        "Qr code saved successfully",
                         FancyToast.LENGTH_SHORT,
-                        FancyToast.ERROR,
+                        FancyToast.SUCCESS,
                         false
                     ).show()
 
                     progressDialog.dismiss()
-                }.addOnProgressListener { taskSnapshot ->
-                 //TODO: show progress
+
+                    updateQrCodeURL(module_id.toString(), seance.id!!)
                 }
+            }.addOnFailureListener {
+                FancyToast.makeText(
+                    this,
+                    "Failed to upload image",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
+
+                progressDialog.dismiss()
+            }
         }
     }
 
