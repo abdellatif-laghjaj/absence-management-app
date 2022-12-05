@@ -89,4 +89,7 @@ dependencies {
 
     //to get uri from string
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //Search View
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 }
