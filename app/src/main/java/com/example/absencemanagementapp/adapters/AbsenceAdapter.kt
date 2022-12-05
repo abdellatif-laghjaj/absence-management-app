@@ -20,8 +20,11 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val student_image: CircleImageView = itemView.findViewById(R.id.student_image);
         val student_name: TextView = itemView.findViewById(R.id.student_name);
-        val absence_checkbox: CheckBox = itemView.findViewById(R.id.absence_checkbox);
+
+        //val absence_checkbox: CheckBox = itemView.findViewById(R.id.absence_checkbox);
         //val absence_date: TextView = itemView.findViewById(R.id.absence_date);
+        val absence_layout = itemView.findViewById<View>(R.id.absence_layout);
+        val absence_value: TextView = itemView.findViewById(R.id.absence_text);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,9 +36,15 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val absence = absence_list[position];
         holder.student_name.text = absence.cne;
-        holder.absence_checkbox.isChecked = absence.is_present;
+        if (absence.is_present) {
+            holder.absence_value.text = "present";
+            holder.absence_layout.setBackgroundResource(R.drawable.present_bg);
+        }else{
+            holder.absence_value.text = "absent";
+            holder.absence_layout.setBackgroundResource(R.drawable.absent_bg);
+        }
+        //holder.absence_checkbox.isChecked = absence.is_present;
         //holder.absence_date.text = absence.date;
-
         //add animation to list
         holder.itemView.startAnimation(
             AnimationUtils.loadAnimation(
@@ -44,20 +53,20 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
         )
 
         //ask for confirmation before marking absence
-        holder.absence_checkbox.setOnClickListener {
-            holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked;
-            val dialog = MaterialAlertDialogBuilder(context)
-                .setTitle("Confirmation")
-                .setMessage("Are you sure you want to change the absence state of student ${absence.cne} ?")
-                .setPositiveButton("Yes") { dialog, which ->
-                    //change the state
-                    holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked
-                }
-                .setNegativeButton("No") { dialog, which ->
-                    //do nothing
-                }
-            dialog.show()
-        }
+//        holder.absence_checkbox.setOnClickListener {
+//            holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked;
+//            val dialog = MaterialAlertDialogBuilder(context)
+//                .setTitle("Confirmation")
+//                .setMessage("Are you sure you want to change the absence state of student ${absence.cne} ?")
+//                .setPositiveButton("Yes") { dialog, which ->
+//                    //change the state
+//                    holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked
+//                }
+//                .setNegativeButton("No") { dialog, which ->
+//                    //do nothing
+//                }
+//            dialog.show()
+//        }
     }
 
     override fun getItemCount(): Int {

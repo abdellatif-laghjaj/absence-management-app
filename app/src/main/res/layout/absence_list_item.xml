@@ -25,10 +25,32 @@
         android:text="Student Name"
         android:textSize="18sp" />
 
-    <CheckBox
-        android:id="@+id/absence_checkbox"
+    <!--    <CheckBox-->
+    <!--        android:id="@+id/absence_checkbox"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentEnd="true" />-->
+    <!--    -->
+
+    <RelativeLayout
+        android:id="@+id/absence_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/absent_bg"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp">
+
+        <TextView
+            android:id="@+id/absence_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/proxima_nova_semibold"
+            android:text="Absent"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
 </RelativeLayout>
