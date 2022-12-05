@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Absence
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AbsenceAdapter(private val absence_list: List<Absence>, val context: Context) :
@@ -41,6 +42,22 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
                 context, R.anim.recycler_view_anim
             )
         )
+
+        //ask for confirmation before marking absence
+        holder.absence_checkbox.setOnClickListener {
+            holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked;
+            val dialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to change the absence state of student ${absence.cne} ?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    //change the state
+                    holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked
+                }
+                .setNegativeButton("No") { dialog, which ->
+                    //do nothing
+                }
+            dialog.show()
+        }
     }
 
     override fun getItemCount(): Int {
