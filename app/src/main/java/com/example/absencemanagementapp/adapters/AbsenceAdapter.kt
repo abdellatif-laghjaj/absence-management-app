@@ -1,5 +1,6 @@
 package com.example.absencemanagementapp.adapters
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -39,7 +40,7 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
         if (absence.is_present) {
             holder.absence_value.text = "present";
             holder.absence_layout.setBackgroundResource(R.drawable.present_bg);
-        }else{
+        } else {
             holder.absence_value.text = "absent";
             holder.absence_layout.setBackgroundResource(R.drawable.absent_bg);
         }
@@ -51,6 +52,18 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
                 context, R.anim.recycler_view_anim
             )
         )
+
+        //click on item
+        holder.itemView.setOnClickListener {
+            val dialog = Dialog(context)
+            dialog.setContentView(R.layout.absence_item_dialog)
+            //full width
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.show()
+        }
 
         //ask for confirmation before marking absence
 //        holder.absence_checkbox.setOnClickListener {
