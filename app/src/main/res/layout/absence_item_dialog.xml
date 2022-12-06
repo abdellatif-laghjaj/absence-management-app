@@ -18,7 +18,7 @@
         android:textSize="24sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/teacher_profile_image_civ"
+        android:id="@+id/student_image"
         android:layout_width="142dp"
         android:layout_height="142dp"
         android:layout_gravity="center_horizontal"
