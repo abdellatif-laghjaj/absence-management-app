@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.CheckBox
+import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
@@ -62,6 +63,25 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
+
+            val absence_status_switch: Switch = dialog.findViewById(R.id.absence_status_switch);
+
+            absence_status_switch.isChecked = absence.is_present;
+
+            absence_status_switch.setOnClickListener {
+                absence_status_switch.isChecked = !absence_status_switch.isChecked
+
+                val d = MaterialAlertDialogBuilder(context).setTitle("Confirmation")
+                    .setMessage("Are you sure you want to change the absence state of student ${absence.cne} ?")
+                    .setPositiveButton("Yes") { dialog, which ->
+                        absence_status_switch.isChecked = !absence_status_switch.isChecked
+                        //change the state
+                        absence.is_present = !absence.is_present;
+                    }.setNegativeButton("No") { dialog, which ->
+                        //do nothing
+                    }
+                d.show()
+            }
             dialog.show()
         }
 
