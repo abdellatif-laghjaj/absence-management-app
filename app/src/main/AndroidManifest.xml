@@ -82,6 +82,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".activities.AbsenceListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.home.StudentActivity"
             android:exported="false">
             <meta-data

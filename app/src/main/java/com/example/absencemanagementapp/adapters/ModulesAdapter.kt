@@ -15,6 +15,7 @@ import com.example.absencemanagementapp.models.Module
 
 class ModulesAdapter(private val modules: List<Module>, val context: Context) :
     RecyclerView.Adapter<ModulesAdapter.ViewHolder>() {
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var module_intitule: TextView = itemView.findViewById(R.id.module_intitule);
         val module_semestre: TextView = itemView.findViewById(R.id.module_semestre);
