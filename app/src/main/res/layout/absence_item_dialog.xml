@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_bg"
+    android:background="@drawable/absence_status_dialog_bg"
     android:orientation="vertical"
     android:padding="12dp">
 
@@ -35,7 +35,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="6dp"
         android:background="@drawable/settings_item_bg"
-        android:padding="16dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp">
 
         <ImageView
             android:id="@+id/type_seance_iv"
@@ -44,7 +45,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/round_back_logout"
+            android:background="@drawable/round_back_language"
             android:padding="6dp"
             android:src="@drawable/ic_user_name"
             app:tint="@color/white" />
@@ -81,7 +82,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="6dp"
         android:background="@drawable/settings_item_bg"
-        android:padding="16dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp">
 
         <ImageView
             android:id="@+id/date_seance_iv"
@@ -90,9 +92,9 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/round_back_logout"
+            android:background="@drawable/round_back_language"
             android:padding="6dp"
-            android:src="@drawable/ic_date"
+            android:src="@drawable/ic_verify"
             app:tint="@color/white" />
 
         <TextView
@@ -127,7 +129,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="6dp"
         android:background="@drawable/settings_item_bg"
-        android:padding="16dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp">
 
         <ImageView
             android:id="@+id/start_time_iv"
@@ -136,7 +139,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/round_back_logout"
+            android:background="@drawable/round_back_language"
             android:padding="6dp"
             android:src="@drawable/ic_filiere"
             app:tint="@color/white" />
@@ -173,7 +176,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="6dp"
         android:background="@drawable/settings_item_bg"
-        android:padding="16dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp">
 
         <ImageView
             android:id="@+id/end_time_iv"
@@ -182,9 +186,9 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/round_back_logout"
+            android:background="@drawable/round_back_language"
             android:padding="6dp"
-            android:src="@drawable/ic_clock"
+            android:src="@drawable/ic_hand"
             app:tint="@color/white" />
 
         <TextView
