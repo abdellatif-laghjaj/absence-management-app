@@ -77,6 +77,9 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
                         absence_status_switch.isChecked = !absence_status_switch.isChecked
                         //change the state
                         absence.is_present = !absence.is_present;
+
+                        //upda
+                        notifyItemChanged(position)
                     }.setNegativeButton("No") { dialog, which ->
                         //do nothing
                     }
