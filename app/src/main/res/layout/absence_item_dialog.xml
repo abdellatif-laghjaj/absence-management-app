@@ -17,6 +17,16 @@
         android:text="Absence details"
         android:textSize="24sp" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/teacher_profile_image_civ"
+        android:layout_width="142dp"
+        android:layout_height="142dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="6dp"
+        android:src="@drawable/ic_launcher_background"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
