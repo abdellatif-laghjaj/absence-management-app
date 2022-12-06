@@ -3,6 +3,9 @@ package com.example.absencemanagementapp.adapters
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,10 +62,11 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
             val dialog = Dialog(context)
             dialog.setContentView(R.layout.absence_item_dialog)
             //full width
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
+            dialog.window?.setGravity(Gravity.CENTER)
 
             val absence_status_switch: Switch = dialog.findViewById(R.id.absence_status_switch);
 
