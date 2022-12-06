@@ -76,4 +76,5 @@
     <string name="total_absences">Total absences</string>
     <string name="submit">submit</string>
     <string name="search_student">Search student...</string>
+    <string name="absence_status">Absence status</string>
 </resources>
