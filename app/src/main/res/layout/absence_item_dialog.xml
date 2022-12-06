@@ -240,10 +240,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/warning_iv"
-            android:fontFamily="@font/proxima_nova_regular"
+            android:fontFamily="@font/proxima_nova_semibold"
             android:text="Note that you can change student's absence status by toggling the switch above."
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
