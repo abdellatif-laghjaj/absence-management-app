@@ -90,4 +90,14 @@
     <string name="failed_to_send_password_reset_link">Failed to send password reset link</string>
     <string name="email_sent">Email sent</string>
     <string name="email_not_sent">Email not sent</string>
+    <string name="failed_to_add_seance">Failed to add seance</string>
+    <string name="generating_qr_code">Generating QR Code</string>
+    <string name="please_wait">Please wait...🚀</string>
+    <string name="qr_code_saved">Qr code saved successfully</string>
+    <string name="failed_to_save_qr_code">Failed to save QR code</string>
+    <string name="type_required">Type is required</string>
+    <string name="date_required">Date is required</string>
+    <string name="start_time_required">Start time is required</string>
+    <string name="end_time_required">End time is required</string>
+    <string name="salle_required">Salle is required</string>
 </resources>
