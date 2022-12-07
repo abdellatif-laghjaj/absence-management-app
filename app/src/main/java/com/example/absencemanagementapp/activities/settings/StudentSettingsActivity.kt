@@ -233,7 +233,7 @@ class StudentSettingsActivity : AppCompatActivity() {
     //logout
     private fun logout() {
         val dialog = MaterialDialog.Builder(this).setTitle(getString(R.string.logout))
-            .setMessage(getString(R.string.are_you_sure_logout)).setCancelable(false)
+            .setMessage(getString(R.string.logout_dialog_message)).setCancelable(false)
             .setAnimation(R.raw.logout).setPositiveButton(getString(R.string.yes)) { _, _ ->
                 auth.signOut()
                 //redirect to login activity
@@ -272,7 +272,7 @@ class StudentSettingsActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     dialog.dismiss()
                     val email_sent_dialog =
-                        MaterialDialog.Builder(this).setTitle(getString(R.string.success))
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.email_sent))
                             .setAnimation(R.raw.success)
                             .setMessage(getString(R.string.password_reset_link_sent))
                             .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
@@ -289,7 +289,7 @@ class StudentSettingsActivity : AppCompatActivity() {
                     animationView.scaleY = 0.5f
                 } else {
                     val email_not_sent_dialog =
-                        MaterialDialog.Builder(this).setTitle(getString(R.string.failed))
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.email_not_sent))
                             .setMessage(getString(R.string.failed_to_send_password_reset_link))
                             .setAnimation(R.raw.failed)
                             .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
