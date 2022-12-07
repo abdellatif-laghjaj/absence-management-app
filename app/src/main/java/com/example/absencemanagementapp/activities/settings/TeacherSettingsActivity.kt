@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -124,16 +125,19 @@ class TeacherSettingsActivity : AppCompatActivity() {
                     //change language to english
                     changeLanguage("en", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
                 R.id.rb_frensh_language -> {
                     //change language to frensh
                     changeLanguage("fr", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
                 R.id.rb_arabic_language -> {
                     //change language to arabic
                     changeLanguage("ar", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
                 else -> {
                     //change language to english
@@ -167,11 +171,11 @@ class TeacherSettingsActivity : AppCompatActivity() {
             when (checkedId) {
                 R.id.rb_light_theme -> {
                     //set light theme
-                    changeTheme("light", this)
+                    changeTheme(getString(R.string.light), this)
                 }
                 R.id.rb_dark_theme -> {
                     //set dark theme
-                    changeTheme("dark", this)
+                    changeTheme(getString(R.string.dark), this)
                 }
             }
         }
@@ -187,9 +191,12 @@ class TeacherSettingsActivity : AppCompatActivity() {
     //show About dialog
     private fun showAboutDialog() {
         val dialog = MaterialDialog.Builder(this)
-            .setTitle("About")
-            .setMessage("Absence Management App is an app that allows students to scan QR codes to mark their attendance. It also allows teachers to view the attendance of their students.")
-            .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
+            .setTitle(getString(R.string.about))
+            .setMessage(getString(R.string.about_dialog_message))
+            .setPositiveButton(
+                getString(R.string.ok),
+                R.drawable.ic_done
+            ) { dialogInterface, which ->
                 dialogInterface.dismiss()
             }
             .setAnimation(R.raw.about)
@@ -206,10 +213,13 @@ class TeacherSettingsActivity : AppCompatActivity() {
     //show Credits dialog
     private fun showCreditsDialog() {
         val dialog = MaterialDialog.Builder(this)
-            .setTitle("Credits")
+            .setTitle(getString(R.string.credits))
             //add links to icons
-            .setMessage("⚡ Animations by LottieFiles.com\n\n🚀 Icons by icons8.com")
-            .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
+            .setMessage(getString(R.string.credits_dialog_message))
+            .setPositiveButton(
+                getString(R.string.ok),
+                R.drawable.ic_done
+            ) { dialogInterface, which ->
                 dialogInterface.dismiss()
             }
             .setAnimation(R.raw.credits)
@@ -225,16 +235,17 @@ class TeacherSettingsActivity : AppCompatActivity() {
 
     //logout
     private fun logout() {
-        val dialog = MaterialDialog.Builder(this).setTitle("Logout")
-            .setMessage("Are you sure you want to logout?").setCancelable(false)
-            .setAnimation(R.raw.logout).setPositiveButton("Yes") { _, _ ->
+        val dialog = MaterialDialog.Builder(this).setTitle(getString(R.string.logout))
+            .setMessage(getString(R.string.logout_dialog_message))
+            .setCancelable(false)
+            .setAnimation(R.raw.logout).setPositiveButton(getString(R.string.yes)) { _, _ ->
                 auth.signOut()
                 //redirect to login activity
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
-            }.setNegativeButton("No") { dialogInterface, _ ->
+            }.setNegativeButton(getString(R.string.no)) { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }.build()
         dialog.show()
@@ -257,17 +268,17 @@ class TeacherSettingsActivity : AppCompatActivity() {
         reset_password_btn.setOnClickListener {
             val email = email_et.text.toString()
             if (email.isEmpty()) {
-                email_et.error = "Email is required"
+                email_et.error = getString(R.string.email_required)
                 email_et.requestFocus()
                 return@setOnClickListener
             }
             auth.sendPasswordResetEmail(email).addOnCompleteListener {
                 if (it.isSuccessful) {
                     dialog.dismiss()
-                    val email_sent_dialog = MaterialDialog.Builder(this).setTitle("Reset Password")
+                    val email_sent_dialog = MaterialDialog.Builder(this).setTitle(getString(R.string.email_sent))
                         .setAnimation(R.raw.success)
-                        .setMessage("Password reset link has been sent to your email. If you don't see the email, please check your spam folder.")
-                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                        .setMessage(getString(R.string.password_reset_link_sent))
+                        .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                             //logout
                             auth.signOut()
@@ -281,10 +292,10 @@ class TeacherSettingsActivity : AppCompatActivity() {
                     animationView.scaleY = 0.5f
                 } else {
                     val email_not_sent_dialog =
-                        MaterialDialog.Builder(this).setTitle("Reset Password")
-                            .setMessage("Failed to send password reset link")
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.email_not_sent))
+                            .setMessage(getString(R.string.failed_to_send_password_reset_link))
                             .setAnimation(R.raw.failed)
-                            .setPositiveButton("Ok") { dialogInterface, _ ->
+                            .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                                 dialogInterface.dismiss()
                             }.build()
                     email_not_sent_dialog.show()
@@ -324,5 +335,18 @@ class TeacherSettingsActivity : AppCompatActivity() {
         reset_password_layout = findViewById(R.id.reset_password_layout)
         credits_layout = findViewById(R.id.credits_layout)
         about_layout = findViewById(R.id.about_layout)
+    }
+
+    private fun restartActivity() {
+        if (Build.VERSION.SDK_INT >= 11) {
+            recreate()
+        } else {
+            val intent = intent
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            finish()
+            overridePendingTransition(0, 0)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+        }
     }
 }

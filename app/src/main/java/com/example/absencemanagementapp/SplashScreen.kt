@@ -54,14 +54,14 @@ class SplashScreen : AppCompatActivity() {
 
                 if (!isConnected(this)) {
                     val dialog_not_internet = MaterialDialog.Builder(this)
-                        .setTitle("No Internet Connection")
+                        .setTitle(getString(R.string.no_internet_connection))
                         .setAnimation(R.raw.no_internet)
-                        .setMessage("Please check your internet connection and try again")
-                        .setNegativeButton("Exit") { dialogInterface, _ ->
+                        .setMessage(getString(R.string.please_check_your_connection))
+                        .setNegativeButton(getString(R.string.exit)) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                             finish()
                         }
-                        .setPositiveButton("Ok") { _, _ ->
+                        .setPositiveButton(getString(R.string.ok)) { _, _ ->
                             checkInternetConnection(this, this)
                         }
                         .build()

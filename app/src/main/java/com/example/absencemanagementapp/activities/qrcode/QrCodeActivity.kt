@@ -126,7 +126,7 @@ class QrCodeActivity : AppCompatActivity() {
                 e.message?.let { Log.e("connection error", it) }
                 FancyToast.makeText(
                     this,
-                    "connection error",
+                    getString(R.string.connection_error),
                     FancyToast.LENGTH_LONG,
                     FancyToast.ERROR,
                     false
@@ -136,7 +136,7 @@ class QrCodeActivity : AppCompatActivity() {
             url = null
             FancyToast.makeText(
                 this,
-                "problem in url!!",
+                getString(R.string.problem_url),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.ERROR,
                 false
@@ -183,10 +183,11 @@ class QrCodeActivity : AppCompatActivity() {
                         fos?.use {
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
                             val save_dialog =
-                                MaterialDialog.Builder(this@QrCodeActivity).setTitle("Hurraaay !")
+                                MaterialDialog.Builder(this@QrCodeActivity)
+                                    .setTitle(getString(R.string.success))
                                     .setAnimation(R.raw.saved)
-                                    .setMessage("QR Code saved in your gallery, you can share it now 🚀")
-                                    .setPositiveButton("Ok") { dialogInterface, _ ->
+                                    .setMessage(getString(R.string.qr_code_saved_to_gallery))
+                                    .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                                         dialogInterface.dismiss()
                                     }.build()
                             save_dialog.show()
@@ -199,7 +200,7 @@ class QrCodeActivity : AppCompatActivity() {
                     } else {
                         FancyToast.makeText(
                             this@QrCodeActivity,
-                            "Permission denied",
+                            getString(R.string.permission_denied),
                             FancyToast.LENGTH_SHORT,
                             FancyToast.ERROR,
                             false

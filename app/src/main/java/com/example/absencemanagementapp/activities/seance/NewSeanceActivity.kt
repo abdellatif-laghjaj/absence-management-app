@@ -126,7 +126,7 @@ class NewSeanceActivity : AppCompatActivity() {
             }.addOnFailureListener {
                 FancyToast.makeText(
                     this,
-                    "Failed to add seance",
+                    getString(R.string.failed_to_add_seance),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
@@ -137,8 +137,8 @@ class NewSeanceActivity : AppCompatActivity() {
 
     private fun storeQrCode(seance: Seance) {
         val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Generating QR Code")
-        progressDialog.setMessage("Please wait...🚀")
+        progressDialog.setTitle(getString(R.string.generating_qr_code))
+        progressDialog.setMessage(getString(R.string.please_wait))
         progressDialog.show()
         val ref = seance.id?.let {
             storage.getReference("qr_codes").child(module_id.toString()).child(it)
@@ -153,7 +153,7 @@ class NewSeanceActivity : AppCompatActivity() {
                 if (task.task.isSuccessful) {
                     FancyToast.makeText(
                         this,
-                        "Qr code saved successfully",
+                        getString(R.string.qr_code_saved),
                         FancyToast.LENGTH_SHORT,
                         FancyToast.SUCCESS,
                         false
@@ -166,7 +166,7 @@ class NewSeanceActivity : AppCompatActivity() {
             }.addOnFailureListener {
                 FancyToast.makeText(
                     this,
-                    "Failed to upload image",
+                    getString(R.string.failed_to_save_qr_code),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
@@ -253,23 +253,23 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun validateInputs(): Boolean {
         return when {
             type_dropdown.text.toString().isEmpty() -> {
-                type_dropdown.error = "Type is required"
+                type_dropdown.error = getString(R.string.type_required)
                 false
             }
             seance_date.text.toString().isEmpty() -> {
-                seance_date.error = "Date is required"
+                seance_date.error = getString(R.string.date_required)
                 false
             }
             start_dropdown.text.toString().isEmpty() -> {
-                start_dropdown.error = "Start time is required"
+                start_dropdown.error = getString(R.string.start_time_required)
                 false
             }
             end_dropdown.text.toString().isEmpty() -> {
-                end_dropdown.error = "End time is required"
+                end_dropdown.error = getString(R.string.end_time_required)
                 false
             }
             salle_dropdown.text.toString().isEmpty() -> {
-                salle_dropdown.error = "Salle is required"
+                salle_dropdown.error = getString(R.string.salle_required)
                 false
             }
             else -> true

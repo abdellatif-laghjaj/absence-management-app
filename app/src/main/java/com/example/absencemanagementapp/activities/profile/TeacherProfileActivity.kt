@@ -148,7 +148,7 @@ class TeacherProfileActivity : AppCompatActivity() {
             } else {
                 EasyPermissions.requestPermissions(
                     this,
-                    "Please accept our permissions",
+                    getString(R.string.accept_permissions),
                     REQUEST_CODE,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 )
@@ -169,17 +169,17 @@ class TeacherProfileActivity : AppCompatActivity() {
         val cin = cin_et.text.toString()
         return when {
             first_name.isEmpty() -> {
-                first_name_et.error = "First name is required"
+                first_name_et.error = getString(R.string.first_name_required)
                 first_name_et.requestFocus()
                 false
             }
             last_name.isEmpty() -> {
-                last_name_et.error = "Last name is required"
+                last_name_et.error = getString(R.string.last_name_required)
                 last_name_et.requestFocus()
                 false
             }
             cin.isEmpty() -> {
-                cin_et.error = "CIN is required"
+                cin_et.error = getString(R.string.cin_required)
                 cin_et.requestFocus()
                 false
             }
@@ -249,7 +249,7 @@ class TeacherProfileActivity : AppCompatActivity() {
         } else {
             FancyToast.makeText(
                 this,
-                "You haven't picked an image",
+                getString(R.string.you_have_not_pick_image),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.ERROR,
                 false
@@ -259,8 +259,8 @@ class TeacherProfileActivity : AppCompatActivity() {
 
     fun uploadImageToFirebaseStorage() {
         val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Uploading...")
-        progressDialog.setMessage("Please wait while we upload and process the image")
+        progressDialog.setTitle(getString(R.string.uploading))
+        progressDialog.setMessage(getString(R.string.uploading_image))
         progressDialog.show()
 
         val ref = storage.getReference("profile_images").child(auth.currentUser!!.uid)
@@ -269,7 +269,7 @@ class TeacherProfileActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 FancyToast.makeText(
                     this,
-                    "Image uploaded successfully",
+                    getString(R.string.image_uploaded_successfully),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.SUCCESS,
                     false
@@ -279,7 +279,7 @@ class TeacherProfileActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 FancyToast.makeText(
                     this,
-                    "Failed to upload image",
+                    getString(R.string.failed_upload_image),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
@@ -313,7 +313,7 @@ class TeacherProfileActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 FancyToast.makeText(
                     this,
-                    "Profile updated successfully",
+                    getString(R.string.profile_updated_successfully),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.SUCCESS,
                     false
