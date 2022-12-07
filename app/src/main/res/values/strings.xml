@@ -127,4 +127,11 @@
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="please_check_your_connection">Please check your internet connection and try again</string>
     <string name="exit">Exit</string>
+    <string name="here_we_go">Here we go</string>
+    <string name="registring_dialog_message">Please wait, while we are creating your space 🚀</string>
+    <string name="registration_succes">You have been registered successfully</string>
+    <string name="invalid_email">Email is not valid</string>
+    <string name="password_weak">Password must be at least 6 characters</string>
+    <string name="confirm_password_required">Confirm password is required</string>
+    <string name="passwords_not_match">Passwords don\'t match</string>
 </resources>
