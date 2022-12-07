@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -13,12 +13,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.auth.LoginActivity
-import com.example.absencemanagementapp.activities.qrcode.ScanQrCodeActivity
 import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
+import com.example.absencemanagementapp.activities.qrcode.ScanQrCodeActivity
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeLanguage
 import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
+
 
 class StudentSettingsActivity : AppCompatActivity() {
     private lateinit var change_language_layout: RelativeLayout
@@ -128,16 +130,19 @@ class StudentSettingsActivity : AppCompatActivity() {
                     //change language to english
                     changeLanguage("en", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
                 R.id.rb_frensh_language -> {
                     //change language to frensh
                     changeLanguage("fr", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
                 R.id.rb_arabic_language -> {
                     //change language to arabic
                     changeLanguage("ar", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
                 else -> {
                     //change language to english
@@ -320,5 +325,18 @@ class StudentSettingsActivity : AppCompatActivity() {
         reset_password_layout = findViewById(R.id.reset_password_layout)
         credits_layout = findViewById(R.id.credits_layout)
         about_layout = findViewById(R.id.about_layout)
+    }
+
+    private fun restartActivity() {
+        if (Build.VERSION.SDK_INT >= 11) {
+            recreate()
+        } else {
+            val intent = intent
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            finish()
+            overridePendingTransition(0, 0)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+        }
     }
 }
