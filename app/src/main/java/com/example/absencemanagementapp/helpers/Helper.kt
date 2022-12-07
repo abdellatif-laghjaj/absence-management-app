@@ -2,6 +2,7 @@ package com.example.absencemanagementapp.helpers
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -18,15 +19,20 @@ class Helper {
         ) {
             if (!isConnected(appCompatActivity)) {
                 val dialog_no_internet =
-                    MaterialDialog.Builder(activity).setTitle("No Internet Connection")
+                    MaterialDialog.Builder(activity)
+                        .setTitle(Resources.getSystem().getString(R.string.no_internet_connection))
                         .setAnimation(R.raw.no_internet)
-                        .setMessage("Please check your internet connection and try again")
+                        .setMessage(
+                            Resources.getSystem().getString(R.string.please_check_your_connection)
+                        )
                         .setCancelable(false)
 
-                        .setNegativeButton("Exit") { dialogInterface, _ ->
+                        .setNegativeButton(
+                            Resources.getSystem().getString(R.string.exit)
+                        ) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                             activity.finish()
-                        }.setPositiveButton("Ok") { _, _ ->
+                        }.setPositiveButton(Resources.getSystem().getString(R.string.ok)) { _, _ ->
                             checkInternetConnection(activity, appCompatActivity)
                         }.build()
                 dialog_no_internet.show()
