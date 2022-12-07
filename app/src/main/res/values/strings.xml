@@ -120,4 +120,11 @@
     <string name="uploading">Uploading...</string>
     <string name="uploading_image">Please wait while we upload and process the image</string>
     <string name="you_have_not_pick_image">You haven\'t picked an image</string>
+    <string name="logging_in">Logging in</string>
+    <string name="logging_you_to_space">Logging you to you space 🚀</string>
+    <string name="invalid_email_or_password">Invalid email or password</string>
+    <string name="password_required">Password is required</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="please_check_your_connection">Please check your internet connection and try again</string>
+    <string name="exit">Exit</string>
 </resources>
