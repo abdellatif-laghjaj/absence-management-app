@@ -193,9 +193,12 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     //show About dialog
     private fun showAboutDialog() {
-        val dialog = MaterialDialog.Builder(this).setTitle("About")
-            .setMessage("Absence Management App is an app that allows students to scan QR codes to mark their attendance. It also allows teachers to view the attendance of their students.")
-            .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
+        val dialog = MaterialDialog.Builder(this).setTitle(getString(R.string.about))
+            .setMessage(getString(R.string.about_dialog_message))
+            .setPositiveButton(
+                getString(R.string.ok),
+                R.drawable.ic_done
+            ) { dialogInterface, which ->
                 dialogInterface.dismiss()
             }.setAnimation(R.raw.about).build()
         dialog.show()
@@ -209,10 +212,13 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     //show Credits dialog
     private fun showCreditsDialog() {
-        val dialog = MaterialDialog.Builder(this).setTitle("Credits")
+        val dialog = MaterialDialog.Builder(this).setTitle(getString(R.string.credits))
             //add links to icons
-            .setMessage("⚡ Animations by LottieFiles.com\n\n🚀 Icons by icons8.com")
-            .setPositiveButton("OK", R.drawable.ic_done) { dialogInterface, which ->
+            .setMessage(getString(R.string.credits_dialog_message))
+            .setPositiveButton(
+                getString(R.string.ok),
+                R.drawable.ic_done
+            ) { dialogInterface, which ->
                 dialogInterface.dismiss()
             }.setAnimation(R.raw.credits).build()
         dialog.show()
