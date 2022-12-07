@@ -75,10 +75,11 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
                 //show success dialog
                 val save_dialog =
-                    MaterialDialog.Builder(this).setTitle("Hurrayy !")
+                    MaterialDialog.Builder(this)
+                        .setTitle(getString(R.string.huray))
                         .setAnimation(R.raw.success)
-                        .setMessage("You have been successfully marked as present 🫡")
-                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                        .setMessage(getString(R.string.mared_as_present))
+                        .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                             finish()
                         }.build()
@@ -154,7 +155,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
                 //permission denied
                 FancyToast.makeText(
                     this,
-                    "Camera permission is required to use this feature",
+                    getString(R.string.camera_permission_required),
                     FancyToast.LENGTH_LONG,
                     FancyToast.ERROR,
                     false

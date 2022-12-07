@@ -100,4 +100,24 @@
     <string name="start_time_required">Start time is required</string>
     <string name="end_time_required">End time is required</string>
     <string name="salle_required">Salle is required</string>
+    <string name="connection_error">Connection error</string>
+    <string name="problem_url">Problem in URL !</string>
+    <string name="qr_code_saved_to_gallery">QR Code saved in your gallery, you can share it now 🚀</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="camera_permission_required">Camera permission is required to use this feature</string>
+    <string name="huray">Hurrayy !</string>
+    <string name="mared_as_present">You have been successfully marked as present 🫡</string>
+    <string name="accept_permissions">Please accept the required permissions</string>
+    <string name="first_name_required">First name is required</string>
+    <string name="last_name_required">Last name is required</string>
+    <string name="cin_required">CIN is required</string>
+    <string name="cne_required">CNE is required</string>
+    <string name="filiere_required">Filiere is required</string>
+    <string name="semester_required">Semester is required</string>
+    <string name="profile_updated_successfully">Profile updated successfully</string>
+    <string name="failed_upload_image">Failed to upload image</string>
+    <string name="image_uploaded_successfully">Image uploaded successfully</string>
+    <string name="uploading">Uploading...</string>
+    <string name="uploading_image">Please wait while we upload and process the image</string>
+    <string name="you_have_not_pick_image">You haven\'t picked an image</string>
 </resources>
