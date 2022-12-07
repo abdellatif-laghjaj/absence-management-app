@@ -79,5 +79,13 @@
     <string name="absence_status">Absence status</string>
     <string name="about_dialog_message">Absence Management App is an app that allows students to scan QR codes to mark their attendance. It also allows teachers to view the attendance of their students.</string>
     <string name="ok">OK</string>
-    <string name="credits_dialog_message">⚡ The app is developed by:\n\n💗@abdellatif-laghjaj\n💗@omar-lamine\n\n***************************\n⚡ Animations by LottieFiles.com\n🚀 Icons by icons8.com></string>
+    <string name="credits_dialog_message">⚡ The app is developed by:\n\n💗 @abdellatif-laghjaj\n💗 @omar-lamine\n\n***************************\n⚡ Animations by LottieFiles.com\n🚀 Icons by icons8.com></string>
+    <string name="are_you_sure_logout">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="email_required">Email is required</string>
+    <string name="success">Success</string>
+    <string name="password_reset_link_sent">Password reset link has been sent to your email. If you don\'t see the email, please check your spam folder.</string>
+    <string name="failed">Failed</string>
+    <string name="failed_to_send_password_reset_link">Failed to send password reset link</string>
 </resources>

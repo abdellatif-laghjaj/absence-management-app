@@ -232,16 +232,16 @@ class StudentSettingsActivity : AppCompatActivity() {
 
     //logout
     private fun logout() {
-        val dialog = MaterialDialog.Builder(this).setTitle("Logout")
-            .setMessage("Are you sure you want to logout?").setCancelable(false)
-            .setAnimation(R.raw.logout).setPositiveButton("Yes") { _, _ ->
+        val dialog = MaterialDialog.Builder(this).setTitle(getString(R.string.logout))
+            .setMessage(getString(R.string.are_you_sure_logout)).setCancelable(false)
+            .setAnimation(R.raw.logout).setPositiveButton(getString(R.string.yes)) { _, _ ->
                 auth.signOut()
                 //redirect to login activity
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
-            }.setNegativeButton("No") { dialogInterface, _ ->
+            }.setNegativeButton(getString(R.string.no)) { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }.build()
         dialog.show()
@@ -264,22 +264,23 @@ class StudentSettingsActivity : AppCompatActivity() {
         reset_password_btn.setOnClickListener {
             val email = email_et.text.toString()
             if (email.isEmpty()) {
-                email_et.error = "Email is required"
+                email_et.error = getString(R.string.email_required)
                 email_et.requestFocus()
                 return@setOnClickListener
             }
             auth.sendPasswordResetEmail(email).addOnCompleteListener {
                 if (it.isSuccessful) {
                     dialog.dismiss()
-                    val email_sent_dialog = MaterialDialog.Builder(this).setTitle("Reset Password")
-                        .setAnimation(R.raw.success)
-                        .setMessage("Password reset link has been sent to your email. If you don't see the email, please check your spam folder.")
-                        .setPositiveButton("Ok") { dialogInterface, _ ->
-                            dialogInterface.dismiss()
-                            //logout
-                            auth.signOut()
-                            redirectToLogin()
-                        }.build()
+                    val email_sent_dialog =
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.success))
+                            .setAnimation(R.raw.success)
+                            .setMessage(getString(R.string.password_reset_link_sent))
+                            .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
+                                dialogInterface.dismiss()
+                                //logout
+                                auth.signOut()
+                                redirectToLogin()
+                            }.build()
                     email_sent_dialog.show()
 
                     //scale animation
@@ -288,10 +289,10 @@ class StudentSettingsActivity : AppCompatActivity() {
                     animationView.scaleY = 0.5f
                 } else {
                     val email_not_sent_dialog =
-                        MaterialDialog.Builder(this).setTitle("Reset Password")
-                            .setMessage("Failed to send password reset link")
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.failed))
+                            .setMessage(getString(R.string.failed_to_send_password_reset_link))
                             .setAnimation(R.raw.failed)
-                            .setPositiveButton("Ok") { dialogInterface, _ ->
+                            .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                                 dialogInterface.dismiss()
                             }.build()
                     email_not_sent_dialog.show()
