@@ -171,11 +171,11 @@ class TeacherSettingsActivity : AppCompatActivity() {
             when (checkedId) {
                 R.id.rb_light_theme -> {
                     //set light theme
-                    changeTheme(getString(R.string.light), this)
+                    changeTheme("light", this)
                 }
                 R.id.rb_dark_theme -> {
                     //set dark theme
-                    changeTheme(getString(R.string.dark), this)
+                    changeTheme("dark", this)
                 }
             }
         }
