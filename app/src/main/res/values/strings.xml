@@ -134,4 +134,6 @@
     <string name="password_weak">Password must be at least 6 characters</string>
     <string name="confirm_password_required">Confirm password is required</string>
     <string name="passwords_not_match">Passwords don\'t match</string>
+    <string name="absence_details">Absence details</string>
+    <string name="absence_details_warning">Note that you can change student\'s absence status by toggling the switch above.</string>
 </resources>

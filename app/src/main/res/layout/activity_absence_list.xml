@@ -57,6 +57,7 @@
         app:startIconDrawable="@drawable/ic_search">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_student_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"

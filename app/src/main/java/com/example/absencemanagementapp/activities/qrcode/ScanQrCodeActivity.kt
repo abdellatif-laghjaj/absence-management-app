@@ -33,7 +33,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scan_qr_code_acticty)
+        setContentView(R.layout.activity_scan_qr_code)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
