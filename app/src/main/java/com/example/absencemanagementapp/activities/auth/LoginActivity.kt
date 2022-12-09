@@ -76,8 +76,8 @@ class LoginActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
         val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Please wait")
-        progressDialog.setMessage("Logging you to you space 🚀")
+        progressDialog.setTitle(getString(R.string.logging_in))
+        progressDialog.setMessage(getString(R.string.logging_you_to_space))
 
         //log in the user
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
@@ -107,11 +107,11 @@ class LoginActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 // If sign in fails, display a dialog to the user.
                 val dialog = MaterialDialog.Builder(this)
-                    .setTitle("Login Failed")
+                    .setTitle(getString(R.string.login_failed))
                     .setAnimation(R.raw.invalid)
-                    .setMessage("Invalid email or password")
+                    .setMessage(getString(R.string.invalid_email_or_password))
                     .setCancelable(false)
-                    .setPositiveButton("Ok") { dialogInterface, _ ->
+                    .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                         dialogInterface.dismiss()
                     }
                     .build()
@@ -139,12 +139,12 @@ class LoginActivity : AppCompatActivity() {
         val password = password_et.text.toString()
         return when {
             email.isEmpty() -> {
-                email_et.error = "Email is required"
+                email_et.error = getString(R.string.email_required)
                 email_et.requestFocus()
                 false
             }
             password.isEmpty() -> {
-                password_et.error = "Password is required"
+                password_et.error = getString(R.string.password_required)
                 password_et.requestFocus()
                 false
             }
@@ -157,14 +157,14 @@ class LoginActivity : AppCompatActivity() {
         //check if user is connected to the internet
         if (!isConnected(this)) {
             val dialog_not_internet = MaterialDialog.Builder(this)
-                .setTitle("No Internet Connection")
+                .setTitle(getString(R.string.no_internet_connection))
                 .setAnimation(R.raw.no_internet)
-                .setMessage("Please check your internet connection and try again")
-                .setNegativeButton("Exit") { dialogInterface, _ ->
+                .setMessage(getString(R.string.please_check_your_connection))
+                .setNegativeButton(getString(R.string.exit)) { dialogInterface, _ ->
                     dialogInterface.dismiss()
                     finish()
                 }
-                .setPositiveButton("Ok") { _, _ ->
+                .setPositiveButton(getString(R.string.ok)) { _, _ ->
                     checkInternetConnection(this, this)
                 }
                 .build()
@@ -188,17 +188,17 @@ class LoginActivity : AppCompatActivity() {
         reset_password_btn.setOnClickListener {
             val email = email_et.text.toString()
             if (email.isEmpty()) {
-                email_et.error = "Email is required"
+                email_et.error = getString(R.string.email_required)
                 email_et.requestFocus()
                 return@setOnClickListener
             }
             auth.sendPasswordResetEmail(email).addOnCompleteListener {
                 if (it.isSuccessful) {
                     dialog.dismiss()
-                    val dialog_success = MaterialDialog.Builder(this).setTitle("Reset Password")
-                        .setMessage("Password reset link has been sent to your email. If you don't see the email, please check your spam folder")
+                    val dialog_success = MaterialDialog.Builder(this).setTitle(getString(R.string.email_sent))
+                        .setMessage(getString(R.string.password_reset_link_sent))
                         .setAnimation(R.raw.success)
-                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                        .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                         }.build()
 
@@ -210,10 +210,10 @@ class LoginActivity : AppCompatActivity() {
                     animationView.scaleX = 0.5f
                     animationView.scaleY = 0.5f
                 } else {
-                    val dialog_failed = MaterialDialog.Builder(this).setTitle("Reset Password")
-                        .setMessage("Failed to send password reset link")
+                    val dialog_failed = MaterialDialog.Builder(this).setTitle(getString(R.string.email_not_sent))
+                        .setMessage(getString(R.string.failed_to_send_password_reset_link))
                         .setAnimation(R.raw.failed)
-                        .setPositiveButton("Ok") { dialogInterface, _ ->
+                        .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                         }.build()
                     dialog_failed.show()

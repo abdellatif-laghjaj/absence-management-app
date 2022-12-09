@@ -82,8 +82,8 @@ class StudentRegisterFragment : Fragment() {
         //register student in firebase
         auth = FirebaseAuth.getInstance()
         val progressDialog = ProgressDialog(requireContext())
-        progressDialog.setTitle("Here we go")
-        progressDialog.setMessage("Please wait, while we are creating your space 🙂")
+        progressDialog.setTitle(getString(R.string.here_we_go))
+        progressDialog.setMessage(getString(R.string.registring_dialog_message))
         progressDialog.show()
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -107,7 +107,7 @@ class StudentRegisterFragment : Fragment() {
                         this.context?.let {
                             FancyToast.makeText(
                                 it,
-                                "You have been registered successfully",
+                                getString(R.string.registration_succes),
                                 FancyToast.LENGTH_LONG,
                                 FancyToast.SUCCESS,
                                 false
@@ -175,62 +175,62 @@ class StudentRegisterFragment : Fragment() {
         val confirm_password = confirm_password_et.text.toString()
         return when {
             first_name.isEmpty() -> {
-                first_name_et.error = "First name is required"
+                first_name_et.error = getString(R.string.first_name_required)
                 first_name_et.requestFocus()
                 false
             }
             last_name.isEmpty() -> {
-                last_name_et.error = "Last name is required"
+                last_name_et.error = getString(R.string.last_name_required)
                 last_name_et.requestFocus()
                 false
             }
             cin.isEmpty() -> {
-                cin_et.error = "CIN is required"
+                cin_et.error = getString(R.string.cin_required)
                 cin_et.requestFocus()
                 false
             }
             cne.isEmpty() -> {
-                cne_et.error = "CNE is required"
+                cne_et.error = getString(R.string.cne_required)
                 cne_et.requestFocus()
                 false
             }
             filiere.isEmpty() -> {
-                filiere_dropdown.error = "Filiere is required"
+                filiere_dropdown.error = getString(R.string.filiere_required)
                 filiere_dropdown.requestFocus()
                 false
             }
             semester.isEmpty() -> {
-                semester_dropdown.error = "Semester is required"
+                semester_dropdown.error = getString(R.string.semester_required)
                 semester_dropdown.requestFocus()
                 false
             }
             email.isEmpty() -> {
-                email_et.error = "Email is required"
+                email_et.error = getString(R.string.email_required)
                 email_et.requestFocus()
                 false
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                email_et.error = "Email is not valid"
+                email_et.error = getString(R.string.invalid_email)
                 email_et.requestFocus()
                 false
             }
             password.isEmpty() -> {
-                password_et.error = "Password is required"
+                password_et.error = getString(R.string.password_required)
                 password_et.requestFocus()
                 false
             }
             password.length < 6 -> {
-                password_et.error = "Password must be at least 6 characters"
+                password_et.error = getString(R.string.password_weak)
                 password_et.requestFocus()
                 false
             }
             confirm_password.isEmpty() -> {
-                confirm_password_et.error = "Confirm password is required"
+                confirm_password_et.error = getString(R.string.confirm_password_required)
                 confirm_password_et.requestFocus()
                 false
             }
             password != confirm_password -> {
-                confirm_password_et.error = "Passwords don't match"
+                confirm_password_et.error = getString(R.string.passwords_not_match)
                 confirm_password_et.requestFocus()
                 false
             }
