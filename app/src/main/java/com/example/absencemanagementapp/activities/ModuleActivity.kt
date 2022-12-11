@@ -3,6 +3,7 @@ package com.example.absencemanagementapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,8 +32,7 @@ class ModuleActivity : AppCompatActivity() {
 
     private lateinit var dbRef: FirebaseDatabase
 
-    var currentModuleId: Int = -1
-    var currentModuleIntitule: String? = null
+    private var currentModuleId: String = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,36 +43,26 @@ class ModuleActivity : AppCompatActivity() {
         initView()
 
         getSeances()
-
-        currentModuleId = intent.getIntExtra("module_id", -1)
-        setCurrentModuleIntitule(currentModuleId)
     }
 
     private fun initSeances(seances: ArrayList<Seance>) {
-        currentModuleId = intent.getIntExtra("module_id", -1)
-        setCurrentModuleIntitule(currentModuleId)
-
-        currentModuleIntitule = module_name_tv.text as String?
-
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)
         val module = Module()
-        module.intitule = currentModuleIntitule.toString()
-        module.id = currentModuleId
         val seanceAdapter = SeanceAdapter(seances, this, module)
         rv.adapter = seanceAdapter
     }
 
     private fun initView() {
-        currentModuleIntitule = intent.getStringExtra("module_intitule")
         module_name_tv = this.findViewById(R.id.module_intitule_tv)
         back_iv = this.findViewById(R.id.back_iv)
         absence_list_cv = this.findViewById(R.id.absence_list_cv)
         new_seance_cv = this.findViewById(R.id.new_seance_cv)
         seances_swipe = this.findViewById(R.id.seances_swipe)
 
-
-        module_name_tv.text = currentModuleIntitule
+        currentModuleId = intent.getIntExtra("module_id", -1).toString()
+        Log.e("debug", "module activity ==> " + currentModuleId)
+        setCurrentModuleIntitule(currentModuleId)
 
         back_iv.setOnClickListener { back() }
 
@@ -86,11 +76,13 @@ class ModuleActivity : AppCompatActivity() {
         }
     }
 
-    private fun setCurrentModuleIntitule(id: Int) {
-        dbRef.getReference("modules").child(id.toString()).child("intitule").get()
+    private fun setCurrentModuleIntitule(module_id: String) {
+        dbRef.getReference("modules").child(module_id).child("intitule").get()
             .addOnSuccessListener {
                 if (it.exists()) {
                     module_name_tv.text = it.value.toString()
+                } else {
+                    module_name_tv.text = "module intitule"
                 }
             }
     }
@@ -120,6 +112,7 @@ class ModuleActivity : AppCompatActivity() {
                         total_absences,
                         qrCodeUrl
                     )
+                    Log.i("debug", "get seances ==> " + n_module)
                     seances.add(seance)
                 }
                 initSeances(seances)
@@ -140,7 +133,6 @@ class ModuleActivity : AppCompatActivity() {
     private fun toNewSeanceView() {
         val intent = Intent(this, NewSeanceActivity::class.java)
         intent.putExtra("module_id", currentModuleId)
-        intent.putExtra("module_intitule", currentModuleIntitule)
         startActivity(intent)
         finish()
     }

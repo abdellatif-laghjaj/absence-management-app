@@ -52,8 +52,8 @@ class SeanceAdapter(
             intent.putExtra("seance_id", seance.id)
             intent.putExtra("url", seance.qrCodeUrl)
             intent.putExtra("module_id", seance.n_module)
-            intent.putExtra("module_intitule", module.intitule)
-            Log.i("intitule", module.intitule)
+            Log.e("debug", "seance adapter ==> " + seance.n_module)
+            Log.e("debug", "seance position ==> " + position)
             startActivity(context, intent, null)
         }
     }

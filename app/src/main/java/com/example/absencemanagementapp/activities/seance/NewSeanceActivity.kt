@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
@@ -23,6 +24,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.shashank.sony.fancytoastlib.FancyToast
 import java.io.ByteArrayOutputStream
+import java.lang.Integer.parseInt
 import java.util.*
 
 class NewSeanceActivity : AppCompatActivity() {
@@ -41,8 +43,7 @@ class NewSeanceActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
 
-    var module_id = -1
-    var module_intitule = ""
+    var module_id = ""
 
     var types = arrayOf("Cours", "TP", "Exam")
     var startHours = arrayOf("08:30", "10:30", "12:30", "14:30", "16:30")
@@ -52,8 +53,8 @@ class NewSeanceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_seance)
 
-        module_id = intent.getIntExtra("module_id", -1)
-        module_intitule = intent.getStringExtra("module_intitule").toString()
+        module_id = intent.getStringExtra("module_id").toString()
+        Log.e("debug", "new seance activity ==> " + module_id)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -110,7 +111,7 @@ class NewSeanceActivity : AppCompatActivity() {
         seance.start_time = start_dropdown.text.toString()
         seance.end_time = end_dropdown.text.toString()
         seance.n_salle = salle_dropdown.text.toString()
-        seance.n_module = module_id
+        seance.n_module = parseInt(module_id)
 
         //save seance to database
         saveSeance(seance)
@@ -215,8 +216,7 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun moveToQrCodeView(id: String, url: String) {
         val intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", id)
-        intent.putExtra("module_id", this.module_id)
-        intent.putExtra("module_intitule", this.module_intitule)
+        intent.putExtra("module_id", parseInt(module_id))
         intent.putExtra("url", url)
         startActivity(intent)
         finish()
@@ -245,7 +245,6 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun back() {
         val intent = Intent(this, ModuleActivity::class.java)
         intent.putExtra("module_id", module_id)
-        intent.putExtra("module_intitule", module_intitule)
         startActivity(intent)
         finish()
     }
