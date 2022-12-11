@@ -109,9 +109,6 @@ class TeacherActivity : AppCompatActivity() {
         database.getReference("modules").get().addOnSuccessListener {
             if (it.exists()) {
                 for (ds in it.children) {
-                    Log.i("debug", "module id ==> " + ds.key.toString())
-                    Log.i("debug", "respo id ==> " + ds.child("respo_id").value.toString())
-                    Log.i("debug", "user id ==> " + user_id)
                     if (ds.child("respo_id").value.toString().equals(user_id)) {
                         val id = parseInt(ds.key.toString())
                         val inititule = ds.child("intitule").value.toString()
@@ -126,26 +123,6 @@ class TeacherActivity : AppCompatActivity() {
                 initModules(modules)
             }
         }
-//        database.getReference("modules").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val modules = ArrayList<Module>();
-//                for (ds in snapshot.children) {
-//                    val id = parseInt(ds.key.toString())
-//                    val inititule = ds.child("intitule").value.toString()
-//                    val abrv = ds.child("abrv").value.toString()
-//                    val semestre = parseInt(ds.child("semestre").value.toString())
-//                    val formation = ds.child("formation").value.toString()
-//                    val respo_id = ds.child("respo_id").value.toString()
-//                    var module = Module(id, inititule, abrv, semestre, formation, respo_id)
-//                    modules.add(module)
-//                }
-//                initModules(modules)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
     }
 
     private fun initModules(modules : ArrayList<Module>) {
