@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ import com.google.firebase.database.ValueEventListener
 import de.hdodenhof.circleimageview.CircleImageView
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import java.lang.Integer.parseInt
+import java.util.UUID
 
 class TeacherActivity : AppCompatActivity() {
     private lateinit var user_name_tv: TextView
@@ -37,6 +39,8 @@ class TeacherActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+
+    private lateinit var user_id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +75,7 @@ class TeacherActivity : AppCompatActivity() {
         }
 
         //get user name
-        val user_id = auth.currentUser!!.uid
+        user_id = auth.currentUser!!.uid
         database.getReference("teachers").child(user_id).get().addOnSuccessListener {
             if (it.exists()) {
                 val teacher = it.getValue(Teacher::class.java)
@@ -101,26 +105,47 @@ class TeacherActivity : AppCompatActivity() {
     }
 
     private fun getModules() {
-        database.getReference("modules").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val modules = ArrayList<Module>();
-                for (ds in snapshot.children) {
-                    val id = parseInt(ds.key.toString())
-                    val inititule = ds.child("intitule").value.toString()
-                    val abrv = ds.child("abrv").value.toString()
-                    val semestre = parseInt(ds.child("semestre").value.toString())
-                    val formation = ds.child("formation").value.toString()
-                    val respo_id = ds.child("respo_id").value.toString()
-                    var module = Module(id, inititule, abrv, semestre, formation, respo_id)
-                    modules.add(module)
+        val modules = ArrayList<Module>()
+        database.getReference("modules").get().addOnSuccessListener {
+            if (it.exists()) {
+                for (ds in it.children) {
+                    Log.i("debug", "module id ==> " + ds.key.toString())
+                    Log.i("debug", "respo id ==> " + ds.child("respo_id").value.toString())
+                    Log.i("debug", "user id ==> " + user_id)
+                    if (ds.child("respo_id").value.toString().equals(user_id)) {
+                        val id = parseInt(ds.key.toString())
+                        val inititule = ds.child("intitule").value.toString()
+                        val abrv = ds.child("abrv").value.toString()
+                        val semestre = parseInt(ds.child("semestre").value.toString())
+                        val formation = ds.child("formation").value.toString()
+                        val respo_id = user_id
+                        var module = Module(id, inititule, abrv, semestre, formation, respo_id)
+                        modules.add(module)
+                    }
                 }
                 initModules(modules)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        }
+//        database.getReference("modules").addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val modules = ArrayList<Module>();
+//                for (ds in snapshot.children) {
+//                    val id = parseInt(ds.key.toString())
+//                    val inititule = ds.child("intitule").value.toString()
+//                    val abrv = ds.child("abrv").value.toString()
+//                    val semestre = parseInt(ds.child("semestre").value.toString())
+//                    val formation = ds.child("formation").value.toString()
+//                    val respo_id = ds.child("respo_id").value.toString()
+//                    var module = Module(id, inititule, abrv, semestre, formation, respo_id)
+//                    modules.add(module)
+//                }
+//                initModules(modules)
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
     }
 
     private fun initModules(modules : ArrayList<Module>) {
