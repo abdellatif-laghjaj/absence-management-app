@@ -14,6 +14,7 @@ import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.lang.Integer.parseInt
 
 class SeanceActivity : AppCompatActivity() {
     lateinit var module_intitule_tv: TextView
@@ -32,9 +33,8 @@ class SeanceActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
 
-    var seance_id: String? = null
-    var module_intitule: String? = null
-    var module_id: Int? = null
+    var seance_id: String = ""
+    var module_id: String = ""
     var url: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +44,16 @@ class SeanceActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
-        seance_id = intent.getStringExtra("seance_id")
-        module_id = intent.getIntExtra("module_id", -1)
-        url = intent.getStringExtra("url").toString()
-        module_intitule = intent.getStringExtra("module_intitule")
-
         //initiate views
         initViews()
 
-        Log.w("on create", seance_id.toString())
-        seance_id?.let { getCurrentSeance(it) }
+        seance_id = intent.getStringExtra("seance_id").toString()
+        module_id = intent.getIntExtra("module_id", -1).toString()
+        url = intent.getStringExtra("url").toString()
+        Log.e("debug", "seance activity ==> " + module_id)
+        setCurrentModuleIntitule(module_id)
+
+        getCurrentSeance(seance_id)
 
         back_iv.setOnClickListener({ back() })
 
@@ -73,9 +73,6 @@ class SeanceActivity : AppCompatActivity() {
         seance_end_time_tv = this.findViewById(R.id.seance_end_time_tv)
         salle_nb_tv = this.findViewById(R.id.salle_nb_tv)
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
-
-        module_intitule = intent.getStringExtra("module_intitule")
-        module_intitule_tv.text = module_intitule
     }
 
     private fun getCurrentSeance(id: String) {
@@ -89,10 +86,20 @@ class SeanceActivity : AppCompatActivity() {
         }
     }
 
+    private fun setCurrentModuleIntitule(module_id: String) {
+        database.getReference("modules").child(module_id).child("intitule").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    module_intitule_tv.text = it.value.toString()
+                } else {
+                    module_intitule_tv.text = "module intitule"
+                }
+            }
+    }
+
     private fun back() {
         val intent = Intent(this, ModuleActivity::class.java)
-        intent.putExtra("module_intitule", module_intitule)
-        intent.putExtra("module_id", module_id)
+        intent.putExtra("module_id", parseInt(module_id))
         startActivity(intent)
         finish()
     }
@@ -100,18 +107,16 @@ class SeanceActivity : AppCompatActivity() {
     private fun showQrCode() {
         val intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", seance_id)
-        intent.putExtra("module_id", module_id)
-        intent.putExtra("module_intitule", module_intitule)
+        intent.putExtra("module_id", parseInt(module_id))
+        Log.e("debug", "seance activity intent ==> " + module_id)
         intent.putExtra("url", url)
         startActivity(intent)
     }
 
     private fun showAbsenceList() {
-        //TODO: show absence list
         val intent = Intent(this, AbsenceListActivity::class.java)
         intent.putExtra("seance_id", seance_id)
         intent.putExtra("module_id", module_id)
-        intent.putExtra("module_intitule", module_intitule)
         intent.putExtra("url", url)
         startActivity(intent)
     }

@@ -30,6 +30,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.lang.Integer.parseInt
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
@@ -50,7 +51,6 @@ class QrCodeActivity : AppCompatActivity() {
     private var module_intitule = ""
     private var url = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qr_code)
@@ -63,11 +63,13 @@ class QrCodeActivity : AppCompatActivity() {
 
         //get seance id and module id from intent
         seance_id = intent.getStringExtra("seance_id").toString()
-        module_intitule = intent.getStringExtra("module_intitule").toString()
         module_id = intent.getIntExtra("module_id", -1).toString()
         url = intent.getStringExtra("url").toString()
 
-        module_intitule_iv.text = module_intitule
+        Log.e("debug", "qr activity ==> " + module_id)
+        Log.e("debug", "qr activity get from intent ==> " + intent.getIntExtra("module_id", 404))
+
+        setCurrentModuleIntitule(module_id)
 
         //get qr code
         setQrCodeImage()
@@ -83,6 +85,18 @@ class QrCodeActivity : AppCompatActivity() {
         share_btn.setOnClickListener { saveQrCode() }
     }
 
+    private fun setCurrentModuleIntitule(module_id: String) {
+        database.getReference("modules").child(module_id).child("intitule").get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    module_intitule_iv.text = it.value.toString()
+                    module_intitule = it.value.toString()
+                } else {
+                    module_intitule_iv.text = "module intitule"
+                }
+            }
+    }
+
     //get qr code image from firebase storage
     private fun setQrCodeImage() {
         Picasso.with(this).load(url).into(qr_code_iv)
@@ -92,8 +106,7 @@ class QrCodeActivity : AppCompatActivity() {
         val intent = Intent(this, SeanceActivity::class.java)
         intent.putExtra("seance_id", seance_id)
         intent.putExtra("url", url)
-        intent.putExtra("module_id", module_id)
-        intent.putExtra("module_intitule", module_intitule)
+        intent.putExtra("module_id", parseInt(module_id))
         startActivity(intent)
     }
 
