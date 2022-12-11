@@ -78,10 +78,13 @@ class AbsenceListActivity : AppCompatActivity() {
         absence_list_rv.layoutManager = LinearLayoutManager(this)
     }
 
+    override fun onBackPressed() {
+        back()
+    }
+
     private fun back() {
         finish()
     }
-
 
     private fun initViews() {
         absence_list_rv = findViewById(R.id.absence_list_rv)

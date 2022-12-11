@@ -62,6 +62,10 @@ class SeanceActivity : AppCompatActivity() {
         show_qr_code.setOnClickListener({ showQrCode() })
     }
 
+    override fun onBackPressed() {
+        back()
+    }
+
     private fun initViews() {
         module_intitule_tv = this.findViewById(R.id.module_intitule_tv)
         back_iv = findViewById(R.id.back_arrow)

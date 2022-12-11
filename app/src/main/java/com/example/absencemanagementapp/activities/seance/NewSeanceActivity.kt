@@ -91,6 +91,10 @@ class NewSeanceActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        back()
+    }
+
     private fun initViews() {
         back_iv = this.findViewById(R.id.back_iv)
         back_iv.setOnClickListener({ back() })

@@ -45,6 +45,10 @@ class ModuleActivity : AppCompatActivity() {
         getSeances()
     }
 
+    override fun onBackPressed() {
+        back()
+    }
+
     private fun initSeances(seances: ArrayList<Seance>) {
         rv = findViewById<RecyclerView>(R.id.seances_rv)
         rv.layoutManager = LinearLayoutManager(this)

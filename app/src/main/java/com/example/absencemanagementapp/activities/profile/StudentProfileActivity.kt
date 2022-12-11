@@ -180,6 +180,12 @@ class StudentProfileActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        bottom_navigation.selectedItemId = R.id.profile
+        startActivity(Intent(this, StudentActivity::class.java))
+        finish()
+    }
+
     private fun validateInputs(): Boolean {
         val first_name = first_name_et.text.toString()
         val last_name = last_name_et.text.toString()
