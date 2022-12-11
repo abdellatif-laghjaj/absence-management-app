@@ -122,41 +122,6 @@ class ModuleActivity : AppCompatActivity() {
                 }
                 initSeances(seances)
             }
-
-//        dbRef.getReference("seances").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val seances = ArrayList<Seance>()
-//                for (ds in snapshot.children) {
-//                    val id = ds.child("id").value.toString()
-//                    val date = ds.child("date").value.toString()
-//                    val start_time = ds.child("start_time").value.toString()
-//                    val end_time = ds.child("end_time").value.toString()
-//                    val type = ds.child("type").value.toString()
-//                    val n_salle = ds.child("n_salle").value.toString()
-//                    val n_module = parseInt(ds.child("n_module").value.toString())
-//                    val total_absences = parseInt(ds.child("total_absences").value.toString())
-//                    val qrCodeUrl = ds.child("qrCodeUrl").value.toString()
-//                    var seance = Seance(
-//                        id,
-//                        date,
-//                        start_time,
-//                        end_time,
-//                        type,
-//                        n_salle,
-//                        n_module,
-//                        total_absences,
-//                        qrCodeUrl
-//                    )
-//                    Log.i("debug", "get seances ==> " + n_module)
-//                    seances.add(seance)
-//                }
-//                initSeances(seances)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
     }
 
     private fun back() {
