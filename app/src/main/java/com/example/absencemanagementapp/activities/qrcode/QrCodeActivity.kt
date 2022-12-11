@@ -75,6 +75,10 @@ class QrCodeActivity : AppCompatActivity() {
         setQrCodeImage()
     }
 
+    override fun onBackPressed() {
+        back()
+    }
+
     private fun initView() {
         qr_code_iv = this.findViewById(R.id.qr_code_iv)
         back_iv = this.findViewById(R.id.back_iv)

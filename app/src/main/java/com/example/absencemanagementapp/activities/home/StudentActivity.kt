@@ -1,16 +1,20 @@
 package com.example.absencemanagementapp.activities.home
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.qrcode.ScanQrCodeActivity
 import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.profile.StudentProfileActivity
 import com.example.absencemanagementapp.activities.settings.StudentSettingsActivity
+import com.example.absencemanagementapp.helpers.Helper
+import com.example.absencemanagementapp.helpers.Helper.Companion.showExitDialog
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +26,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import de.hdodenhof.circleimageview.CircleImageView
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class StudentActivity : AppCompatActivity() {
     private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -96,6 +101,10 @@ class StudentActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        showExitDialog(this)
+    }
+
     private fun swipeToRefresh() {
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         swipe_refresh_layout.setOnRefreshListener {
@@ -111,13 +120,6 @@ class StudentActivity : AppCompatActivity() {
             R.color.white,
             R.color.yellow
         )
-    }
-
-    //redirect to login activity
-    private fun redirectToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun initViews() {

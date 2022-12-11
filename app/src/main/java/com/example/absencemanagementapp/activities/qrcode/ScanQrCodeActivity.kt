@@ -1,6 +1,7 @@
 package com.example.absencemanagementapp.activities.qrcode
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.slider.Slider
 import com.google.firebase.auth.FirebaseAuth

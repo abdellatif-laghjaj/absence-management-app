@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat.finishAffinity
 import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Seance
@@ -49,6 +50,25 @@ class Helper {
             }
         }
 
+        fun showExitDialog(context: Activity) {
+            val dialog = MaterialDialog.Builder(context).setTitle(context.getString(R.string.exit))
+                .setMessage(context.getString(R.string.exit_dialog_message))
+                .setCancelable(false)
+                .setAnimation(R.raw.logout)
+                .setPositiveButton(context.getString(R.string.yes)) { _, _ ->
+                    finishAffinity(context)
+                }.setNegativeButton(context.getString(R.string.no)) { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                }.build()
+            dialog.show()
+
+            val animationView: LottieAnimationView = dialog.animationView
+
+            //scale animation
+            animationView.scaleX = 0.5f
+            animationView.scaleY = 0.5f
+        }
+
         fun isConnected(activity: AppCompatActivity): Boolean {
             val connectivityManager =
                 activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -67,7 +87,6 @@ class Helper {
             //save theme to shared preferences
             saveTheme(theme, activity)
         }
-
 
         //save theme to shared preferences
         fun saveTheme(theme: String, activity: AppCompatActivity) {

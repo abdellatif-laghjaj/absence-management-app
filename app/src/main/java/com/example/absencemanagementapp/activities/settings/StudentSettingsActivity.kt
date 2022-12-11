@@ -108,6 +108,12 @@ class StudentSettingsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        bottom_navigation.selectedItemId = R.id.profile
+        startActivity(Intent(this, StudentActivity::class.java))
+        finish()
+    }
+
     //show change language dialog
     private fun showChangeLanguageDialog() {
         val dialog = Dialog(this)

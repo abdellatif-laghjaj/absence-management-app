@@ -1,5 +1,6 @@
 package com.example.absencemanagementapp.activities.auth
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -17,8 +18,10 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.home.StudentActivity
 import com.example.absencemanagementapp.activities.home.TeacherActivity
+import com.example.absencemanagementapp.helpers.Helper
 import com.example.absencemanagementapp.helpers.Helper.Companion.checkInternetConnection
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
+import com.example.absencemanagementapp.helpers.Helper.Companion.showExitDialog
 import com.example.absencemanagementapp.models.Student
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -70,6 +73,10 @@ class LoginActivity : AppCompatActivity() {
         forget_password_tv.setOnClickListener {
             showResetPasswordDialog()
         }
+    }
+
+    override fun onBackPressed() {
+        showExitDialog(this)
     }
 
     private fun login(email: String, password: String) {
@@ -195,12 +202,13 @@ class LoginActivity : AppCompatActivity() {
             auth.sendPasswordResetEmail(email).addOnCompleteListener {
                 if (it.isSuccessful) {
                     dialog.dismiss()
-                    val dialog_success = MaterialDialog.Builder(this).setTitle(getString(R.string.email_sent))
-                        .setMessage(getString(R.string.password_reset_link_sent))
-                        .setAnimation(R.raw.success)
-                        .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
-                            dialogInterface.dismiss()
-                        }.build()
+                    val dialog_success =
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.email_sent))
+                            .setMessage(getString(R.string.password_reset_link_sent))
+                            .setAnimation(R.raw.success)
+                            .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
+                                dialogInterface.dismiss()
+                            }.build()
 
                     dialog_success.show()
 
@@ -210,12 +218,13 @@ class LoginActivity : AppCompatActivity() {
                     animationView.scaleX = 0.5f
                     animationView.scaleY = 0.5f
                 } else {
-                    val dialog_failed = MaterialDialog.Builder(this).setTitle(getString(R.string.email_not_sent))
-                        .setMessage(getString(R.string.failed_to_send_password_reset_link))
-                        .setAnimation(R.raw.failed)
-                        .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
-                            dialogInterface.dismiss()
-                        }.build()
+                    val dialog_failed =
+                        MaterialDialog.Builder(this).setTitle(getString(R.string.email_not_sent))
+                            .setMessage(getString(R.string.failed_to_send_password_reset_link))
+                            .setAnimation(R.raw.failed)
+                            .setPositiveButton(getString(R.string.ok)) { dialogInterface, _ ->
+                                dialogInterface.dismiss()
+                            }.build()
                     dialog_failed.show()
 
                     val animationView: LottieAnimationView = dialog_failed.getAnimationView()

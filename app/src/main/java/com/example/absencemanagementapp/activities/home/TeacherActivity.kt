@@ -1,5 +1,6 @@
 package com.example.absencemanagementapp.activities.home
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter
 import com.example.absencemanagementapp.R
@@ -14,6 +16,7 @@ import com.example.absencemanagementapp.activities.auth.LoginActivity
 import com.example.absencemanagementapp.activities.profile.TeacherProfileActivity
 import com.example.absencemanagementapp.activities.settings.TeacherSettingsActivity
 import com.example.absencemanagementapp.adapters.ModulesAdapter
+import com.example.absencemanagementapp.helpers.Helper.Companion.showExitDialog
 import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Teacher
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import de.hdodenhof.circleimageview.CircleImageView
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import java.lang.Integer.parseInt
 
 class TeacherActivity : AppCompatActivity() {
@@ -90,6 +94,10 @@ class TeacherActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        showExitDialog(this)
     }
 
     private fun getModules() {

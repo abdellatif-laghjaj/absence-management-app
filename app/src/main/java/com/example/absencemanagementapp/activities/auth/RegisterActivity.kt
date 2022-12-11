@@ -28,6 +28,12 @@ class RegisterActivity : AppCompatActivity() {
         initTabs()
     }
 
+    override fun onBackPressed() {
+        Intent(this, LoginActivity::class.java).also {
+            startActivity(it)
+        }
+    }
+
     private fun initViews() {
         tab_layout = findViewById(R.id.tab_layout)
         view_pager = findViewById(R.id.view_pager)
