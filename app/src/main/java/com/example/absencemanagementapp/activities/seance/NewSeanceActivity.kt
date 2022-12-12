@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.ModuleActivity
 import com.example.absencemanagementapp.activities.qrcode.QrCodeActivity
+import com.example.absencemanagementapp.models.Absence
 import com.example.absencemanagementapp.models.Seance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +27,7 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import java.io.ByteArrayOutputStream
 import java.lang.Integer.parseInt
 import java.util.*
+import kotlin.collections.ArrayList
 
 class NewSeanceActivity : AppCompatActivity() {
     private lateinit var back_iv: ImageView
@@ -54,7 +56,6 @@ class NewSeanceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_seance)
 
         module_id = intent.getStringExtra("module_id").toString()
-        Log.e("debug", "new seance activity ==> " + module_id)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -127,6 +128,7 @@ class NewSeanceActivity : AppCompatActivity() {
         if (id != null) {
             seance.id = id.toString()
             ref.child(id).setValue(seance).addOnSuccessListener {
+                markEveryOneAsAbsent(id.toString())
                 storeQrCode(seance)
             }.addOnFailureListener {
                 FancyToast.makeText(
@@ -276,6 +278,21 @@ class NewSeanceActivity : AppCompatActivity() {
                 false
             }
             else -> true
+        }
+    }
+
+    private fun markEveryOneAsAbsent(seance_id: String) {
+//        get students list & mark everyone as absent
+        database.getReference("inscriptions").get().addOnSuccessListener {
+            for (ds in it.children) {
+                if (ds.child("n_module").value.toString().equals(module_id)) {
+                    val absence = Absence(ds.child("cne").value.toString(), seance_id, false)
+                    val key = database.getReference("absences").push().key
+                    database.getReference("absences/" + key).setValue(absence)
+                }
+            }
+        }.addOnFailureListener {
+            Log.e("debug", it.message.toString())
         }
     }
 }

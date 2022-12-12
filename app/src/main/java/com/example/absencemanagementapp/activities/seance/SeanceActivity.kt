@@ -50,7 +50,6 @@ class SeanceActivity : AppCompatActivity() {
         seance_id = intent.getStringExtra("seance_id").toString()
         module_id = intent.getIntExtra("module_id", -1).toString()
         url = intent.getStringExtra("url").toString()
-        Log.e("debug", "seance activity ==> " + module_id)
         setCurrentModuleIntitule(module_id)
 
         getCurrentSeance(seance_id)

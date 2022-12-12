@@ -65,7 +65,6 @@ class ModuleActivity : AppCompatActivity() {
         seances_swipe = this.findViewById(R.id.seances_swipe)
 
         currentModuleId = intent.getIntExtra("module_id", -1).toString()
-        Log.e("debug", "module activity ==> " + currentModuleId)
         setCurrentModuleIntitule(currentModuleId)
 
         back_iv.setOnClickListener { back() }
