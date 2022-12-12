@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AbsenceManagementApp</string>
+    <string name="app_name">Absenti.fy</string>
     <string name="register">Register</string>
     <string name="welcome_to_absenti_fy">welcome to absenti.fy</string>
     <string name="full_name">Full name</string>
