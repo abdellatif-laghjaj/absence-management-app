@@ -1,6 +1,8 @@
 package com.example.absencemanagementapp.activities
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -10,7 +12,10 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class AbsenceListActivity : AppCompatActivity() {
@@ -22,6 +27,8 @@ class AbsenceListActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
 
+    private lateinit var seance_id: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_absence_list)
@@ -29,57 +36,55 @@ class AbsenceListActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
+        seance_id = intent.getStringExtra("seance_id").toString()
+
         //initiate views
         initViews()
 
+        getAbsences()
+
         back_iv.setOnClickListener { back() }
+    }
 
-        //initiate absence adapter
-        val absence_list = mutableListOf<Absence>()
-        absence_list.add(Absence("cne 1", "188q7872", true))
-        absence_list.add(Absence("cne 2", "188q7872", true))
-        absence_list.add(Absence("cne 3", "188q7872", false))
-        absence_list.add(Absence("cne 4", "188q7872", true))
-        absence_list.add(Absence("cne 5", "188q7872", true))
-        absence_list.add(Absence("cne 6", "188q7872", false))
-        absence_list.add(Absence("cne 7", "188q7872", false))
-        absence_list.add(Absence("cne 8", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
-        absence_list.add(Absence("cne 9", "188q7872", true))
+    override fun onBackPressed() {
+        back()
+    }
 
+    private fun getAbsences() {
+        database.getReference("absences").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(it: DataSnapshot) {
+                val absences = ArrayList<Absence>()
+                for (ds in it.children) {
+                    if (ds.child("seance_id").value.toString().equals(seance_id)) {
+                        val cne = ds.child("cne").value.toString()
+                        val is_present: Boolean? = ds.child("_present").value as Boolean?
+                        var absence = Absence()
+                        if (is_present != null) {
+                            absence = Absence(cne, seance_id, is_present)
+                        }
+                        absences.add(absence)
+                    }
+                }
+                displayAbsences(absences)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+    }
+
+    private fun displayAbsences(absences: ArrayList<Absence>) {
         //add a divider between items
         val dividerItemDecoration = DividerItemDecoration(
             absence_list_rv.context, LinearLayoutManager.VERTICAL
         )
         absence_list_rv.addItemDecoration(dividerItemDecoration)
-        absence_adapter = AbsenceAdapter(absence_list, this)
+        absence_adapter = AbsenceAdapter(absences, this)
         absence_list_rv.adapter = absence_adapter
         absence_list_rv.setHasFixedSize(true)
         absence_list_rv.layoutManager = LinearLayoutManager(this)
-    }
-
-    override fun onBackPressed() {
-        back()
     }
 
     private fun back() {

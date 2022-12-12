@@ -112,7 +112,6 @@ class SeanceActivity : AppCompatActivity() {
         val intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", seance_id)
         intent.putExtra("module_id", parseInt(module_id))
-        Log.e("debug", "seance activity intent ==> " + module_id)
         intent.putExtra("url", url)
         startActivity(intent)
     }
@@ -120,8 +119,6 @@ class SeanceActivity : AppCompatActivity() {
     private fun showAbsenceList() {
         val intent = Intent(this, AbsenceListActivity::class.java)
         intent.putExtra("seance_id", seance_id)
-        intent.putExtra("module_id", module_id)
-        intent.putExtra("url", url)
         startActivity(intent)
     }
 
