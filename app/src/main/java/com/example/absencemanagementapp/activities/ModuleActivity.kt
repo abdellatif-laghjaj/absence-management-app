@@ -65,7 +65,6 @@ class ModuleActivity : AppCompatActivity() {
         seances_swipe = this.findViewById(R.id.seances_swipe)
 
         currentModuleId = intent.getIntExtra("module_id", -1).toString()
-        Log.e("debug", "module activity ==> " + currentModuleId)
         setCurrentModuleIntitule(currentModuleId)
 
         back_iv.setOnClickListener { back() }
@@ -92,40 +91,36 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun getSeances() {
-        dbRef.getReference("seances").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        dbRef.getReference("seances").get()
+            .addOnSuccessListener {
                 val seances = ArrayList<Seance>()
-                for (ds in snapshot.children) {
-                    val id = ds.child("id").value.toString()
-                    val date = ds.child("date").value.toString()
-                    val start_time = ds.child("start_time").value.toString()
-                    val end_time = ds.child("end_time").value.toString()
-                    val type = ds.child("type").value.toString()
-                    val n_salle = ds.child("n_salle").value.toString()
-                    val n_module = parseInt(ds.child("n_module").value.toString())
-                    val total_absences = parseInt(ds.child("total_absences").value.toString())
-                    val qrCodeUrl = ds.child("qrCodeUrl").value.toString()
-                    var seance = Seance(
-                        id,
-                        date,
-                        start_time,
-                        end_time,
-                        type,
-                        n_salle,
-                        n_module,
-                        total_absences,
-                        qrCodeUrl
-                    )
-                    Log.i("debug", "get seances ==> " + n_module)
-                    seances.add(seance)
+                for (ds in it.children) {
+                    if (ds.child("n_module").value.toString().equals(currentModuleId)) {
+                        val id = ds.child("id").value.toString()
+                        val date = ds.child("date").value.toString()
+                        val start_time = ds.child("start_time").value.toString()
+                        val end_time = ds.child("end_time").value.toString()
+                        val type = ds.child("type").value.toString()
+                        val n_salle = ds.child("n_salle").value.toString()
+                        val n_module = parseInt(ds.child("n_module").value.toString())
+                        val total_absences = parseInt(ds.child("total_absences").value.toString())
+                        val qrCodeUrl = ds.child("qrCodeUrl").value.toString()
+                        var seance = Seance(
+                            id,
+                            date,
+                            start_time,
+                            end_time,
+                            type,
+                            n_salle,
+                            n_module,
+                            total_absences,
+                            qrCodeUrl
+                        )
+                        seances.add(seance)
+                    }
                 }
                 initSeances(seances)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
     }
 
     private fun back() {

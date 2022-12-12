@@ -50,7 +50,6 @@ class SeanceActivity : AppCompatActivity() {
         seance_id = intent.getStringExtra("seance_id").toString()
         module_id = intent.getIntExtra("module_id", -1).toString()
         url = intent.getStringExtra("url").toString()
-        Log.e("debug", "seance activity ==> " + module_id)
         setCurrentModuleIntitule(module_id)
 
         getCurrentSeance(seance_id)
@@ -112,7 +111,6 @@ class SeanceActivity : AppCompatActivity() {
         val intent = Intent(this, QrCodeActivity::class.java)
         intent.putExtra("seance_id", seance_id)
         intent.putExtra("module_id", parseInt(module_id))
-        Log.e("debug", "seance activity intent ==> " + module_id)
         intent.putExtra("url", url)
         startActivity(intent)
     }
@@ -120,8 +118,6 @@ class SeanceActivity : AppCompatActivity() {
     private fun showAbsenceList() {
         val intent = Intent(this, AbsenceListActivity::class.java)
         intent.putExtra("seance_id", seance_id)
-        intent.putExtra("module_id", module_id)
-        intent.putExtra("url", url)
         startActivity(intent)
     }
 

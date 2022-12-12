@@ -113,15 +113,23 @@ class ScanQrCodeActivity : AppCompatActivity() {
     }
 
     private fun markStudentAsPresent(seance_id: String) {
-        val ref = database.getReference("absences")
-        val absence = Absence()
-        val id = ref.push().key
-        database.getReference("students").child(user_id!!).child("cne").get()
+        database.getReference("students").get()
             .addOnSuccessListener {
-                absence.cne = it.value.toString()
-                absence.seance_id = seance_id
-                absence.is_present = true
-                ref.child(id!!).setValue(absence)
+                for (ds in it.children) {
+                    if (ds.key.toString().equals(user_id)) {
+                        database.getReference("absences").get().addOnSuccessListener {
+                            for (ds2 in it.children) {
+                                if (ds2.child("cne").value.toString()
+                                        .equals(ds.child("cne").value.toString()) && ds2.child("seance_id").value.toString()
+                                        .equals(seance_id)
+                                ) {
+                                    database.getReference("absences").child(ds2.key.toString())
+                                        .child("_present").setValue(true)
+                                }
+                            }
+                        }
+                    }
+                }
             }
     }
 
