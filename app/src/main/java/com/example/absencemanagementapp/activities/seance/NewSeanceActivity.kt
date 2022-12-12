@@ -286,8 +286,8 @@ class NewSeanceActivity : AppCompatActivity() {
         database.getReference("inscriptions").get().addOnSuccessListener {
             for (ds in it.children) {
                 if (ds.child("n_module").value.toString().equals(module_id)) {
-                    val absence = Absence(ds.child("cne").value.toString(), seance_id, false)
                     val key = database.getReference("absences").push().key
+                    val absence = Absence(key.toString(), ds.child("cne").value.toString(), seance_id, false)
                     database.getReference("absences/" + key).setValue(absence)
                 }
             }

@@ -17,9 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.database.FirebaseDatabase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class AbsenceAdapter(private val absence_list: List<Absence>, val context: Context) :
+class AbsenceAdapter(private val absence_list: List<Absence>, val context: Context, val database: FirebaseDatabase) :
     RecyclerView.Adapter<AbsenceAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -74,10 +75,12 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
                         //change the state
                         absence.is_present = !absence.is_present;
 
+                        database.getReference("absences/" + absence.id).setValue(absence)
+
                         //upda
                         notifyItemChanged(position)
                     }.setNegativeButton("No") { dialog, which ->
-                        //do nothing
+//                        do something
                     }
                 d.show()
             }

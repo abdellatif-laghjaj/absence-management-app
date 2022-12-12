@@ -56,11 +56,12 @@ class AbsenceListActivity : AppCompatActivity() {
                 val absences = ArrayList<Absence>()
                 for (ds in it.children) {
                     if (ds.child("seance_id").value.toString().equals(seance_id)) {
+                        val id = ds.child("id").value.toString()
                         val cne = ds.child("cne").value.toString()
                         val is_present: Boolean? = ds.child("_present").value as Boolean?
                         var absence = Absence()
                         if (is_present != null) {
-                            absence = Absence(cne, seance_id, is_present)
+                            absence = Absence(id, cne, seance_id, is_present)
                         }
                         absences.add(absence)
                     }
@@ -81,7 +82,7 @@ class AbsenceListActivity : AppCompatActivity() {
             absence_list_rv.context, LinearLayoutManager.VERTICAL
         )
         absence_list_rv.addItemDecoration(dividerItemDecoration)
-        absence_adapter = AbsenceAdapter(absences, this)
+        absence_adapter = AbsenceAdapter(absences, this, database)
         absence_list_rv.adapter = absence_adapter
         absence_list_rv.setHasFixedSize(true)
         absence_list_rv.layoutManager = LinearLayoutManager(this)
