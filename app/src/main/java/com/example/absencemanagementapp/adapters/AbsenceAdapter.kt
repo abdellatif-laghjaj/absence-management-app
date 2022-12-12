@@ -48,14 +48,6 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
             holder.absence_value.text = "absent";
             holder.absence_layout.setBackgroundResource(R.drawable.absent_bg);
         }
-        //holder.absence_checkbox.isChecked = absence.is_present;
-        //holder.absence_date.text = absence.date;
-        //add animation to list
-        holder.itemView.startAnimation(
-            AnimationUtils.loadAnimation(
-                context, R.anim.recycler_view_anim
-            )
-        )
 
         //click on item
         holder.itemView.setOnClickListener {
