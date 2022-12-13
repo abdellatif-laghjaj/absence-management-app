@@ -15,12 +15,17 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
+import com.example.absencemanagementapp.helpers.Helper.Companion.formatStudentName
 import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class AbsenceAdapter(private val absence_list: List<Absence>, val context: Context, val database: FirebaseDatabase) :
+class AbsenceAdapter(
+    private val absence_list: List<Absence>,
+    val context: Context,
+    val database: FirebaseDatabase
+) :
     RecyclerView.Adapter<AbsenceAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -41,7 +46,17 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val absence = absence_list[position];
-        holder.student_name.text = absence.cne;
+
+//        get student name from db by absence.cne
+        database.getReference("students").get().addOnSuccessListener {
+            for (student in it.children) {
+                if (student.child("cne").value.toString().equals(absence.cne)) {
+                    holder.student_name.text = formatStudentName(student.child("last_name").value.toString(), student.child("first_name").value.toString())
+                    break;
+                }
+            }
+        }
+
         if (absence.is_present) {
             holder.absence_value.text = "present";
             holder.absence_layout.setBackgroundResource(R.drawable.present_bg);
@@ -57,7 +72,7 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
             //full width
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window?.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             dialog.window?.setGravity(Gravity.CENTER)
 
@@ -86,22 +101,6 @@ class AbsenceAdapter(private val absence_list: List<Absence>, val context: Conte
             }
             dialog.show()
         }
-
-        //ask for confirmation before marking absence
-//        holder.absence_checkbox.setOnClickListener {
-//            holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked;
-//            val dialog = MaterialAlertDialogBuilder(context)
-//                .setTitle("Confirmation")
-//                .setMessage("Are you sure you want to change the absence state of student ${absence.cne} ?")
-//                .setPositiveButton("Yes") { dialog, which ->
-//                    //change the state
-//                    holder.absence_checkbox.isChecked = !holder.absence_checkbox.isChecked
-//                }
-//                .setNegativeButton("No") { dialog, which ->
-//                    //do nothing
-//                }
-//            dialog.show()
-//        }
     }
 
     override fun getItemCount(): Int {
