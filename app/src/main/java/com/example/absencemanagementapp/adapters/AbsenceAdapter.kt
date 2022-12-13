@@ -51,7 +51,10 @@ class AbsenceAdapter(
         database.getReference("students").get().addOnSuccessListener {
             for (student in it.children) {
                 if (student.child("cne").value.toString().equals(absence.cne)) {
-                    holder.student_name.text = formatStudentName(student.child("last_name").value.toString(), student.child("first_name").value.toString())
+                    holder.student_name.text = formatStudentName(
+                        student.child("last_name").value.toString(),
+                        student.child("first_name").value.toString()
+                    )
                     break;
                 }
             }
