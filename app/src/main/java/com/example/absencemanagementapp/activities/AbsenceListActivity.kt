@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,9 +27,9 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.util.Date
 
@@ -124,6 +123,11 @@ class AbsenceListActivity : AppCompatActivity() {
 
     //export absence list to excel file
     private fun exportAbsencesToExcel(data: ArrayList<Absence>) {
+        val progress_dialog = ProgressDialog(this)
+        progress_dialog.setTitle("Exporting...")
+        progress_dialog.setMessage("Please wait while we are exporting your data to excel file")
+        progress_dialog.show()
+
         val workbook: Workbook = XSSFWorkbook()
         val sheet = workbook.createSheet("Absences")
 
@@ -162,23 +166,23 @@ class AbsenceListActivity : AppCompatActivity() {
                     }
                     val file_name = "absences-${Date().time}.xlsx"
                     val file = File(dir, file_name)
-                    val progressDialog = ProgressDialog(this@AbsenceListActivity)
-                    progressDialog.setTitle("Exporting...")
-                    progressDialog.setMessage("Please wait while we are exporting your data to excel file")
-                    progressDialog.show()
                     try {
                         file.createNewFile()
                         val outputStream = file.outputStream()
                         workbook.write(outputStream)
                         outputStream.close()
-                        Toast.makeText(
+
+                        FancyToast.makeText(
                             this@AbsenceListActivity,
-                            "File exported successfully",
-                            Toast.LENGTH_SHORT
+                            "File exported successfully to ${dir.absolutePath}",
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.SUCCESS,
+                            false
                         ).show()
-                        progressDialog.dismiss()
+
+                        progress_dialog.dismiss()
                     } catch (e: Exception) {
-                        progressDialog.dismiss()
+                        progress_dialog.dismiss()
                         e.printStackTrace()
                     }
                 }
