@@ -1,31 +1,43 @@
 package com.example.absencemanagementapp.activities
 
+import android.Manifest
 import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 
 
 class AbsenceListActivity : AppCompatActivity() {
+    private val REQUEST_CODE: Int = 100
     private lateinit var absence_list_rv: RecyclerView
     private lateinit var back_iv: ImageView
-    private lateinit var export_fab: FloatingActionButton
+    private lateinit var export_fab: ExtendedFloatingActionButton
 
     private lateinit var absence_adapter: AbsenceAdapter
 
@@ -132,12 +144,39 @@ class AbsenceListActivity : AppCompatActivity() {
             row.createCell(4).setCellValue(data[i].is_present)
         }
 
-        //write to file
-        val file = File(getExternalFilesDir(null), "absences.xlsx")
-        file.createNewFile()
+        //ask for permission to write to external storage
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                    // permission was granted, you can perform your action
+                    //get download directory
+                    val download_dir =
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    val file = File(download_dir, "absences.xlsx")
 
-        val outputStream = file.outputStream()
-        workbook.write(outputStream)
-        outputStream.close()
+                    //write to file
+                    val output_stream = file.outputStream()
+                    workbook.write(output_stream)
+                    output_stream.close()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                    // permission was denied, you can show a message to the user
+                    Toast.makeText(
+                        this@AbsenceListActivity,
+                        "Permission denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    // permission was not granted, you can request that the user grant the permission
+                    token?.continuePermissionRequest()
+                }
+            }).check()
     }
 }

@@ -91,8 +91,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
     //Apache POI
-    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi:5.2.3'
 
-    //import org.apache.poi.xssf.usermodel.XSSFWorkbook
-    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+    //Apache POI OOXML
+    implementation "org.apache.poi:poi-ooxml:5.2.3"
 }
