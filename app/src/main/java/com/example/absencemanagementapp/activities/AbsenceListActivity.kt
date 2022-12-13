@@ -1,6 +1,7 @@
 package com.example.absencemanagementapp.activities
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.os.Environment
@@ -31,6 +32,7 @@ import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
+import java.util.Date
 
 
 class AbsenceListActivity : AppCompatActivity() {
@@ -158,7 +160,12 @@ class AbsenceListActivity : AppCompatActivity() {
                     if (!dir.exists()) {
                         dir.mkdir()
                     }
-                    val file = File(dir, "absences.xlsx")
+                    val file_name = "absences-${Date().time}.xlsx"
+                    val file = File(dir, file_name)
+                    val progressDialog = ProgressDialog(this@AbsenceListActivity)
+                    progressDialog.setTitle("Exporting...")
+                    progressDialog.setMessage("Please wait while we are exporting your data to excel file")
+                    progressDialog.show()
                     try {
                         file.createNewFile()
                         val outputStream = file.outputStream()
@@ -169,7 +176,9 @@ class AbsenceListActivity : AppCompatActivity() {
                             "File exported successfully",
                             Toast.LENGTH_SHORT
                         ).show()
+                        progressDialog.dismiss()
                     } catch (e: Exception) {
+                        progressDialog.dismiss()
                         e.printStackTrace()
                     }
                 }
