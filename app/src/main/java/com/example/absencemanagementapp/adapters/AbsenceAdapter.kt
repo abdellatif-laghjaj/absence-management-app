@@ -19,6 +19,7 @@ import com.example.absencemanagementapp.helpers.Helper.Companion.formatStudentNa
 import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AbsenceAdapter(
@@ -47,14 +48,19 @@ class AbsenceAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val absence = absence_list[position];
 
-//        get student name from db by absence.cne
         database.getReference("students").get().addOnSuccessListener {
             for (student in it.children) {
                 if (student.child("cne").value.toString().equals(absence.cne)) {
+//                  get student name from db by absence.cne
                     holder.student_name.text = formatStudentName(
                         student.child("last_name").value.toString(),
                         student.child("first_name").value.toString()
                     )
+//                  set student image URL with picasso
+                    if (student.child("avatar").value != null && student.child("avatar").value.toString().isNotEmpty()) {
+                        Picasso.with(context).load(student.child("avatar").value.toString())
+                            .into(holder.student_image)
+                    }
                     break;
                 }
             }
