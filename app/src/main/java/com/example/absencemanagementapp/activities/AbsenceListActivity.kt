@@ -16,6 +16,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import java.io.File
 
 
 class AbsenceListActivity : AppCompatActivity() {
@@ -95,5 +98,38 @@ class AbsenceListActivity : AppCompatActivity() {
     private fun initViews() {
         absence_list_rv = findViewById(R.id.absence_list_rv)
         back_iv = findViewById(R.id.back_arrow)
+    }
+
+    //export absence list to excel file
+    private fun exportAbsencesToExcel(data: ArrayList<Absence>) {
+        val workbook: Workbook = XSSFWorkbook()
+        val sheet = workbook.createSheet("Absences")
+
+        //get number of columns
+        val columns = arrayOf("cne", "first name", "last name", "seance_id", "presence status")
+
+        //create header row
+        val headerRow = sheet.createRow(0)
+        for (i in columns.indices) {
+            val cell = headerRow.createCell(i)
+            cell.setCellValue(columns[i])
+        }
+
+        for (i in data.indices) {
+            val row = sheet.createRow(i)
+            row.createCell(0).setCellValue(data[i].cne)
+            row.createCell(1).setCellValue("first name")
+            row.createCell(2).setCellValue("last name")
+            row.createCell(3).setCellValue(data[i].seance_id)
+            row.createCell(4).setCellValue(data[i].is_present)
+        }
+
+        //write to file
+        val file = File(getExternalFilesDir(null), "absences.xlsx")
+        file.createNewFile()
+
+        val outputStream = file.outputStream()
+        workbook.write(outputStream)
+        outputStream.close()
     }
 }
