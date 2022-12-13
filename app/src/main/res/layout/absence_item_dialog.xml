@@ -62,7 +62,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/seance_type_tv"
+            android:id="@+id/student_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -109,7 +109,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/seance_date_tv"
+            android:id="@+id/cne_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -156,7 +156,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/seance_start_time_tv"
+            android:id="@+id/branch_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
