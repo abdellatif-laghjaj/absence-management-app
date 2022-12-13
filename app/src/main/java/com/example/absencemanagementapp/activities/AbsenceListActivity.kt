@@ -150,15 +150,28 @@ class AbsenceListActivity : AppCompatActivity() {
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                     // permission was granted, you can perform your action
-                    //get download directory
-                    val download_dir =
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    val file = File(download_dir, "absences.xlsx")
-
-                    //write to file
-                    val output_stream = file.outputStream()
-                    workbook.write(output_stream)
-                    output_stream.close()
+                    //get root directory
+                    val dir = File(
+                        Environment.getExternalStorageDirectory()
+                            .toString() + "/AbsenceManagementApp"
+                    )
+                    if (!dir.exists()) {
+                        dir.mkdir()
+                    }
+                    val file = File(dir, "absences.xlsx")
+                    try {
+                        file.createNewFile()
+                        val outputStream = file.outputStream()
+                        workbook.write(outputStream)
+                        outputStream.close()
+                        Toast.makeText(
+                            this@AbsenceListActivity,
+                            "File exported successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
                 override fun onPermissionDenied(response: PermissionDeniedResponse?) {
