@@ -89,4 +89,10 @@ dependencies {
 
     //to get uri from string
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //Apache POI
+    implementation 'org.apache.poi:poi:4.1.2'
+
+    //import org.apache.poi.xssf.usermodel.XSSFWorkbook
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
 }
