@@ -136,5 +136,9 @@ class Helper {
 
             return "$module-$date-$start_time"
         }
+
+        fun formatStudentName(first_name: String, last_name: String): String {
+            return first_name.toCharArray()[0].toUpperCase() + first_name.substring(1).toLowerCase() + " " + last_name.toLowerCase()
+        }
     }
 }
