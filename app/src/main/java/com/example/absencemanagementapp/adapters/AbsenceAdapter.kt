@@ -57,7 +57,9 @@ class AbsenceAdapter(
                         student.child("first_name").value.toString()
                     )
 //                  set student image URL with picasso
-                    if (student.child("avatar").value != null && student.child("avatar").value.toString().isNotEmpty()) {
+                    if (student.child("avatar").value != null && student.child("avatar").value.toString()
+                            .isNotEmpty()
+                    ) {
                         Picasso.with(context).load(student.child("avatar").value.toString())
                             .into(holder.student_image)
                     }
@@ -73,6 +75,13 @@ class AbsenceAdapter(
             holder.absence_value.text = "absent";
             holder.absence_layout.setBackgroundResource(R.drawable.absent_bg);
         }
+
+        //add animation to list
+        holder.itemView.startAnimation(
+            AnimationUtils.loadAnimation(
+                context, R.anim.absence_list_anim
+            )
+        )
 
         //click on item
         holder.itemView.setOnClickListener {

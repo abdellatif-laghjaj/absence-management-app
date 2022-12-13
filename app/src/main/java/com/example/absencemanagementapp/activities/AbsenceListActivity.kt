@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +25,7 @@ import java.io.File
 class AbsenceListActivity : AppCompatActivity() {
     private lateinit var absence_list_rv: RecyclerView
     private lateinit var back_iv: ImageView
+    private lateinit var export_fab: FloatingActionButton
 
     private lateinit var absence_adapter: AbsenceAdapter
 
@@ -31,6 +33,7 @@ class AbsenceListActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var seance_id: String
+    private lateinit var absences: ArrayList<Absence>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,10 @@ class AbsenceListActivity : AppCompatActivity() {
         getAbsences()
 
         back_iv.setOnClickListener { back() }
+
+        export_fab.setOnClickListener {
+            exportAbsencesToExcel(absences)
+        }
     }
 
     override fun onBackPressed() {
@@ -56,7 +63,7 @@ class AbsenceListActivity : AppCompatActivity() {
     private fun getAbsences() {
         database.getReference("absences").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(it: DataSnapshot) {
-                val absences = ArrayList<Absence>()
+                absences = ArrayList()
                 for (ds in it.children) {
                     if (ds.child("seance_id").value.toString().equals(seance_id)) {
                         val id = ds.child("id").value.toString()
@@ -98,6 +105,7 @@ class AbsenceListActivity : AppCompatActivity() {
     private fun initViews() {
         absence_list_rv = findViewById(R.id.absence_list_rv)
         back_iv = findViewById(R.id.back_arrow)
+        export_fab = findViewById(R.id.export_fab)
     }
 
     //export absence list to excel file
