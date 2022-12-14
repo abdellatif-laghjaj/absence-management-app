@@ -111,7 +111,7 @@ class AbsenceAdapter(
 //                      set student cne
                         cne_tv.text = absence.cne
 //                      set student branch
-                        branch_tv.text = student.child("branch").value.toString()
+                        branch_tv.text = student.child("filiere").value.toString()
                         break;
                     }
                 }
