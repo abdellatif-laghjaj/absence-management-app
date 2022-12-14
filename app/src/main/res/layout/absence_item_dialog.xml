@@ -19,7 +19,7 @@
         android:textSize="24sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/student_image"
+        android:id="@+id/student_image_iv"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_gravity="center_horizontal"
@@ -62,7 +62,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/seance_type_tv"
+            android:id="@+id/student_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -109,7 +109,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/seance_date_tv"
+            android:id="@+id/cne_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -156,7 +156,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/seance_start_time_tv"
+            android:id="@+id/branch_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
