@@ -140,5 +140,13 @@ class Helper {
         fun formatStudentName(first_name: String, last_name: String): String {
             return first_name.toCharArray()[0].toUpperCase() + first_name.substring(1).toLowerCase() + " " + last_name.toLowerCase()
         }
+
+        fun shorten(string: String, length: Int): String {
+            return if (string.length > length) {
+                string.substring(0, length) + "..."
+            } else {
+                string
+            }
+        }
     }
 }
