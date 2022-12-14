@@ -143,7 +143,7 @@ class Helper {
 
         fun shorten(string: String, length: Int): String {
             return if (string.length > length) {
-                string.substring(0, length) + "..."
+                string.substring(0, length - 3) + "..."
             } else {
                 string
             }
