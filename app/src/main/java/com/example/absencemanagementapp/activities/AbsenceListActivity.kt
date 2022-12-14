@@ -1,9 +1,13 @@
 package com.example.absencemanagementapp.activities
 
+import android.Manifest
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,19 +15,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
+import java.util.Date
 
 
 class AbsenceListActivity : AppCompatActivity() {
+    private val REQUEST_CODE: Int = 100
     private lateinit var absence_list_rv: RecyclerView
     private lateinit var back_iv: ImageView
+    private lateinit var export_fab: ExtendedFloatingActionButton
 
     private lateinit var absence_adapter: AbsenceAdapter
 
@@ -31,6 +46,7 @@ class AbsenceListActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var seance_id: String
+    private lateinit var absences: ArrayList<Absence>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +63,10 @@ class AbsenceListActivity : AppCompatActivity() {
         getAbsences()
 
         back_iv.setOnClickListener { back() }
+
+        export_fab.setOnClickListener {
+            exportAbsencesToExcel(absences)
+        }
     }
 
     override fun onBackPressed() {
@@ -56,7 +76,7 @@ class AbsenceListActivity : AppCompatActivity() {
     private fun getAbsences() {
         database.getReference("absences").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(it: DataSnapshot) {
-                val absences = ArrayList<Absence>()
+                absences = ArrayList()
                 for (ds in it.children) {
                     if (ds.child("seance_id").value.toString().equals(seance_id)) {
                         val id = ds.child("id").value.toString()
@@ -98,10 +118,16 @@ class AbsenceListActivity : AppCompatActivity() {
     private fun initViews() {
         absence_list_rv = findViewById(R.id.absence_list_rv)
         back_iv = findViewById(R.id.back_arrow)
+        export_fab = findViewById(R.id.export_fab)
     }
 
     //export absence list to excel file
     private fun exportAbsencesToExcel(data: ArrayList<Absence>) {
+        val progress_dialog = ProgressDialog(this)
+        progress_dialog.setTitle("Exporting...")
+        progress_dialog.setMessage("Please wait while we are exporting your data to excel file")
+        progress_dialog.show()
+
         val workbook: Workbook = XSSFWorkbook()
         val sheet = workbook.createSheet("Absences")
 
@@ -124,12 +150,59 @@ class AbsenceListActivity : AppCompatActivity() {
             row.createCell(4).setCellValue(data[i].is_present)
         }
 
-        //write to file
-        val file = File(getExternalFilesDir(null), "absences.xlsx")
-        file.createNewFile()
+        //ask for permission to write to external storage
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                    // permission was granted, you can perform your action
+                    //get root directory
+                    val dir = File(
+                        Environment.getExternalStorageDirectory()
+                            .toString() + "/AbsenceManagementApp"
+                    )
+                    if (!dir.exists()) {
+                        dir.mkdir()
+                    }
+                    val file_name = "absences-${Date().time}.xlsx"
+                    val file = File(dir, file_name)
+                    try {
+                        file.createNewFile()
+                        val outputStream = file.outputStream()
+                        workbook.write(outputStream)
+                        outputStream.close()
 
-        val outputStream = file.outputStream()
-        workbook.write(outputStream)
-        outputStream.close()
+                        FancyToast.makeText(
+                            this@AbsenceListActivity,
+                            "File exported successfully to ${dir.absolutePath}",
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.SUCCESS,
+                            false
+                        ).show()
+
+                        progress_dialog.dismiss()
+                    } catch (e: Exception) {
+                        progress_dialog.dismiss()
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                    // permission was denied, you can show a message to the user
+                    Toast.makeText(
+                        this@AbsenceListActivity,
+                        "Permission denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    // permission was not granted, you can request that the user grant the permission
+                    token?.continuePermissionRequest()
+                }
+            }).check()
     }
 }
