@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.helpers.Helper.Companion.formatStudentName
+import com.example.absencemanagementapp.helpers.Helper.Companion.shorten
 import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
@@ -53,9 +54,11 @@ class AbsenceAdapter(
             for (student in it.children) {
                 if (student.child("cne").value.toString().equals(absence.cne)) {
 //                  get student name from db by absence.cne
-                    holder.student_name.text = formatStudentName(
-                        student.child("last_name").value.toString(),
-                        student.child("first_name").value.toString()
+                    holder.student_name.text = shorten(
+                        formatStudentName(
+                            student.child("last_name").value.toString(),
+                            student.child("first_name").value.toString()
+                        ), 24
                     )
 //                  set student image URL with picasso
                     if (student.child("avatar").value != null && student.child("avatar").value.toString()
@@ -97,9 +100,11 @@ class AbsenceAdapter(
                 for (student in it.children) {
                     if (student.child("cne").value.toString().equals(absence.cne)) {
 //                      get student name from db by absence.cne
-                        student_name_tv.text = formatStudentName(
-                            student.child("last_name").value.toString(),
-                            student.child("first_name").value.toString()
+                        student_name_tv.text = shorten(
+                            formatStudentName(
+                                student.child("last_name").value.toString(),
+                                student.child("first_name").value.toString()
+                            ), 48
                         )
 //                      set student image URL with picasso
                         if (student.child("avatar").value != null && student.child("avatar").value.toString()
