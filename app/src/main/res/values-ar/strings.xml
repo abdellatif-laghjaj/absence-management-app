@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Absenti.fy</string>
+    <string name="register">يسجل</string>
+    <string name="welcome_to_absenti_fy">مرحبا بكم في absenti.fy</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="cne">CNE</string>
+    <string name="password">كلمة المرور</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="student">طالب علم</string>
+    <string name="teacher">معلم</string>
+    <string name="already_have_an_account">هل لديك حساب؟</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="remember_me">تذكرنى</string>
+    <string name="don_t_have_an_account">ليس لديك حساب؟</string>
+    <string name="cin">CIN</string>
+    <string name="last_name">اللقب</string>
+    <string name="first_name">الاسم الاول</string>
+    <string name="semester">نصف السنة</string>
+    <string name="branch">فرع</string>
+    <string name="hello_blank_fragment">مرحبا جزء فارغ</string>
+
+    <string name="prompt_email">البريد الإلكتروني</string>
+    <string name="prompt_password">كلمة المرور</string>
+    <string name="action_sign_in">تسجيل الدخول أو التسجيل</string>
+    <string name="action_sign_in_short">تسجيل الدخول</string>
+    <string name="welcome">"أهلا وسهلا!"</string>
+    <string name="invalid_username">اسم مستخدم غير صالح</string>
+    <string name="invalid_password">يجب أن تكون كلمة المرور&gt; 5 أحرف</string>
+    <string name="login_failed">"فشل عملية الدخول"</string>
+    <string name="user_image">صورة المستخدم</string>
+    <string name="dashboard">لوحة القيادة</string>
+    <string name="card_image">صورة البطاقة</string>
+    <string name="my_classes">الطبقات</string>
+    <string name="scan_qr_code">مسح رمز الاستجابة السريعة</string>
+    <string name="reset_password">إعادة تعيين كلمة المرور</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="logout">تسجيل خروج</string>
+
+
+    <string name="generate_qr">إنشاء رمز الاستجابة السريعة</string>
+    <string name="absence_list">قائمة الغياب</string>
+    <string name="my_profile">ملفي</string>
+    <string name="update">تحديث</string>
+    <string name="update_your_profile">تحديث ملفك الشخصي</string>
+    <string name="enter_your_email_address_and_we_will_send_you_a_link_to_reset_your_password">أدخل عنوان بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.</string>
+    <string name="bottom_sheet_handle">مقبض الورقة السفلية</string>
+    <string name="forget_password">نسيت كلمة المرور؟</string>
+    <string name="pick_image">اختر الصورة</string>
+    <string name="my_stats">إحصائياتي</string>
+    <string name="scan">مسح</string>
+    <string name="settings">إعدادات</string>
+    <string name="change_language">تغيير اللغة</string>
+    <string name="language">لغة</string>
+    <string name="arabic">العربية</string>
+    <string name="frensh">الفرنسية</string>
+    <string name="english">إنجليزي</string>
+    <string name="be_modern_and_save_time">كن حديثًا ووفر الوقت</string>
+    <string name="system_settings">اعدادات النظام</string>
+    <string name="session_settings">إعدادات الجلسة</string>
+    <string name="about">حول</string>
+    <string name="about_app">حول التطبيق</string>
+    <string name="credits">الاعتمادات</string>
+    <string name="change_theme">غير الخلفية</string>
+    <string name="dark">مظلم</string>
+    <string name="light">خفيفة</string>
+    <string name="date_of_seance">تاريخ الجلسة</string>
+    <string name="add_new_seance">إضافة جلسة تحضير الأرواح الجديدة</string>
+    <string name="seance_details">تفاصيل الجلسة</string>
+    <string name="type_of_seance">نوع الجلسة</string>
+    <string name="start_time">وقت البدء</string>
+    <string name="end_time">وقت النهاية</string>
+    <string name="salle">سال</string>
+    <string name="add">يضيف</string>
+    <string name="back">الى الخلف</string>
+    <string name="total_absences">الغياب الكلي</string>
+    <string name="submit">إرسال</string>
+    <string name="search_student">بحث عن طالب ...</string>
+    <string name="absence_status">حالة الغياب</string>
+    <string name="about_dialog_message">تطبيق Absence Management هو تطبيق يسمح للطلاب بمسح رموز QR لتحديد حضورهم. كما يسمح للمعلمين بمشاهدة حضور طلابهم.</string>
+    <string name="ok">نعم</string>
+    <string name="credits_dialog_message">⚡ تم تطوير التطبيق بواسطة: \n\n💗 @ abdellatif-laghjaj \n💗 @ omar-lamine \n\n*********************** **** \n⚡ رسوم متحركة بواسطة LottieFiles.com \n🚀 أيقونات من icons8.com</string>
+    <string name="logout_dialog_message">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">رقم</string>
+    <string name="email_required">البريد الالكتروني مطلوب</string>
+    <string name="success">النجاح</string>
+    <string name="password_reset_link_sent">تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. إذا كنت لا ترى البريد الإلكتروني ، يرجى التحقق من مجلد البريد العشوائي الخاص بك.</string>
+    <string name="failed">باءت بالفشل</string>
+    <string name="failed_to_send_password_reset_link">فشل في إرسال رابط إعادة تعيين كلمة المرور</string>
+    <string name="email_sent">أرسل البريد الإلكتروني</string>
+    <string name="email_not_sent">لم يتم إرسال البريد الإلكتروني</string>
+    <string name="failed_to_add_seance">فشل إضافة جلسة تحضير الأرواح</string>
+    <string name="generating_qr_code">توليد QR Code</string>
+    <string name="please_wait">من فضلك انتظر ... 🚀</string>
+    <string name="qr_code_saved">تم حفظ رمز الاستجابة السريعة بنجاح</string>
+    <string name="failed_to_save_qr_code">فشل حفظ رمز الاستجابة السريعة</string>
+    <string name="type_required">النوع مطلوب</string>
+    <string name="date_required">التاريخ مطلوب</string>
+    <string name="start_time_required">وقت البدء مطلوب</string>
+    <string name="end_time_required">وقت الانتهاء مطلوب</string>
+    <string name="salle_required">مطلوب سال</string>
+    <string name="connection_error">خطأ في الإتصال</string>
+    <string name="problem_url">مشكلة في URL!</string>
+    <string name="qr_code_saved_to_gallery">رمز الاستجابة السريعة المحفوظ في معرض الصور الخاص بك ، يمكنك مشاركته الآن 🚀</string>
+    <string name="permission_denied">تم رفض الإذن</string>
+    <string name="camera_permission_required">مطلوب إذن الكاميرا لاستخدام هذه الميزة</string>
+    <string name="huray">يا هلا!</string>
+    <string name="mared_as_present">لقد تم تعليمك بنجاح على أنك حاضر 🫡</string>
+    <string name="accept_permissions">الرجاء قبول الأذونات المطلوبة</string>
+    <string name="first_name_required">الإسم الأول مطلوب</string>
+    <string name="last_name_required">إسم العائلة مطلوب</string>
+    <string name="cin_required">مطلوب CIN</string>
+    <string name="cne_required">CNE مطلوب</string>
+    <string name="filiere_required">مطلوب Filiere</string>
+    <string name="semester_required">الفصل الدراسي مطلوب</string>
+    <string name="profile_updated_successfully">تم تحديث الملف الشخصي بنجاح</string>
+    <string name="failed_upload_image">فشل تحميل الصورة</string>
+    <string name="image_uploaded_successfully">تم تحميل الصورة بنجاح</string>
+    <string name="uploading">جارٍ التحميل ...</string>
+    <string name="uploading_image">يرجى الانتظار بينما نقوم بتحميل الصورة ومعالجتها</string>
+    <string name="you_have_not_pick_image">لم تختر صورة</string>
+    <string name="logging_in">تسجيل الدخول</string>
+    <string name="logging_you_to_space">تسجيلك في الفضاء</string>
+    <string name="invalid_email_or_password">البريد الإلكتروني أو كلمة السر خاطئة</string>
+    <string name="password_required">كلمة المرور مطلوبة</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="please_check_your_connection">يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى</string>
+    <string name="exit">مخرج</string>
+    <string name="here_we_go">ها نحن ذا</string>
+    <string name="registring_dialog_message">يرجى الانتظار ، بينما نقوم بإنشاء مساحتك 🚀</string>
+    <string name="registration_succes">لقد تم تسجيلك بنجاح</string>
+    <string name="invalid_email">البريد الإلكتروني غير صالح</string>
+    <string name="password_weak">يجب أن تتكون كلمة المرور من 6 أحرف على الأقل</string>
+    <string name="confirm_password_required">تأكيد كلمة المرور مطلوب</string>
+    <string name="passwords_not_match">كلمات المرور غير متطابقة</string>
+    <string name="absence_details">تفاصيل الغياب</string>
+    <string name="absence_details_warning">لاحظ أنه يمكنك تغيير حالة غياب الطالب عن طريق تبديل المفتاح أعلاه.</string>
+    <string name="exit_dialog_message">هل أنت متأكد أنك تريد الخروج؟</string>
+    <string name="export">يصدّر</string>
+    <!-- Generated by Automatic String Resource Translation -->
+    <!--          https://asrt.gluege.boerde.de             -->
+</resources>
