@@ -284,13 +284,17 @@ class NewSeanceActivity : AppCompatActivity() {
     private fun markEveryOneAsAbsent(seance_id: String) {
 //        get students list & mark everyone as absent
         database.getReference("inscriptions").get().addOnSuccessListener {
+            var total_absences = 0
             for (ds in it.children) {
                 if (ds.child("n_module").value.toString().equals(module_id)) {
+                    total_absences++
                     val key = database.getReference("absences").push().key
                     val absence = Absence(key.toString(), ds.child("cne").value.toString(), seance_id, false)
                     database.getReference("absences/" + key).setValue(absence)
                 }
             }
+            // update seance total absences
+            database.getReference("seances").child(seance_id).child("total_absences").setValue(total_absences)
         }.addOnFailureListener {
             Log.e("debug", it.message.toString())
         }
