@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">الغياب</string>
+    <string name="app_name">Absenti.fy</string>
     <string name="register">يسجل</string>
-    <string name="welcome_to_absenti_fy">مرحبا بكم في الغياب</string>
+    <string name="welcome_to_absenti_fy">مرحبا بكم في absenti.fy</string>
     <string name="full_name">الاسم الكامل</string>
     <string name="email">البريد الإلكتروني</string>
     <string name="cne">CNE</string>
