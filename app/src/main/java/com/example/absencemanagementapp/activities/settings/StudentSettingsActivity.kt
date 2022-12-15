@@ -154,6 +154,7 @@ class StudentSettingsActivity : AppCompatActivity() {
                     //change language to english
                     changeLanguage("en", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
             }
         }

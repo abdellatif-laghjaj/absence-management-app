@@ -149,6 +149,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
                     //change language to english
                     changeLanguage("en", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
             }
         }
