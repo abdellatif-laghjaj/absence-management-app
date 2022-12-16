@@ -28,14 +28,16 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
+import org.apache.poi.ss.usermodel.FillPatternType
+import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
+import java.text.DateFormat
 import java.util.Date
 
 
 class AbsenceListActivity : AppCompatActivity() {
-    private val REQUEST_CODE: Int = 100
     private lateinit var absence_list_rv: RecyclerView
     private lateinit var back_iv: ImageView
     private lateinit var export_fab: ExtendedFloatingActionButton
@@ -132,22 +134,54 @@ class AbsenceListActivity : AppCompatActivity() {
         val sheet = workbook.createSheet("Absences")
 
         //get number of columns
-        val columns = arrayOf("cne", "first name", "last name", "seance_id", "presence status")
+        val columns =
+            arrayOf("cne", "first name", "last name", "presence status", "date")
 
         //create header row
         val headerRow = sheet.createRow(0)
         for (i in columns.indices) {
             val cell = headerRow.createCell(i)
-            cell.setCellValue(columns[i])
+            cell.setCellValue(columns[i].uppercase())
+        }
+
+        //add padding to header row and set column width
+        val headerCellStyle = workbook.createCellStyle()
+        headerCellStyle.fillForegroundColor = IndexedColors.GREY_25_PERCENT.index
+        headerCellStyle.fillPattern = FillPatternType.SOLID_FOREGROUND
+        for (i in columns.indices) {
+            val cell = headerRow.getCell(i)
+            cell.cellStyle = headerCellStyle
+            sheet.setColumnWidth(i, 6000)
         }
 
         for (i in data.indices) {
-            val row = sheet.createRow(i)
+            val df = DateFormat.getDateInstance(DateFormat.FULL)
+            var first_name = ""
+            var last_name = ""
+
+            //get student first name and last name
+            database.getReference("students").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(it: DataSnapshot) {
+                    for (ds in it.children) {
+                        if (ds.child("cne").value.toString().equals(data[i].cne)) {
+                            first_name = ds.child("first_name").value.toString()
+                            last_name = ds.child("last_name").value.toString()
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException())
+                }
+            })
+
+            val row = sheet.createRow(i + 1)
             row.createCell(0).setCellValue(data[i].cne)
-            row.createCell(1).setCellValue("first name")
-            row.createCell(2).setCellValue("last name")
-            row.createCell(3).setCellValue(data[i].seance_id)
-            row.createCell(4).setCellValue(data[i].is_present)
+            row.createCell(1).setCellValue(first_name)
+            row.createCell(2).setCellValue(last_name)
+            row.createCell(3).setCellValue(if (data[i].is_present) "present" else "absent")
+            row.createCell(4).setCellValue(df.format(Date()))
         }
 
         //ask for permission to write to external storage
