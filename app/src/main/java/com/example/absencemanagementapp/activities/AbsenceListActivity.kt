@@ -156,11 +156,30 @@ class AbsenceListActivity : AppCompatActivity() {
 
         for (i in data.indices) {
             val df = DateFormat.getDateInstance(DateFormat.FULL)
+            var first_name = ""
+            var last_name = ""
+
+            //get student first name and last name
+            database.getReference("students").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(it: DataSnapshot) {
+                    for (ds in it.children) {
+                        if (ds.child("cne").value.toString().equals(data[i].cne)) {
+                            first_name = ds.child("first_name").value.toString()
+                            last_name = ds.child("last_name").value.toString()
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException())
+                }
+            })
 
             val row = sheet.createRow(i + 1)
             row.createCell(0).setCellValue(data[i].cne)
-            row.createCell(1).setCellValue(getStudentFirstName(data[i].cne))
-            row.createCell(2).setCellValue(getStudentLastName(data[i].cne))
+            row.createCell(1).setCellValue(first_name)
+            row.createCell(2).setCellValue(last_name)
             row.createCell(3).setCellValue(if (data[i].is_present) "present" else "absent")
             row.createCell(4).setCellValue(df.format(Date()))
         }
@@ -219,47 +238,5 @@ class AbsenceListActivity : AppCompatActivity() {
                     token?.continuePermissionRequest()
                 }
             }).check()
-    }
-
-    //get student first name from cne
-    private fun getStudentFirstName(cne: String): String {
-        var first_name = ""
-        database.getReference("students").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(it: DataSnapshot) {
-                for (ds in it.children) {
-                    if (ds.child("cne").value.toString() == cne) {
-                        first_name = ds.child("first_name").value.toString()
-                        break
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
-        return first_name
-    }
-
-    //get student last name from cne
-    private fun getStudentLastName(cne: String): String {
-        var last_name = ""
-        database.getReference("students").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(it: DataSnapshot) {
-                for (ds in it.children) {
-                    if (ds.child("cne").value.toString() == cne) {
-                        last_name = ds.child("last_name").value.toString()
-                        break
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
-        return last_name
     }
 }
