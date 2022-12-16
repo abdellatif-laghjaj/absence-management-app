@@ -29,9 +29,12 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
+import org.apache.poi.ss.usermodel.FillPatternType
+import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
+import java.text.DateFormat
 import java.util.Date
 
 
@@ -134,7 +137,7 @@ class AbsenceListActivity : AppCompatActivity() {
 
         //get number of columns
         val columns =
-            arrayOf("cne", "first name", "last name", "seance_id", "presence status", "date")
+            arrayOf("cne", "first name", "last name", "presence status", "date")
 
         //create header row
         val headerRow = sheet.createRow(0)
@@ -143,20 +146,30 @@ class AbsenceListActivity : AppCompatActivity() {
             cell.setCellValue(columns[i])
         }
 
+        //add padding to header row
+        val headerCellStyle = workbook.createCellStyle()
+        headerCellStyle.fillForegroundColor = IndexedColors.GREY_25_PERCENT.index
+        headerCellStyle.fillPattern = FillPatternType.SOLID_FOREGROUND
+        for (i in columns.indices) {
+            val cell = headerRow.getCell(i)
+            cell.cellStyle = headerCellStyle
+        }
+
         //set column width
         for (i in columns.indices) {
-            sheet.autoSizeColumn(i)
+            sheet.setColumnWidth(i, 5000)
         }
 
         for (i in data.indices) {
             val student = getStudent(data[i].cne)
+            val df = DateFormat.getDateInstance(DateFormat.FULL)
+
             val row = sheet.createRow(i + 1)
             row.createCell(0).setCellValue(data[i].cne)
             row.createCell(1).setCellValue(student.first_name)
             row.createCell(2).setCellValue(student.last_name)
-            row.createCell(3).setCellValue(data[i].seance_id)
-            row.createCell(4).setCellValue(if (data[i].is_present) "present" else "absent")
-            row.createCell(5).setCellValue(Date().toString())
+            row.createCell(3).setCellValue(if (data[i].is_present) "present" else "absent")
+            row.createCell(4).setCellValue(df.format(Date()))
         }
 
         //ask for permission to write to external storage
