@@ -150,14 +150,9 @@ class AbsenceListActivity : AppCompatActivity() {
             sheet.autoSizeColumn(i)
         }
 
-        //set header row style
-        val headerCellStyle = workbook.createCellStyle()
-        headerCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index)
-        headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)
-
         for (i in data.indices) {
             val student = getStudent(data[i].cne)
-            val row = sheet.createRow(i)
+            val row = sheet.createRow(i + 1)
             row.createCell(0).setCellValue(data[i].cne)
             row.createCell(1).setCellValue(student.first_name)
             row.createCell(2).setCellValue(student.last_name)
