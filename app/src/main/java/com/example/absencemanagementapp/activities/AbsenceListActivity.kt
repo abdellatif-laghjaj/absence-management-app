@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
-import com.example.absencemanagementapp.models.Student
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -39,7 +38,6 @@ import java.util.Date
 
 
 class AbsenceListActivity : AppCompatActivity() {
-    private val REQUEST_CODE: Int = 100
     private lateinit var absence_list_rv: RecyclerView
     private lateinit var back_iv: ImageView
     private lateinit var export_fab: ExtendedFloatingActionButton
@@ -143,7 +141,7 @@ class AbsenceListActivity : AppCompatActivity() {
         val headerRow = sheet.createRow(0)
         for (i in columns.indices) {
             val cell = headerRow.createCell(i)
-            cell.setCellValue(columns[i])
+            cell.setCellValue(columns[i].uppercase())
         }
 
         //add padding to header row
@@ -157,17 +155,18 @@ class AbsenceListActivity : AppCompatActivity() {
 
         //set column width
         for (i in columns.indices) {
-            sheet.setColumnWidth(i, 5000)
+            sheet.setColumnWidth(i, 6000)
         }
 
         for (i in data.indices) {
-            val student = getStudent(data[i].cne)
             val df = DateFormat.getDateInstance(DateFormat.FULL)
+
+            val (first_name, last_name) = getStudentName(data[i].cne)
 
             val row = sheet.createRow(i + 1)
             row.createCell(0).setCellValue(data[i].cne)
-            row.createCell(1).setCellValue(student.first_name)
-            row.createCell(2).setCellValue(student.last_name)
+            row.createCell(1).setCellValue(first_name)
+            row.createCell(2).setCellValue(last_name)
             row.createCell(3).setCellValue(if (data[i].is_present) "present" else "absent")
             row.createCell(4).setCellValue(df.format(Date()))
         }
@@ -229,14 +228,15 @@ class AbsenceListActivity : AppCompatActivity() {
     }
 
     //get student from cne
-    private fun getStudent(cne: String): Student {
-        val student = Student()
+    private fun getStudentName(cne: String): Pair<String, String> {
+        var first_name = ""
+        var last_name = ""
         database.getReference("students").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(it: DataSnapshot) {
                 for (ds in it.children) {
                     if (ds.child("cne").value.toString() == cne) {
-                        student.first_name = ds.child("first_name").value.toString()
-                        student.last_name = ds.child("last_name").value.toString()
+                        first_name = ds.child("first_name").value.toString()
+                        last_name = ds.child("last_name").value.toString()
                     }
                 }
             }
@@ -246,6 +246,6 @@ class AbsenceListActivity : AppCompatActivity() {
                 Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
-        return student
+        return Pair(first_name, last_name)
     }
 }
