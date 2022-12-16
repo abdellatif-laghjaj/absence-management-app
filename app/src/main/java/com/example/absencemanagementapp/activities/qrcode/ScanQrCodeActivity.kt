@@ -125,6 +125,14 @@ class ScanQrCodeActivity : AppCompatActivity() {
                                 ) {
                                     database.getReference("absences").child(ds2.key.toString())
                                         .child("_present").setValue(true)
+
+                                    database.getReference("seances/" + seance_id + "/total_absences")
+                                        .get().addOnSuccessListener {
+                                        database.getReference("seances/" + seance_id + "/total_absences")
+                                            .setValue(
+                                                Integer.parseInt(it.value.toString()) - 1
+                                            )
+                                    }
                                 }
                             }
                         }
