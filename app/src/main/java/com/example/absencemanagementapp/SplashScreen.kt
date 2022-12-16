@@ -15,7 +15,7 @@ import com.example.absencemanagementapp.helpers.Helper.Companion.changeTheme
 import com.example.absencemanagementapp.helpers.Helper.Companion.checkInternetConnection
 import com.example.absencemanagementapp.helpers.Helper.Companion.isConnected
 import com.example.absencemanagementapp.helpers.Helper.Companion.loadLanguage
-import com.example.absencemanagementapp.helpers.Helper.Companion.lodaTheme
+import com.example.absencemanagementapp.helpers.Helper.Companion.loadTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
@@ -31,7 +31,7 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         //get theme and language from shared preferences
-        val theme = lodaTheme(this)
+        val theme = loadTheme(this)
         val language = loadLanguage(this)
         //change theme and language
         changeTheme(theme, this)

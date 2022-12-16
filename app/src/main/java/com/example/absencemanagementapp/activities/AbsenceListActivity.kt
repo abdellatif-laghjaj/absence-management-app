@@ -29,8 +29,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
-import org.apache.poi.ss.usermodel.FillPatternType
-import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
@@ -219,11 +217,11 @@ class AbsenceListActivity : AppCompatActivity() {
 
     //get student from cne
     private fun getStudent(cne: String): Student {
-        var student = Student()
+        val student = Student()
         database.getReference("students").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(it: DataSnapshot) {
                 for (ds in it.children) {
-                    if (ds.child("cne").value.toString().equals(cne)) {
+                    if (ds.child("cne").value.toString() == cne) {
                         student.first_name = ds.child("first_name").value.toString()
                         student.last_name = ds.child("last_name").value.toString()
                     }

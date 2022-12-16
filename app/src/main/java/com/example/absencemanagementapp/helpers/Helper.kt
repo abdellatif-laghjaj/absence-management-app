@@ -97,7 +97,7 @@ class Helper {
         }
 
         //get theme from shared preferences
-        fun lodaTheme(activity: AppCompatActivity): String {
+        fun loadTheme(activity: AppCompatActivity): String {
             val sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
             return sharedPreferences.getString("theme", "system").toString()
         }
@@ -138,7 +138,9 @@ class Helper {
         }
 
         fun formatStudentName(first_name: String, last_name: String): String {
-            return first_name.toCharArray()[0].toUpperCase() + first_name.substring(1).toLowerCase() + " " + last_name.toLowerCase()
+            return first_name.toCharArray()[0].toUpperCase() + first_name.substring(1).toLowerCase(
+                Locale.ROOT
+            ) + " " + last_name.toLowerCase(Locale.ROOT)
         }
 
         fun shorten(string: String, length: Int): String {
