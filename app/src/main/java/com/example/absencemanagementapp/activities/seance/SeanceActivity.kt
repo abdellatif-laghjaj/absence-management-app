@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.activities.AbsenceListActivity
 import com.example.absencemanagementapp.activities.ModuleActivity
@@ -29,6 +30,7 @@ class SeanceActivity : AppCompatActivity() {
     lateinit var seance_end_time_tv: TextView
     lateinit var salle_nb_tv: TextView
     lateinit var total_absence_tv: TextView
+    lateinit var seance_swipe: SwipeRefreshLayout
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -59,6 +61,11 @@ class SeanceActivity : AppCompatActivity() {
         absence_list_cv.setOnClickListener({ showAbsenceList() })
 
         show_qr_code.setOnClickListener({ showQrCode() })
+
+        seance_swipe.setOnRefreshListener {
+            getCurrentSeance(seance_id)
+            seance_swipe.isRefreshing = false
+        }
     }
 
     override fun onBackPressed() {
@@ -76,6 +83,7 @@ class SeanceActivity : AppCompatActivity() {
         seance_end_time_tv = this.findViewById(R.id.seance_end_time_tv)
         salle_nb_tv = this.findViewById(R.id.salle_nb_tv)
         total_absence_tv = this.findViewById(R.id.total_absence_tv)
+        seance_swipe = this.findViewById(R.id.seance_swipe)
     }
 
     private fun getCurrentSeance(id: String) {
