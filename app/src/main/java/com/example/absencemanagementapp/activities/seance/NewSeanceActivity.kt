@@ -293,7 +293,7 @@ class NewSeanceActivity : AppCompatActivity() {
                     database.getReference("absences/" + key).setValue(absence)
                 }
             }
-            // update seance total absences
+//             update seance total absences
             database.getReference("seances").child(seance_id).child("total_absences").setValue(total_absences)
         }.addOnFailureListener {
             Log.e("debug", it.message.toString())
