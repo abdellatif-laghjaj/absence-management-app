@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.lang.Integer.parseInt
 
 class AbsenceAdapter(
     private val absence_list: List<Absence>,
@@ -126,12 +127,33 @@ class AbsenceAdapter(
 
             absence_status_switch.isChecked = absence.is_present;
 
-            absence_status_switch.setOnClickListener {
-                absence_status_switch.isChecked = !absence_status_switch.isChecked
-                absence.is_present = !absence.is_present
-                database.getReference("absences/" + absence.id + "/_present")
-                    .setValue(absence_status_switch.isChecked)
-            }
+            absence_status_switch.setOnCheckedChangeListener({_, isCheked ->
+                if (isCheked) {
+                    absence_status_switch.isChecked = true
+                    absence.is_present = true
+
+                    notifyItemChanged(position)
+
+                    database.getReference("absences/" + absence.id + "/_present")
+                        .setValue(true)
+
+                    database.getReference("seances/" + absence.seance_id + "/total_absences").get().addOnSuccessListener {
+                        database.getReference("seances/" + absence.seance_id + "/total_absences").setValue(parseInt(it.value.toString()) - 1)
+                    }
+                } else {
+                    absence_status_switch.isChecked = false
+                    absence.is_present = false
+
+                    notifyItemChanged(position)
+
+                    database.getReference("absences/" + absence.id + "/_present")
+                        .setValue(false)
+
+                    database.getReference("seances/" + absence.seance_id + "/total_absences").get().addOnSuccessListener {
+                        database.getReference("seances/" + absence.seance_id + "/total_absences").setValue(parseInt(it.value.toString()) + 1)
+                    }
+                }
+            })
             dialog.show()
         }
     }
