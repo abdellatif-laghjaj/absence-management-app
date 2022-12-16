@@ -144,29 +144,23 @@ class AbsenceListActivity : AppCompatActivity() {
             cell.setCellValue(columns[i].uppercase())
         }
 
-        //add padding to header row
+        //add padding to header row and set column width
         val headerCellStyle = workbook.createCellStyle()
         headerCellStyle.fillForegroundColor = IndexedColors.GREY_25_PERCENT.index
         headerCellStyle.fillPattern = FillPatternType.SOLID_FOREGROUND
         for (i in columns.indices) {
             val cell = headerRow.getCell(i)
             cell.cellStyle = headerCellStyle
-        }
-
-        //set column width
-        for (i in columns.indices) {
             sheet.setColumnWidth(i, 6000)
         }
 
         for (i in data.indices) {
             val df = DateFormat.getDateInstance(DateFormat.FULL)
 
-            val (first_name, last_name) = getStudentName(data[i].cne)
-
             val row = sheet.createRow(i + 1)
             row.createCell(0).setCellValue(data[i].cne)
-            row.createCell(1).setCellValue(first_name)
-            row.createCell(2).setCellValue(last_name)
+            row.createCell(1).setCellValue(getStudentFirstName(data[i].cne))
+            row.createCell(2).setCellValue(getStudentLastName(data[i].cne))
             row.createCell(3).setCellValue(if (data[i].is_present) "present" else "absent")
             row.createCell(4).setCellValue(df.format(Date()))
         }
@@ -227,16 +221,15 @@ class AbsenceListActivity : AppCompatActivity() {
             }).check()
     }
 
-    //get student from cne
-    private fun getStudentName(cne: String): Pair<String, String> {
+    //get student first name from cne
+    private fun getStudentFirstName(cne: String): String {
         var first_name = ""
-        var last_name = ""
         database.getReference("students").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(it: DataSnapshot) {
                 for (ds in it.children) {
                     if (ds.child("cne").value.toString() == cne) {
                         first_name = ds.child("first_name").value.toString()
-                        last_name = ds.child("last_name").value.toString()
+                        break
                     }
                 }
             }
@@ -246,6 +239,27 @@ class AbsenceListActivity : AppCompatActivity() {
                 Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
-        return Pair(first_name, last_name)
+        return first_name
+    }
+
+    //get student last name from cne
+    private fun getStudentLastName(cne: String): String {
+        var last_name = ""
+        database.getReference("students").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(it: DataSnapshot) {
+                for (ds in it.children) {
+                    if (ds.child("cne").value.toString() == cne) {
+                        last_name = ds.child("last_name").value.toString()
+                        break
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+        return last_name
     }
 }
