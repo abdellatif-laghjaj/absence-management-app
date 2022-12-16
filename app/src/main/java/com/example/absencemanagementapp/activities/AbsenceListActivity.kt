@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
+import com.example.absencemanagementapp.models.Student
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -28,6 +29,8 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
+import org.apache.poi.ss.usermodel.FillPatternType
+import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
@@ -132,7 +135,8 @@ class AbsenceListActivity : AppCompatActivity() {
         val sheet = workbook.createSheet("Absences")
 
         //get number of columns
-        val columns = arrayOf("cne", "first name", "last name", "seance_id", "presence status")
+        val columns =
+            arrayOf("cne", "first name", "last name", "seance_id", "presence status", "date")
 
         //create header row
         val headerRow = sheet.createRow(0)
@@ -141,13 +145,25 @@ class AbsenceListActivity : AppCompatActivity() {
             cell.setCellValue(columns[i])
         }
 
+        //set column width
+        for (i in columns.indices) {
+            sheet.autoSizeColumn(i)
+        }
+
+        //set header row style
+        val headerCellStyle = workbook.createCellStyle()
+        headerCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index)
+        headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+
         for (i in data.indices) {
+            val student = getStudent(data[i].cne)
             val row = sheet.createRow(i)
             row.createCell(0).setCellValue(data[i].cne)
-            row.createCell(1).setCellValue("first name")
-            row.createCell(2).setCellValue("last name")
+            row.createCell(1).setCellValue(student.first_name)
+            row.createCell(2).setCellValue(student.last_name)
             row.createCell(3).setCellValue(data[i].seance_id)
-            row.createCell(4).setCellValue(data[i].is_present)
+            row.createCell(4).setCellValue(if (data[i].is_present) "present" else "absent")
+            row.createCell(5).setCellValue(Date().toString())
         }
 
         //ask for permission to write to external storage
@@ -204,5 +220,26 @@ class AbsenceListActivity : AppCompatActivity() {
                     token?.continuePermissionRequest()
                 }
             }).check()
+    }
+
+    //get student from cne
+    private fun getStudent(cne: String): Student {
+        var student = Student()
+        database.getReference("students").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(it: DataSnapshot) {
+                for (ds in it.children) {
+                    if (ds.child("cne").value.toString().equals(cne)) {
+                        student.first_name = ds.child("first_name").value.toString()
+                        student.last_name = ds.child("last_name").value.toString()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+        return student
     }
 }
