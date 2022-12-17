@@ -95,4 +95,7 @@ dependencies {
 
     //Apache POI OOXML
     implementation "org.apache.poi:poi-ooxml:5.2.3"
+
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
