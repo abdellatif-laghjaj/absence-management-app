@@ -257,7 +257,7 @@ class ModuleActivity : AppCompatActivity() {
                     workbook.close()
                     outputStream.close()
 
-                    Toast.makeText(this, "Excel file saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Excel file saved", Toast.LENGTH_LONG).show()
                 }
             }.addOnFailureListener {
                 Log.e("debug", "Error getting inscription data", it)
