@@ -81,6 +81,13 @@ class AbsenceAdapter(
             holder.absence_layout.setBackgroundResource(R.drawable.absent_bg);
         }
 
+        //add animation to list
+        holder.itemView.startAnimation(
+            AnimationUtils.loadAnimation(
+                context, R.anim.absence_list_anim
+            )
+        )
+
         //click on item
         holder.itemView.setOnClickListener {
             val dialog = Dialog(context)
@@ -105,7 +112,7 @@ class AbsenceAdapter(
                             formatStudentName(
                                 student.child("last_name").value.toString(),
                                 student.child("first_name").value.toString()
-                            ), 48
+                            ), 16
                         )
 //                      set student image URL with picasso
                         if (student.child("avatar").value != null && student.child("avatar").value.toString()
@@ -127,7 +134,7 @@ class AbsenceAdapter(
 
             absence_status_switch.isChecked = absence.is_present;
 
-            absence_status_switch.setOnCheckedChangeListener({_, isCheked ->
+            absence_status_switch.setOnCheckedChangeListener({ _, isCheked ->
                 if (isCheked) {
                     absence_status_switch.isChecked = true
                     absence.is_present = true
@@ -137,9 +144,11 @@ class AbsenceAdapter(
                     database.getReference("absences/" + absence.id + "/_present")
                         .setValue(true)
 
-                    database.getReference("seances/" + absence.seance_id + "/total_absences").get().addOnSuccessListener {
-                        database.getReference("seances/" + absence.seance_id + "/total_absences").setValue(parseInt(it.value.toString()) - 1)
-                    }
+                    database.getReference("seances/" + absence.seance_id + "/total_absences").get()
+                        .addOnSuccessListener {
+                            database.getReference("seances/" + absence.seance_id + "/total_absences")
+                                .setValue(parseInt(it.value.toString()) - 1)
+                        }
                 } else {
                     absence_status_switch.isChecked = false
                     absence.is_present = false
@@ -149,9 +158,11 @@ class AbsenceAdapter(
                     database.getReference("absences/" + absence.id + "/_present")
                         .setValue(false)
 
-                    database.getReference("seances/" + absence.seance_id + "/total_absences").get().addOnSuccessListener {
-                        database.getReference("seances/" + absence.seance_id + "/total_absences").setValue(parseInt(it.value.toString()) + 1)
-                    }
+                    database.getReference("seances/" + absence.seance_id + "/total_absences").get()
+                        .addOnSuccessListener {
+                            database.getReference("seances/" + absence.seance_id + "/total_absences")
+                                .setValue(parseInt(it.value.toString()) + 1)
+                        }
                 }
             })
             dialog.show()

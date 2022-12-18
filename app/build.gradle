@@ -90,6 +90,12 @@ dependencies {
     //to get uri from string
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    // Apache POI
-    implementation 'org.apache.poi:poi:4.1.2'
+    //Apache POI
+    implementation 'org.apache.poi:poi:5.2.3'
+
+    //Apache POI OOXML
+    implementation "org.apache.poi:poi-ooxml:5.2.3"
+
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

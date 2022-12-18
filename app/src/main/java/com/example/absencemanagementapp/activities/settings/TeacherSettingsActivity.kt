@@ -149,6 +149,7 @@ class TeacherSettingsActivity : AppCompatActivity() {
                     //change language to english
                     changeLanguage("en", this)
                     dialog.dismiss()
+                    restartActivity()
                 }
             }
         }
@@ -343,15 +344,10 @@ class TeacherSettingsActivity : AppCompatActivity() {
     }
 
     private fun restartActivity() {
-        if (Build.VERSION.SDK_INT >= 11) {
-            recreate()
-        } else {
-            val intent = intent
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            finish()
-            overridePendingTransition(0, 0)
-            startActivity(intent)
-            overridePendingTransition(0, 0)
-        }
+        //restart activity
+        val intent = Intent(this, StudentSettingsActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

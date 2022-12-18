@@ -3,6 +3,7 @@ package com.example.absencemanagementapp.activities.home
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,10 @@ import com.example.absencemanagementapp.activities.settings.StudentSettingsActiv
 import com.example.absencemanagementapp.helpers.Helper
 import com.example.absencemanagementapp.helpers.Helper.Companion.showExitDialog
 import com.example.absencemanagementapp.models.Student
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -33,6 +38,7 @@ class StudentActivity : AppCompatActivity() {
     private lateinit var student_image_civ: CircleImageView
     private lateinit var user_name_tv: TextView
     private lateinit var bottom_navigation: BottomNavigationView
+    private lateinit var pie_chart: PieChart
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -48,6 +54,9 @@ class StudentActivity : AppCompatActivity() {
 
         //initiate views
         initViews()
+
+        //fill pie chart with data
+        fillPieChart()
 
         //set dashboard selected
         bottom_navigation.selectedItemId = R.id.dashboard
@@ -127,6 +136,29 @@ class StudentActivity : AppCompatActivity() {
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
+        pie_chart = findViewById(R.id.pie_chart)
+    }
+
+    //fill the pie chart
+    private fun fillPieChart() {
+        //get total number of absences of each module of the student, by looping through the inscriptions table
+        val user_id = auth.currentUser!!.uid
+        database.getReference("inscriptions").get().addOnSuccessListener {
+            if (it.exists()) {
+                val inscriptions = it.children
+                var total_absences = 0
+                inscriptions.forEach { inscription ->
+                    val student_id = inscription.child("student_id").value.toString()
+                    if (student_id == user_id) {
+                        val absences = inscription.child("absences").children
+                        absences.forEach { absence ->
+                            total_absences++
+                        }
+                    }
+                }
+                //set the data
+            }
+        }
     }
 
     override fun onStart() {
