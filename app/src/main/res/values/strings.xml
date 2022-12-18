@@ -137,4 +137,5 @@
     <string name="absence_details">Absence details</string>
     <string name="absence_details_warning">Note that you can change student\'s absence status by toggling the switch above.</string>
     <string name="exit_dialog_message">Are you sure you want to exit?</string>
+    <string name="select_directory">Select a directory</string>
 </resources>
