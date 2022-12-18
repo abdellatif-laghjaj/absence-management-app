@@ -140,6 +140,14 @@
                     android:id="@+id/pie_chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/student_dashboard" />
             </LinearLayout>
         </LinearLayout>
 
