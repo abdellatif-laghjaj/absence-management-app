@@ -75,7 +75,7 @@ class ModuleActivity : AppCompatActivity() {
 
         back_iv.setOnClickListener { back() }
 
-        absence_list_cv.setOnClickListener { exportExcel() }
+        absence_list_cv.setOnClickListener { createExcelFile() }
 
         new_seance_cv.setOnClickListener { toNewSeanceView() }
 
@@ -157,19 +157,19 @@ class ModuleActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_CHOOSE_DIRECTORY && resultCode == RESULT_OK) {
             val uri = data?.data
             if (uri != null) {
-                createExcelFile(this, uri)
+//                createExcelFile(this, uri)
                 Log.e("debug", "Selected file: $uri")
             }
         }
     }
 
-    private fun createExcelFile(activity: Activity, uri: Uri) {
-        val contentResolver = activity.contentResolver
-        val documentFile = DocumentFile.fromTreeUri(activity, uri)
-        val fileName = "new_excel_file.xls"
-        val excelFile = documentFile?.createFile("application/vnd.ms-excel", fileName)
-        if (excelFile != null) {
-            val outputStream = contentResolver.openOutputStream(excelFile.uri)
+    private fun createExcelFile() {
+//        val contentResolver = activity.contentResolver
+//        val documentFile = DocumentFile.fromTreeUri(activity, uri)
+//        val fileName = "absence.xls"
+//        val excelFile = documentFile?.createFile("application/vnd.ms-excel", fileName)
+//        if (excelFile != null) {
+            val outputStream = FileOutputStream("/storage/emulated/0/Download/absence.xls")
             if (outputStream != null) {
                 val workbook = HSSFWorkbook()
 
@@ -242,12 +242,12 @@ class ModuleActivity : AppCompatActivity() {
                 workbook.close()
                 outputStream.close()
 
-                Toast.makeText(activity, "Excel file saved", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(activity, "Unable to create file", Toast.LENGTH_SHORT).show()
-            }
+                Toast.makeText(this, "Excel file saved", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(activity, "Unable to create file", Toast.LENGTH_SHORT).show()
+//            }
         } else {
-            Toast.makeText(activity, "Unable to create file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Unable to create file", Toast.LENGTH_SHORT).show()
         }
     }
 
