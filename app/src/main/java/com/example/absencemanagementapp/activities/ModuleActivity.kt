@@ -164,72 +164,87 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun createExcelFile() {
-//        val contentResolver = activity.contentResolver
-//        val documentFile = DocumentFile.fromTreeUri(activity, uri)
-//        val fileName = "absence.xls"
-//        val excelFile = documentFile?.createFile("application/vnd.ms-excel", fileName)
-//        if (excelFile != null) {
-            val outputStream = FileOutputStream("/storage/emulated/0/Download/absence.xls")
-            if (outputStream != null) {
-                val workbook = HSSFWorkbook()
+        val file_path = getExternalFilesDir(null)?.absolutePath
+        val file_name = "absences.xls"
 
-                // export to excel
-                var rowNum = 0
-                var cellNum = 3
+        Log.e("debug", "file_path: $file_path/$file_name")
 
-                Log.d("debug", "Export to excel")
-                workbook.createSheet("Absences")
-                val sheet = workbook.getSheetAt(0)
-                val row = sheet.createRow(++rowNum)
+        try {
+            val outputStream = FileOutputStream("$file_path/$file_name")
+            val workbook = HSSFWorkbook()
 
-                row.createCell(1).setCellValue("CNE")
-                row.createCell(2).setCellValue("Nom")
-                row.createCell(3).setCellValue("Prénom")
+            // export to excel
+            var rowNum = 0
+            var cellNum = 3
 
-                dbRef.getReference("inscription").get().addOnSuccessListener {
-                    for (ds in it.children) {
-                        if (ds.child("n_module").value.toString().equals(currentModuleId)) {
-                            val row = sheet.createRow(++rowNum)
-                            dbRef.getReference("students").get().addOnSuccessListener {
-                                for (ds1 in it.children) {
-                                    if (ds1.child("cne").value.toString()
-                                            .equals(ds.child("cne").value.toString())
-                                    ) {
-                                        row.createCell(1)
-                                            .setCellValue(ds1.child("cne").value.toString())
-                                        row.createCell(2)
-                                            .setCellValue(ds1.child("first_name").value.toString())
-                                        row.createCell(3)
-                                            .setCellValue(ds1.child("last_name").value.toString())
-                                    }
+            Log.d("debug", "Export to excel")
+            workbook.createSheet("Absences")
+            val sheet = workbook.getSheetAt(0)
+            val row = sheet.createRow(++rowNum)
+
+            row.createCell(1).setCellValue("CNE")
+            row.createCell(2).setCellValue("Nom")
+            row.createCell(3).setCellValue("Prénom")
+
+            dbRef.getReference("inscription").get().addOnSuccessListener {
+                for (ds in it.children) {
+                    if (ds.child("n_module").value.toString().equals(currentModuleId)) {
+                        val row = sheet.createRow(++rowNum)
+                        dbRef.getReference("students").get().addOnSuccessListener {
+                            for (ds1 in it.children) {
+                                if (ds1.child("cne").value.toString()
+                                        .equals(ds.child("cne").value.toString())
+                                ) {
+                                    row.createCell(1)
+                                        .setCellValue(ds1.child("cne").value.toString())
+                                    Log.e("debug", "cne: ${ds1.child("cne").value.toString()}")
+
+                                    row.createCell(2)
+                                        .setCellValue(ds1.child("first_name").value.toString())
+                                    Log.e(
+                                        "debug",
+                                        "first_name: ${ds1.child("first_name").value.toString()}"
+                                    )
+
+                                    row.createCell(3)
+                                        .setCellValue(ds1.child("last_name").value.toString())
+                                    Log.e(
+                                        "debug",
+                                        "last_name: ${ds1.child("last_name").value.toString()}"
+                                    )
                                 }
                             }
                         }
                     }
+                }
 
-                    dbRef.getReference("seances").get().addOnSuccessListener {
-                        rowNum = 0
+                dbRef.getReference("seances").get().addOnSuccessListener {
+                    rowNum = 1
 
-                        for (ds2 in it.children) {
-                            if (ds2.child("n_module").value.toString().equals(currentModuleId)) {
-                                row.createCell(++cellNum).setCellValue(
-                                    ds2.child("date").value.toString() + " " + ds2.child("start_time").value.toString() + " - " + ds2.child(
-                                        "end_time"
-                                    ).value.toString() + " (" + ds2.child("type").value.toString() + ")"
-                                )
+                    for (ds2 in it.children) {
+                        if (ds2.child("n_module").value.toString().equals(currentModuleId)) {
+                            row.createCell(++cellNum).setCellValue(
+                                ds2.child("date").value.toString() + " " + ds2.child("start_time").value.toString() + " - " + ds2.child(
+                                    "end_time"
+                                ).value.toString() + " (" + ds2.child("type").value.toString() + ")"
+                            )
 
-                                dbRef.getReference("absences").get().addOnSuccessListener {
-
-                                    for (ds3 in it.children) {
-                                        if (ds3.child("seance_id").value.toString()
-                                                .equals(ds2.child("id").value.toString()) && ds3.child(
-                                                "cne"
-                                            ).value.toString()
-                                                .equals(row.getCell(1).toString())
-                                        ) {
-                                            when (ds3.child("_present").value.toString()) {
-                                                "true" -> row.createCell(cellNum).setCellValue("P")
-                                                "false" -> row.createCell(cellNum).setCellValue("A")
+                            dbRef.getReference("absences").get().addOnSuccessListener {
+                                for (ds3 in it.children) {
+                                    if (ds3.child("seance_id").value.toString()
+                                            .equals(ds2.child("id").value.toString()) && ds3.child(
+                                            "cne"
+                                        ).value.toString()
+                                            .equals(row.getCell(1).toString())
+                                    ) {
+                                        when (ds3.child("_present").value.toString()) {
+                                            "true" -> {
+                                                row.createCell(cellNum).setCellValue("P")
+                                                Log.e("debug", "Present")
+                                            }
+                                            "false" -> {
+                                                row.createCell(cellNum).setCellValue("A")
+                                                Log.e("debug", "Absent")
                                             }
                                         }
                                     }
@@ -237,17 +252,18 @@ class ModuleActivity : AppCompatActivity() {
                             }
                         }
                     }
-                }
-                workbook.write(outputStream)
-                workbook.close()
-                outputStream.close()
 
-                Toast.makeText(this, "Excel file saved", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(activity, "Unable to create file", Toast.LENGTH_SHORT).show()
-//            }
-        } else {
-            Toast.makeText(this, "Unable to create file", Toast.LENGTH_SHORT).show()
+                    workbook.write(outputStream)
+                    workbook.close()
+                    outputStream.close()
+
+                    Toast.makeText(this, "Excel file saved", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                Log.e("debug", "Error getting inscription data", it)
+            }
+        } catch (e: Exception) {
+            Log.e("debug", "Error creating excel file", e)
         }
     }
 
