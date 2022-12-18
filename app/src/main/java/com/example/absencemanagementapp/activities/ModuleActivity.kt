@@ -98,7 +98,7 @@ class ModuleActivity : AppCompatActivity() {
 
         back_iv.setOnClickListener { back() }
 
-        absence_list_cv.setOnClickListener { createExcelFile() }
+        absence_list_cv.setOnClickListener { exportAbsencesToExcel() }
 
         new_seance_cv.setOnClickListener { toNewSeanceView() }
 
@@ -166,120 +166,94 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     //export absence list to excel file
-    private fun exportAbsencesToExcel(data: ArrayList<Absence>) {
-        val progress_dialog = ProgressDialog(this)
-        progress_dialog.setTitle("Exporting...")
-        progress_dialog.setMessage("Please wait while we are exporting your data to excel file")
-        progress_dialog.show()
-
+    private fun exportAbsencesToExcel() {
         val workbook: Workbook = XSSFWorkbook()
         val sheet = workbook.createSheet("Absences")
 
         //get number of columns
-        val columns =
-            arrayOf("cne", "first name", "last name", "presence status", "date")
+        val columns = ArrayList<String>()
 
-        //create header row
-        val headerRow = sheet.createRow(0)
-        for (i in columns.indices) {
-            val cell = headerRow.createCell(i)
-            cell.setCellValue(columns[i].uppercase())
-        }
+        columns.add("CNE")
+        columns.add("Nom")
+        columns.add("Prénom")
 
-        //add padding to header row and set column width
-        val headerCellStyle = workbook.createCellStyle()
-        headerCellStyle.fillForegroundColor = IndexedColors.GREY_25_PERCENT.index
-        headerCellStyle.fillPattern = FillPatternType.SOLID_FOREGROUND
-        for (i in columns.indices) {
-            val cell = headerRow.getCell(i)
-            cell.cellStyle = headerCellStyle
-            sheet.setColumnWidth(i, 6000)
-        }
+        dbRef.getReference("seances").get().addOnSuccessListener {
+            for (ds in it.children) {
+                val title: String = ds.child("date").value.toString() + " " + ds.child("start_time").value.toString() + " - " + ds.child("end_time").value.toString() + " (" + ds.child("type").value.toString() + ")"
+                columns.add(title)
+            }
 
-        for (i in data.indices) {
-            val df = DateFormat.getDateInstance(DateFormat.FULL)
-            var first_name = ""
-            var last_name = ""
+            columns.add("Total")
 
-            //get student first name and last name
-            database.getReference("students").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(it: DataSnapshot) {
-                    for (ds in it.children) {
-                        if (ds.child("cne").value.toString().equals(data[i].cne)) {
-                            first_name = ds.child("first_name").value.toString()
-                            last_name = ds.child("last_name").value.toString()
+            //create header row
+            val headerRow = sheet.createRow(0)
+            for (i in columns.indices) {
+                val cell = headerRow.createCell(i)
+                cell.setCellValue(columns[i].uppercase())
+            }
+
+            //add padding to header row and set column width
+            val headerCellStyle = workbook.createCellStyle()
+            headerCellStyle.fillForegroundColor = IndexedColors.GREY_25_PERCENT.index
+            headerCellStyle.fillPattern = FillPatternType.SOLID_FOREGROUND
+            for (i in columns.indices) {
+                val cell = headerRow.getCell(i)
+                cell.cellStyle = headerCellStyle
+                sheet.setColumnWidth(i, 6000)
+            }
+
+            //ask for permission to write to external storage
+            Dexter.withActivity(this)
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        // permission was granted, you can perform your action
+                        //get root directory
+                        val dir = File(
+                            Environment.getExternalStorageDirectory()
+                                .toString() + "/AbsenceManagementApp"
+                        )
+                        if (!dir.exists()) {
+                            dir.mkdir()
+                        }
+                        val file_name = "absences-${Date().time}.xlsx"
+                        val file = File(dir, file_name)
+                        try {
+                            file.createNewFile()
+                            val outputStream = file.outputStream()
+                            workbook.write(outputStream)
+                            outputStream.close()
+
+                            FancyToast.makeText(
+                                this@ModuleActivity,
+                                "File exported successfully to ${dir.absolutePath}",
+                                FancyToast.LENGTH_LONG,
+                                FancyToast.SUCCESS,
+                                false
+                            ).show()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Failed to read value
-                    Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
-                }
-            })
-
-            val row = sheet.createRow(i + 1)
-            row.createCell(0).setCellValue(data[i].cne)
-            row.createCell(1).setCellValue(first_name)
-            row.createCell(2).setCellValue(last_name)
-            row.createCell(3).setCellValue(if (data[i].is_present) "present" else "absent")
-            row.createCell(4).setCellValue(df.format(Date()))
-        }
-
-        //ask for permission to write to external storage
-        Dexter.withActivity(this)
-            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    // permission was granted, you can perform your action
-                    //get root directory
-                    val dir = File(
-                        Environment.getExternalStorageDirectory()
-                            .toString() + "/AbsenceManagementApp"
-                    )
-                    if (!dir.exists()) {
-                        dir.mkdir()
-                    }
-                    val file_name = "absences-${Date().time}.xlsx"
-                    val file = File(dir, file_name)
-                    try {
-                        file.createNewFile()
-                        val outputStream = file.outputStream()
-                        workbook.write(outputStream)
-                        outputStream.close()
-
-                        FancyToast.makeText(
-                            this@AbsenceListActivity,
-                            "File exported successfully to ${dir.absolutePath}",
-                            FancyToast.LENGTH_LONG,
-                            FancyToast.SUCCESS,
-                            false
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                        // permission was denied, you can show a message to the user
+                        Toast.makeText(
+                            this@ModuleActivity,
+                            "Permission denied",
+                            Toast.LENGTH_SHORT
                         ).show()
-
-                        progress_dialog.dismiss()
-                    } catch (e: Exception) {
-                        progress_dialog.dismiss()
-                        e.printStackTrace()
                     }
-                }
 
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                    // permission was denied, you can show a message to the user
-                    Toast.makeText(
-                        this@AbsenceListActivity,
-                        "Permission denied",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
-                ) {
-                    // permission was not granted, you can request that the user grant the permission
-                    token?.continuePermissionRequest()
-                }
-            }).check()
+                    override fun onPermissionRationaleShouldBeShown(
+                        permission: PermissionRequest?,
+                        token: PermissionToken?
+                    ) {
+                        // permission was not granted, you can request that the user grant the permission
+                        token?.continuePermissionRequest()
+                    }
+                }).check()
+        }
     }
 
     private fun createExcelFile() {
