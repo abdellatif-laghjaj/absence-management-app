@@ -1,11 +1,14 @@
 package com.example.absencemanagementapp.activities
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,6 +20,9 @@ import com.example.absencemanagementapp.models.Module
 import com.example.absencemanagementapp.models.Seance
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.FirebaseDatabase
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import org.apache.poi.poifs.filesystem.POIFSFileSystem
+import java.io.FileOutputStream
 import java.lang.Integer.parseInt
 
 class ModuleActivity : AppCompatActivity() {
@@ -134,7 +140,111 @@ class ModuleActivity : AppCompatActivity() {
     }
 
     private fun exportExcel() {
-//        export to excel
-        Log.d("debug", "Export to excel")
+        val fileChooser = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "application/vnd.ms-excel"
+        }
+        startActivityForResult(
+            Intent.createChooser(fileChooser, "Select a file"),
+            REQUEST_CODE_CHOOSE_FILE
+        )
+
+        val fileOut = fileChooser.data?.path?.let { FileOutputStream(it) }
+        if (fileOut != null) {
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CHOOSE_FILE && resultCode == RESULT_OK) {
+            val uri = data?.data
+            if (uri != null) {
+                Toast.makeText(this, "Selected file: $uri", Toast.LENGTH_SHORT).show()
+                Log.e("debug", "Selected file: $uri")
+            }
+        }
+    }
+
+    private fun saveExcelFile(activity: Activity, uri: Uri) {
+        val inputStream = getInputStreamForUri(activity.contentResolver, uri)
+        if (inputStream != null) {
+            val fileSystem = POIFSFileSystem(inputStream)
+            val workbook = HSSFWorkbook(fileSystem)
+            val fileOut = FileOutputStream("saved_excel_file.xls")
+            // export to excel
+            var rowNum = 0
+            var cellNum = 3
+
+            Log.d("debug", "Export to excel")
+            workbook.createSheet("Absences")
+            val sheet = workbook.getSheetAt(0)
+            val row = sheet.createRow(++rowNum)
+
+            row.createCell(1).setCellValue("CNE")
+            row.createCell(2).setCellValue("Nom")
+            row.createCell(3).setCellValue("Prénom")
+
+            dbRef.getReference("inscription").get().addOnSuccessListener {
+                for (ds in it.children) {
+                    if (ds.child("n_module").value.toString().equals(currentModuleId)) {
+                        val row = sheet.createRow(++rowNum)
+                        dbRef.getReference("students").get().addOnSuccessListener {
+                            for (ds1 in it.children) {
+                                if (ds1.child("cne").value.toString()
+                                        .equals(ds.child("cne").value.toString())
+                                ) {
+                                    row.createCell(1)
+                                        .setCellValue(ds1.child("cne").value.toString())
+                                    row.createCell(2)
+                                        .setCellValue(ds1.child("first_name").value.toString())
+                                    row.createCell(3)
+                                        .setCellValue(ds1.child("last_name").value.toString())
+                                }
+                            }
+                        }
+                    }
+                }
+
+                dbRef.getReference("seances").get().addOnSuccessListener {
+                    rowNum = 0
+
+                    for (ds2 in it.children) {
+                        if (ds2.child("n_module").value.toString().equals(currentModuleId)) {
+                            row.createCell(++cellNum).setCellValue(
+                                ds2.child("date").value.toString() + " " + ds2.child("start_time").value.toString() + " - " + ds2.child(
+                                    "end_time"
+                                ).value.toString() + " (" + ds2.child("type").value.toString() + ")"
+                            )
+
+                            dbRef.getReference("absences").get().addOnSuccessListener {
+
+                                for (ds3 in it.children) {
+                                    if (ds3.child("seance_id").value.toString()
+                                            .equals(ds2.child("id").value.toString()) && ds3.child("cne").value.toString()
+                                            .equals(row.getCell(1).toString())
+                                    ) {
+                                        when (ds3.child("_present").value.toString()) {
+                                            "true" -> row.createCell(cellNum).setCellValue("P")
+                                            "false" -> row.createCell(cellNum).setCellValue("A")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            workbook.write(fileOut)
+            fileOut.close()
+            workbook.close()
+
+        Toast.makeText(this, "Exported to excel", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Excel file saved", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(activity, "Unable to open file", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_CHOOSE_FILE = 1
     }
 }
