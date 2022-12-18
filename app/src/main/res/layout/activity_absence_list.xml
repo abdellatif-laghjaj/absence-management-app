@@ -77,16 +77,4 @@
             tools:listitem="@layout/absence_list_item" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/export_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/export"
-        android:text="@string/export"
-        android:textColor="@color/white"
-        app:icon="@drawable/ic_export"
-        app:iconTint="@color/white" />
 </RelativeLayout>
