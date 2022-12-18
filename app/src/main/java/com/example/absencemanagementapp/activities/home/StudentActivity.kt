@@ -56,9 +56,6 @@ class StudentActivity : AppCompatActivity() {
         //initiate views
         initViews()
 
-        //set total absence
-        user_total_absence_tv.text = getTotalAbsences().toString()
-
         //fill pie chart with data
         fillPieChart()
 
@@ -142,6 +139,9 @@ class StudentActivity : AppCompatActivity() {
         user_name_tv = findViewById(R.id.user_name_tv)
         pie_chart = findViewById(R.id.pie_chart)
         user_total_absence_tv = findViewById(R.id.user_total_absence_tv)
+
+        //set total absence
+        user_total_absence_tv.text = getTotalAbsences().toString()
     }
 
     //fill the pie chart
