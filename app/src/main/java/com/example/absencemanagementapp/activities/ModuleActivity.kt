@@ -210,66 +210,70 @@ class ModuleActivity : AppCompatActivity() {
                     if (ds.child("n_module").value.toString().equals(currentModuleId)) {
                         val cne = ds.child("cne").value.toString()
                         students.add(cne)
-                        val nom = ds.child("nom").value.toString()
-                        val prenom = ds.child("prenom").value.toString()
                         val row = sheet.createRow(rowIdx++)
                         row.createCell(0).setCellValue(cne)
-                        row.createCell(1).setCellValue(nom)
-                        row.createCell(2).setCellValue(prenom)
+                        dbRef.getReference("students").get().addOnSuccessListener {
+                            for (ds in it.children) {
+                                if (ds.child("cne").value.toString().equals(cne)) {
+                                    row.createCell(1).setCellValue(ds.child("last_name").value.toString())
+                                    row.createCell(2).setCellValue(ds.child("first_name").value.toString())
+                                }
+                            }
+
+                            //ask for permission to write to external storage
+                            Dexter.withActivity(this)
+                                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                .withListener(object : PermissionListener {
+                                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                                        // permission was granted, you can perform your action
+                                        //get root directory
+                                        val dir = File(
+                                            Environment.getExternalStorageDirectory()
+                                                .toString() + "/AbsenceManagementApp"
+                                        )
+                                        if (!dir.exists()) {
+                                            dir.mkdir()
+                                        }
+                                        val file_name = "absences-${Date().time}.xlsx"
+                                        val file = File(dir, file_name)
+                                        try {
+                                            file.createNewFile()
+                                            val outputStream = file.outputStream()
+                                            workbook.write(outputStream)
+                                            outputStream.close()
+
+                                            FancyToast.makeText(
+                                                this@ModuleActivity,
+                                                "File exported successfully to ${dir.absolutePath}",
+                                                FancyToast.LENGTH_LONG,
+                                                FancyToast.SUCCESS,
+                                                false
+                                            ).show()
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
+                                    }
+
+                                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                                        // permission was denied, you can show a message to the user
+                                        Toast.makeText(
+                                            this@ModuleActivity,
+                                            "Permission denied",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+
+                                    override fun onPermissionRationaleShouldBeShown(
+                                        permission: PermissionRequest?,
+                                        token: PermissionToken?
+                                    ) {
+                                        // permission was not granted, you can request that the user grant the permission
+                                        token?.continuePermissionRequest()
+                                    }
+                                }).check()
+                        }
                     }
                 }
-
-                //ask for permission to write to external storage
-                Dexter.withActivity(this)
-                    .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .withListener(object : PermissionListener {
-                        override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                            // permission was granted, you can perform your action
-                            //get root directory
-                            val dir = File(
-                                Environment.getExternalStorageDirectory()
-                                    .toString() + "/AbsenceManagementApp"
-                            )
-                            if (!dir.exists()) {
-                                dir.mkdir()
-                            }
-                            val file_name = "absences-${Date().time}.xlsx"
-                            val file = File(dir, file_name)
-                            try {
-                                file.createNewFile()
-                                val outputStream = file.outputStream()
-                                workbook.write(outputStream)
-                                outputStream.close()
-
-                                FancyToast.makeText(
-                                    this@ModuleActivity,
-                                    "File exported successfully to ${dir.absolutePath}",
-                                    FancyToast.LENGTH_LONG,
-                                    FancyToast.SUCCESS,
-                                    false
-                                ).show()
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-
-                        override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                            // permission was denied, you can show a message to the user
-                            Toast.makeText(
-                                this@ModuleActivity,
-                                "Permission denied",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        override fun onPermissionRationaleShouldBeShown(
-                            permission: PermissionRequest?,
-                            token: PermissionToken?
-                        ) {
-                            // permission was not granted, you can request that the user grant the permission
-                            token?.continuePermissionRequest()
-                        }
-                    }).check()
             }
         }
     }
