@@ -39,6 +39,7 @@ class StudentActivity : AppCompatActivity() {
     private lateinit var user_name_tv: TextView
     private lateinit var bottom_navigation: BottomNavigationView
     private lateinit var pie_chart: PieChart
+    private lateinit var user_total_absence_tv: TextView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -137,6 +138,10 @@ class StudentActivity : AppCompatActivity() {
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
         pie_chart = findViewById(R.id.pie_chart)
+        user_total_absence_tv = findViewById(R.id.user_total_absence_tv)
+
+        //set total absence
+        user_total_absence_tv.text = getTotalAbsences().toString()
     }
 
     //fill the pie chart
@@ -159,6 +164,37 @@ class StudentActivity : AppCompatActivity() {
                 //set the data
             }
         }
+    }
+
+    //get the total number of absences of the student
+    private fun getTotalAbsences(): Int {
+        var total_absences = 0
+        val current_cne = getCne()
+        database.getReference("abseces").get().addOnSuccessListener {
+            if (it.exists()) {
+                val absences = it.children
+                absences.forEach { absence ->
+                    val cne = absence.child("cne").value.toString()
+                    if (current_cne == cne) {
+                        total_absences++
+                    }
+                }
+            }
+        }
+        return total_absences
+    }
+
+    //get cne of current user
+    private fun getCne(): String {
+        var cne = ""
+        val user_id = auth.currentUser!!.uid
+        database.getReference("students").child(user_id).get().addOnSuccessListener {
+            if (it.exists()) {
+                val student = it.getValue(Student::class.java)
+                cne = student!!.cne
+            }
+        }
+        return cne
     }
 
     override fun onStart() {
