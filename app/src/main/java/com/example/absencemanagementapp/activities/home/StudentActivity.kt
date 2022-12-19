@@ -38,7 +38,6 @@ class StudentActivity : AppCompatActivity() {
     private lateinit var student_image_civ: CircleImageView
     private lateinit var user_name_tv: TextView
     private lateinit var bottom_navigation: BottomNavigationView
-    private lateinit var pie_chart: PieChart
     private lateinit var user_total_absence_tv: TextView
 
     private lateinit var auth: FirebaseAuth
@@ -55,9 +54,6 @@ class StudentActivity : AppCompatActivity() {
 
         //initiate views
         initViews()
-
-        //fill pie chart with data
-        fillPieChart()
 
         //set dashboard selected
         bottom_navigation.selectedItemId = R.id.dashboard
@@ -137,33 +133,10 @@ class StudentActivity : AppCompatActivity() {
         swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
         student_image_civ = findViewById(R.id.student_image_civ)
         user_name_tv = findViewById(R.id.user_name_tv)
-        pie_chart = findViewById(R.id.pie_chart)
         user_total_absence_tv = findViewById(R.id.user_total_absence_tv)
 
         //set total absence
         user_total_absence_tv.text = getTotalAbsences().toString()
-    }
-
-    //fill the pie chart
-    private fun fillPieChart() {
-        //get total number of absences of each module of the student, by looping through the inscriptions table
-        val user_id = auth.currentUser!!.uid
-        database.getReference("inscriptions").get().addOnSuccessListener {
-            if (it.exists()) {
-                val inscriptions = it.children
-                var total_absences = 0
-                inscriptions.forEach { inscription ->
-                    val student_id = inscription.child("student_id").value.toString()
-                    if (student_id == user_id) {
-                        val absences = inscription.child("absences").children
-                        absences.forEach { absence ->
-                            total_absences++
-                        }
-                    }
-                }
-                //set the data
-            }
-        }
     }
 
     //get the total number of absences of the student
