@@ -73,17 +73,17 @@
                 android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/task" />
+                    android:src="@drawable/excel" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/proxima_nova_semibold"
-                    android:text="Absence list"
+                    android:text="@string/export"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
