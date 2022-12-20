@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/proxima_nova_semibold"
-                    android:text="@string/my_classes"
+                    android:text="@string/dashboard"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
