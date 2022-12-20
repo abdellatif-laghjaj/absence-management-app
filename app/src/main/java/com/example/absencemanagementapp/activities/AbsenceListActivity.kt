@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.example.absencemanagementapp.R
 import com.example.absencemanagementapp.adapters.AbsenceAdapter
 import com.example.absencemanagementapp.models.Absence
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,6 +30,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.shashank.sony.fancytoastlib.FancyToast
+import org.apache.logging.log4j.ThreadContext.trim
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Workbook
@@ -40,6 +43,7 @@ import java.util.Date
 class AbsenceListActivity : AppCompatActivity() {
     private lateinit var absence_list_rv: RecyclerView
     private lateinit var back_iv: ImageView
+    private lateinit var search_student_et: SearchView
 
     private lateinit var absence_adapter: AbsenceAdapter
 
@@ -64,6 +68,43 @@ class AbsenceListActivity : AppCompatActivity() {
         getAbsences()
 
         back_iv.setOnClickListener { back() }
+
+        search_student_et.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                database.getReference("absences").addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(it: DataSnapshot) {
+                        absences = ArrayList()
+                        for (ds in it.children) {
+                            if (ds.child("seance_id").value.toString().equals(seance_id)) {
+                                val id = ds.child("id").value.toString()
+                                val cne = ds.child("cne").value.toString()
+                                val is_present: Boolean? = ds.child("_present").value as Boolean?
+                                var absence = Absence()
+                                if (is_present != null) {
+                                    absence = Absence(id, cne, seance_id, is_present)
+                                }
+                                absences.add(absence)
+                            }
+                        }
+                        val filteredList = absences.filter { it.cne.contains(newText?.trim().toString(), ignoreCase = true) }
+                        // Update the RecyclerView with the filtered list
+                        absences = filteredList as ArrayList<Absence>
+                        displayAbsences(absences)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException())
+                    }
+                })
+                return true
+            }
+
+        })
     }
 
     override fun onBackPressed() {
@@ -115,6 +156,7 @@ class AbsenceListActivity : AppCompatActivity() {
     private fun initViews() {
         absence_list_rv = findViewById(R.id.absence_list_rv)
         back_iv = findViewById(R.id.back_arrow)
+        search_student_et = findViewById(R.id.search_student_et)
     }
 
 }
