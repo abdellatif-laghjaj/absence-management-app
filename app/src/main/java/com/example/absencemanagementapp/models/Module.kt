@@ -10,14 +10,14 @@ data class Module(
 ) {
 
 
-   constructor() : this(
-       -1,
-       "",
-       "",
-       -1,
-       "",
-       ""
-   )
+    constructor() : this(
+        -1,
+        "",
+        "",
+        -1,
+        "",
+        ""
+    )
 
     override fun toString(): String {
         return "Module(id=$id, intitule=$intitule, abrv=$abrv, semestre=$semestre, formation=$formation, respo_id='$respo_id')"
