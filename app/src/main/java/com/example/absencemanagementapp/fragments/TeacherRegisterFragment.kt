@@ -93,7 +93,7 @@ class TeacherRegisterFragment : Fragment() {
                         FancyToast.makeText(
                             requireContext(),
                             "You have been registered successfully",
-                            Toast.LENGTH_SHORT,
+                            FancyToast.LENGTH_LONG,
                             FancyToast.SUCCESS,
                             false
                         ).show()
@@ -114,7 +114,7 @@ class TeacherRegisterFragment : Fragment() {
                 FancyToast.makeText(
                     requireContext(),
                     "Error: ${task.exception?.message}",
-                    Toast.LENGTH_SHORT,
+                    FancyToast.LENGTH_LONG,
                     FancyToast.ERROR,
                     false
                 ).show()
