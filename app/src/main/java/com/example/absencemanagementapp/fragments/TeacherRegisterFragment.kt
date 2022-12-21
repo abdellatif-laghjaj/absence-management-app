@@ -103,7 +103,7 @@ class TeacherRegisterFragment : Fragment() {
                         FancyToast.makeText(
                             requireContext(),
                             "Error: ${task.exception?.message}",
-                            Toast.LENGTH_SHORT,
+                            FancyToast.LENGTH_LONG,
                             FancyToast.ERROR,
                             false
                         ).show()
